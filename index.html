@@ -57,7 +57,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -105,7 +105,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/06/about-docker/" data-id="cjeftpop8000180m1uvir8b6k" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/06/about-docker/" data-id="cjegk23910000pafyidyvh2vp" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -152,11 +152,29 @@
 </ul>
 <h2 id="分布式SESSION（会话控制）"><a href="#分布式SESSION（会话控制）" class="headerlink" title="分布式SESSION（会话控制）"></a>分布式SESSION（会话控制）</h2><p>分布式多台主机情况下，IP哈希使得用户可以一直访问一台主机，那么如果主机挂掉，也是有隐患的，想要在分布式系统保存session，可以使用专门一个主机（服务）去处理session</p>
 <h3 id="水平扩展和垂直扩展"><a href="#水平扩展和垂直扩展" class="headerlink" title="水平扩展和垂直扩展"></a>水平扩展和垂直扩展</h3><p>水平扩展指的是加机器，构造集群，垂直扩展指的是拆分服务，微服务架构</p>
-<h2 id="TRY"><a href="#TRY" class="headerlink" title="TRY"></a>TRY</h2>
+<h2 id="对于SpringCloud套件基本功能的认识"><a href="#对于SpringCloud套件基本功能的认识" class="headerlink" title="对于SpringCloud套件基本功能的认识"></a>对于SpringCloud套件基本功能的认识</h2><ul>
+<li><p>Spring Eureka Server : 服务发现服务器，用于发现服务，为其他（例如消费者）提供host 也就是说可以直接用microservice的名字进行调用 多个Server集群replicat可以实现高可用热备</p>
+</li>
+<li><p>Spring Ribbon ： 负载均衡，可以以不同的模式进行对ServiceProvider提供的服务进行负载均衡式的调用</p>
+</li>
+<li><p>Spring Feign ： 另一种负载均衡，Ribbon基于resttemplate调用 多参数的时候程序不好写，Feign提供声明式调用，更加方便</p>
+</li>
+<li><p>Spring Hystrix ： 断路器，对出现故障的事例进行隔离，防止雪崩效应</p>
+</li>
+<li><p>Spring Zuul ： 用于构建微服务网关</p>
+</li>
+<li><p>Spring Config ：基于Git的统一管理微服务配置的组件</p>
+</li>
+<li><p>Spring Sleuth ： Spring的微服务耿总组件</p>
+</li>
+<li><p>SpringBoot ： 用于撰写服务提供者</p>
+</li>
+</ul>
+
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/04/distributed-system/" data-id="cjeftpop5000080m1r1lvskic" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/02/04/distributed-system/" data-id="cjegk23960001pafyogb3w2mu" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -205,7 +223,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/03/test-speed/" data-id="cjeftpopc000380m1i73zlg58" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/02/03/test-speed/" data-id="cjegk23980002pafyk7hmmcm1" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -250,7 +268,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/02/hello-world/" data-id="cjeftpopa000280m14okttyz1" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/02/02/hello-world/" data-id="cjegk23990003pafyl3uvulhk" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -276,7 +294,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Archiv</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li></ul>
     </div>
@@ -286,7 +304,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">letzter Beitrag</h3>
     <div class="widget">
       <ul>
         
