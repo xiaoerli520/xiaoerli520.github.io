@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>ncre4 网络工程师 day2 | GTX HOME</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="操作系统 计算机整体设计结构 整体结构 层次结构 微内核结构(客户机/服务器结构)  用户程序在用户态下使用特权指令而引起的中断是 访管中断 而 溢出中断属于异常  指令错属于CPU错误 不属于IO中断 设备出错 数据传送完毕 键盘输入是可以的  Linux支持的状态：运行状态， 可中断睡眠状态， 不可中断睡眠状态， 暂停状态， 不可交互睡眠状态， 死亡状态， 僵死状态， 僵死撤销状态  Fork">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ncre4 网络工程师 day2">
+<meta property="og:url" content="http://yoursite.com/2018/03/08/ncre42/index.html">
+<meta property="og:site_name" content="GTX HOME">
+<meta property="og:description" content="操作系统 计算机整体设计结构 整体结构 层次结构 微内核结构(客户机/服务器结构)  用户程序在用户态下使用特权指令而引起的中断是 访管中断 而 溢出中断属于异常  指令错属于CPU错误 不属于IO中断 设备出错 数据传送完毕 键盘输入是可以的  Linux支持的状态：运行状态， 可中断睡眠状态， 不可中断睡眠状态， 暂停状态， 不可交互睡眠状态， 死亡状态， 僵死状态， 僵死撤销状态  Fork">
+<meta property="og:updated_time" content="2018-03-09T06:27:38.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ncre4 网络工程师 day2">
+<meta name="twitter:description" content="操作系统 计算机整体设计结构 整体结构 层次结构 微内核结构(客户机/服务器结构)  用户程序在用户态下使用特权指令而引起的中断是 访管中断 而 溢出中断属于异常  指令错属于CPU错误 不属于IO中断 设备出错 数据传送完毕 键盘输入是可以的  Linux支持的状态：运行状态， 可中断睡眠状态， 不可中断睡眠状态， 暂停状态， 不可交互睡眠状态， 死亡状态， 僵死状态， 僵死撤销状态  Fork">
+  
+    <link rel="alternate" href="/atom.xml" title="GTX HOME" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">GTX HOME</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">my site!</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-ncre42" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/08/ncre42/" class="article-date">
+  <time datetime="2018-03-08T12:22:26.000Z" itemprop="datePublished">2018-03-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      ncre4 网络工程师 day2
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="操作系统"><a href="#操作系统" class="headerlink" title="操作系统"></a>操作系统</h1><ul>
+<li><p>计算机整体设计结构 整体结构 层次结构 微内核结构(客户机/服务器结构)</p>
+</li>
+<li><p>用户程序在用户态下使用特权指令而引起的中断是 访管中断 而 溢出中断属于异常</p>
+</li>
+<li><p>指令错属于CPU错误 不属于IO中断 设备出错 数据传送完毕 键盘输入是可以的</p>
+</li>
+<li><p>Linux支持的状态：运行状态， 可中断睡眠状态， 不可中断睡眠状态， 暂停状态， 不可交互睡眠状态， 死亡状态， 僵死状态， 僵死撤销状态</p>
+</li>
+<li><p>Fork之后后面的不执行</p>
+</li>
+<li><p>新创建的进程进入就绪队列不会引起新进程的调度</p>
+</li>
+<li><p>管程是实现进程同步的有效工具 通常用来管理资源 可以提升代码可读性</p>
+</li>
+<li><p>动态地址映射方式向内存装入程序的时候 地址转换发生在每条命令执行的时刻</p>
+</li>
+<li><p>加快内存分配 应该按空闲区大小递增顺序排列</p>
+</li>
+<li><p>页式存储管理方案 逻辑地址32bit  内存分块pow(2, 10) 用户程序分成 pow(2, (32 - 10))页</p>
+</li>
+<li><p>虚拟存储空间受到计算机位宽的限制</p>
+</li>
+<li><p>打开文件的时候所做的工作：检查文件以及对应的控制块是否已经调入内存 检查操作合法性 返回给用户一个文件描述符</p>
+</li>
+<li><p>每个索引可以放100个地址 一级可以放100个 二级可以放100 * 100个 则全加起来就是10 + 100 + 10000</p>
+</li>
+<li><p>影响磁盘读写性能的  寻道时间main 旋转延时 传输时间</p>
+</li>
+<li><p>设备按信息交换单位进行分类 可以分为块设备和字符设备</p>
+</li>
+<li><p>缓冲池着重考虑进程同步</p>
+</li>
+<li><p>进程饥饿 进程的优先级较低而长时间得不到调度</p>
+</li>
+<li><p>银行家算法是对死锁的避免</p>
+</li>
+<li><p>死锁的定义 当且仅当当前状态的资源分配图是不可完全化简的</p>
+</li>
+<li><p>进程的必要组成成分是 进程控制块 数据 指令代码</p>
+</li>
+<li><p>每个线程拥有独立的栈， 不拥有独立的地址空间</p>
+</li>
+<li><p>PV问题：P申请过资源 资源为1 且 -1 PV也就是rc = rc + 1之类的 PV原语不可以改变顺序</p>
+</li>
+<li><p>操作系统存储管理方法，存在碎片的是动态分区 段氏分区</p>
+</li>
+<li><p>虚拟页式存储管理系统中，每个页表项必须包含的 页框号 有效位 修改位 访问位</p>
+</li>
+<li><p>为了保证文件系统文件安全，可以采用定时备份 设置文件访问控制列表</p>
+</li>
+<li><p>FAT 是指Windows的File Allocation Table 文件分配表 使用十六位表示蹙号 文件物理结构是链接结构</p>
+</li>
+<li><p>IO软件的层次结构 用户应用层 设备独立层 设备驱动层 中断处理层</p>
+</li>
+<li><p>计算机死锁 进程推进不当 资源分配不当</p>
+</li>
+</ul>
+<h1 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a>计算机网络</h1><ul>
+<li><p>801.11ae是万兆以太网 801.11z是1G 802.11ac  54mbps  802.11b 11mbps</p>
+</li>
+<li><p>以太网中前导码字段长度 56位 7比特</p>
+</li>
+<li><p>以太网帧长 64-1518B</p>
+</li>
+<li><p>IP互联网中主机使用同一的物理地址表示方法是错误的</p>
+</li>
+<li><p>IP数据报中 如果偏移字段值为十进制数100 那么位置偏移量为800字节</p>
+</li>
+<li><p>P2P网络的主要结构类型分为集中式 分布式结构化 分布式非结构化 混合式</p>
+</li>
+<li><p>DNS资源种类 MX 交换机 A 主机 SOA 授权开始 CNAME 域名、别名</p>
+</li>
+<li><p>FTP模式 主动模式和被动模式</p>
+</li>
+<li><p>电子邮件系统使用base64编码的主要目的是将二进制码转化为ascii码</p>
+</li>
+<li><p>Telnet中使用nvt的目的是屏蔽不同用户终端格式差异</p>
+</li>
+<li><p>mSN使用MSNP协议 AOL采用OSCAR协议 Google Talk采用XMPP XMPP采用简单客户端 体系结构和Email类似 采用分布式非P2P协议</p>
+</li>
+<li><p>BT下载 tracker存储用户信息 最早的P2P 共享系统是Napster</p>
+</li>
+<li><p>SNMP协议已经超越了TCPIP协议 再上一层 第一部协议并没有充分考虑安全性 MIB集中存储于代理软件 收集数据采用中断和轮询</p>
+</li>
+<li><p>ElGamal基于椭圆曲线的公钥密码体制 生成密文长度是原文的2倍</p>
+</li>
+<li><p>X.509是由ITU和IETF共同制定的协议 顺序号是证书的唯一标识 发行者名用DN格式的[RFC 2222]标识</p>
+</li>
+<li><p>Linux不是Unix的一个变种 由编程爱好者维护</p>
+</li>
+<li><p>无线局域网可以采用跳频扩频通信技术</p>
+</li>
+<li><p>Gigabit以太网 采用和以太网一样的帧格式 也可以使用双绞线进行连接</p>
+</li>
+<li><p>RIP采用向量-距离算法、OSPF采用链路-状态算法 OSPF比RIP收敛快 RIP比OSPF配置算法简单 RIP中的距离以跳数计算</p>
+</li>
+<li><p>提高域名解析效率的方法 从本地域名服务器开始解析 在域名服务器中使用高速缓存 在客户机使用高速缓存</p>
+</li>
+<li><p>VoIP 网络电话 中的网守 是网络中消息控制中心 可以用来确定网关地址 可以和网关结合在一起 可以进行计费管理</p>
+</li>
+<li><p>主动攻击 重放 篡改 拒绝服务 伪装 被动攻击 监控 流量分析</p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/08/ncre42/" data-id="cjejk7lfp0003m4fym6jfqidt" class="article-share-link">Teilen</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/03/08/ncre41/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">ncre4 网络工程师 day1</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/03/08/ncre42/">ncre4 网络工程师 day2</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/08/ncre41/">ncre4 网络工程师 day1</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/06/about-docker/">关于Docker的一些常用</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/04/distributed-system/">关于分布式的一些认识</a>
+          </li>
+        
+          <li>
+            <a href="/2018/02/03/test-speed/">SpringBoot Laravel(artisan serve) MIXPHP简单性能测试</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 GuoQingZhe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
