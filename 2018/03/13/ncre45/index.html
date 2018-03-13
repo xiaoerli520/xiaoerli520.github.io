@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>计算机四级-网络工程 Day5 | GTX HOME</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="操作系统 多通道技术增加了系统的并发性 后面还有共享 随机性  用户使用打印输出 系统调用应该是write（）； 是系统提供的调用 printf也会调用write  微内核结构特点 较高的灵活性和可扩充性 提高了系统的可靠性 【更适合分布式系统】  设备忙的 时候不会导致进程终止 比如打印机 Divide 0 的时候会引发异常中断 保留现场 引发中断   当程序从运行态转换为就绪态的时候，处理机现">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机四级-网络工程 Day5">
+<meta property="og:url" content="http://yoursite.com/2018/03/13/ncre45/index.html">
+<meta property="og:site_name" content="GTX HOME">
+<meta property="og:description" content="操作系统 多通道技术增加了系统的并发性 后面还有共享 随机性  用户使用打印输出 系统调用应该是write（）； 是系统提供的调用 printf也会调用write  微内核结构特点 较高的灵活性和可扩充性 提高了系统的可靠性 【更适合分布式系统】  设备忙的 时候不会导致进程终止 比如打印机 Divide 0 的时候会引发异常中断 保留现场 引发中断   当程序从运行态转换为就绪态的时候，处理机现">
+<meta property="og:updated_time" content="2018-03-13T04:16:53.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="计算机四级-网络工程 Day5">
+<meta name="twitter:description" content="操作系统 多通道技术增加了系统的并发性 后面还有共享 随机性  用户使用打印输出 系统调用应该是write（）； 是系统提供的调用 printf也会调用write  微内核结构特点 较高的灵活性和可扩充性 提高了系统的可靠性 【更适合分布式系统】  设备忙的 时候不会导致进程终止 比如打印机 Divide 0 的时候会引发异常中断 保留现场 引发中断   当程序从运行态转换为就绪态的时候，处理机现">
+  
+    <link rel="alternate" href="/atom.xml" title="GTX HOME" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">GTX HOME</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">my site!</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSSフィード"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="検索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-ncre45" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/13/ncre45/" class="article-date">
+  <time datetime="2018-03-13T03:40:12.000Z" itemprop="datePublished">2018-03-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      计算机四级-网络工程 Day5
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="操作系统"><a href="#操作系统" class="headerlink" title="操作系统"></a>操作系统</h1><ul>
+<li><p>多通道技术增加了系统的并发性 后面还有共享 随机性</p>
+</li>
+<li><p>用户使用打印输出 系统调用应该是write（）； 是系统提供的调用 printf也会调用write</p>
+</li>
+<li><p>微内核结构特点 较高的灵活性和可扩充性 提高了系统的可靠性 【更适合分布式系统】</p>
+</li>
+<li><p>设备忙的 时候不会导致进程终止 比如打印机 Divide 0 的时候会引发异常中断 保留现场 引发中断 </p>
+</li>
+<li><p>当程序从运行态转换为就绪态的时候，处理机现场信息必须保留在进程控制块中 理解为保留现场</p>
+</li>
+<li><p>进程控制块对读者不透明 系统对其进行控制 所以用户不可读</p>
+</li>
+<li><p>申请处理机得不到满足 将进入饥饿状态</p>
+</li>
+<li><p>管程用来解决同步问题  在条件变量上面进行PV操作 管程不能同时有两个活跃进程</p>
+</li>
+<li><p>PV对共享资源读写的代码段称为临界区</p>
+</li>
+<li><p>在进程同步中 可以对信号量的操作是 初始化信号量 PV操作 不可进行加减</p>
+</li>
+<li><p>进程在得到处理机运行之前 必须将部分装入内存</p>
+</li>
+<li><p>优先使用低地址区的算法是首次适应算法 顺序分配算法 </p>
+</li>
+<li><p>实现页式虚拟存储管理的硬件基础是缺页中断机制</p>
+</li>
+<li><p>空间局部性是指程序代码的顺序性</p>
+</li>
+<li><p>建立文件系统的主要目标是实现文件的按名存取</p>
+</li>
+<li><p>文件的物理结构 ： 顺序结构 索引结构 链接结构</p>
+</li>
+<li><p>close的操作的目的是将文件控制块写入磁盘或者缓存</p>
+</li>
+<li><p>设备分配方案是把资源分配给进程</p>
+</li>
+<li><p>磁盘IO控制主要采用DMA</p>
+</li>
+<li><p>设备分配的主要数据结构以及分配顺序是 ： 系统设备表 -》 设备控制表 -》 控制器控制表</p>
+</li>
+<li><p>操作系统类型 ：批处理 交互式 实时 分布式 个人操作系统 网络操作系统 智能卡操作系统</p>
+</li>
+<li><p>CPU进程优先级和IO没有办法比较</p>
+</li>
+<li><p>进程调度分为高级调度 中级调度 和低级调度</p>
+</li>
+<li><p>任何进程必须通过调度才能运行 </p>
+</li>
+<li><p>交互式系统一般采用时间片轮转的调度方法</p>
+</li>
+<li><p>信号量初值一定大于等于0</p>
+</li>
+<li><p>一个进程变化 如果异步 另外的进程不一定变化 同步的话是一定的</p>
+</li>
+<li><p>进程是资源分配的基本单位 线程是处理机调用的基本单位</p>
+</li>
+<li><p>页表项中 有效位 修改位 访问位</p>
+</li>
+<li><p>文件存储空间的管理办法有：空闲块表 空闲块链表 位示图 成组链接法</p>
+</li>
+<li><p>通道类型 字节多路通道 数据选择通道 数组多路通道</p>
+</li>
+<li><p>死锁的必要条件 资源互斥使用 部分分配资源 不可剥夺 资源申请成为环路</p>
+</li>
+</ul>
+<h1 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a>计算机网络</h1><ul>
+<li><p>协议中 语法 控制信息结构和格式 语义控制时间顺序上的推进</p>
+</li>
+<li><p>万兆网必须的光纤 ae</p>
+</li>
+<li><p>以太网地址 不兼容IPV6</p>
+</li>
+<li><p>CSMA/CD 集线器协议 介质访问控制阀 用于多点共享总线 发送数据需要边侦听边发送</p>
+</li>
+<li><p>802.11采用的是层次结构模型</p>
+</li>
+<li><p>IP协议三个特点 不可靠 面向无连接 尽最大努力</p>
+</li>
+<li><p>B向A直接广播 + 255</p>
+</li>
+<li><p>要求域名服务器系统一次性完成全部名字 - 地址的变换 递归解析</p>
+</li>
+<li><p>SIP使用URL表示用户 可以基于UDP和TCP</p>
+</li>
+<li><p>SIMPLE基于SIP XMPP基于URL</p>
+</li>
+<li><p>社交网络又称社会网络 基于六度分割理论</p>
+</li>
+<li><p>DES是堆成秘钥 NIST制定 也称DEA Rc5算法属于对称加密算法</p>
+</li>
+<li><p>OSI模型 不同节点同等层使用协议通信 同一节点相邻层之间通过接口通信</p>
+</li>
+<li><p>IP路由器功能 转发所受到的IP数据报 为IP数据报选择最佳路径 维护路由表</p>
+</li>
+<li><p>分片爆头和原来数据报中字段 标识和目的地址相同</p>
+</li>
+<li><p>混合式P2P网络包含用户节点 搜索节点 索引节点</p>
+</li>
+<li><p>提高系统解析域名效率 解析从本地域名开始 采用缓存技术</p>
+</li>
+<li><p>Maze 有种子 有积点 混合P2P结构 URL标识文件位置</p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/13/ncre45/" data-id="cjep5athq0004k2m1b7ziqmep" class="article-share-link">共有</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/03/12/ncre44/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前の記事</strong>
+      <div class="article-nav-title">计算机四级-网络工程 Day4</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">アーカイブ</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最近の投稿</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/03/13/ncre45/">计算机四级-网络工程 Day5</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/12/ncre44/">计算机四级-网络工程 Day4</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/11/ncre43/">计算机四级-网络工程 Day3</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/08/ncre42/">ncre4 网络工程师 day2</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/08/ncre41/">ncre4 网络工程师 day1</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 GuoQingZhe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
