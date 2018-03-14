@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>计算机四级-网络工程 Day6 | GTX HOME</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="操作系统 配置操作系统的目的是提高计算机系统资源的利用率  使进程从阻塞态转换为挂起的原语是 suspend  pthread_mutex_init() 表示创建一个互斥量 pthread_mutex_unlock表示释放一个互斥量  直接通信中  系统提供的发送原语是 send(receiver, message)  源代码-》 编译 -》目标文件.obj -》 链接 -》 可执行文件exe">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机四级-网络工程 Day6">
+<meta property="og:url" content="http://yoursite.com/2018/03/14/ncre46/index.html">
+<meta property="og:site_name" content="GTX HOME">
+<meta property="og:description" content="操作系统 配置操作系统的目的是提高计算机系统资源的利用率  使进程从阻塞态转换为挂起的原语是 suspend  pthread_mutex_init() 表示创建一个互斥量 pthread_mutex_unlock表示释放一个互斥量  直接通信中  系统提供的发送原语是 send(receiver, message)  源代码-》 编译 -》目标文件.obj -》 链接 -》 可执行文件exe">
+<meta property="og:updated_time" content="2018-03-14T02:59:13.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="计算机四级-网络工程 Day6">
+<meta name="twitter:description" content="操作系统 配置操作系统的目的是提高计算机系统资源的利用率  使进程从阻塞态转换为挂起的原语是 suspend  pthread_mutex_init() 表示创建一个互斥量 pthread_mutex_unlock表示释放一个互斥量  直接通信中  系统提供的发送原语是 send(receiver, message)  源代码-》 编译 -》目标文件.obj -》 链接 -》 可执行文件exe">
+  
+    <link rel="alternate" href="/atom.xml" title="GTX HOME" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">GTX HOME</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">my site!</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-ncre46" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/14/ncre46/" class="article-date">
+  <time datetime="2018-03-14T02:19:06.000Z" itemprop="datePublished">2018-03-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      计算机四级-网络工程 Day6
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="操作系统"><a href="#操作系统" class="headerlink" title="操作系统"></a>操作系统</h1><ul>
+<li><p>配置操作系统的目的是提高计算机系统资源的利用率</p>
+</li>
+<li><p>使进程从阻塞态转换为挂起的原语是 suspend</p>
+</li>
+<li><p>pthread_mutex_init() 表示创建一个互斥量 pthread_mutex_unlock表示释放一个互斥量</p>
+</li>
+<li><p>直接通信中  系统提供的发送原语是 send(receiver, message)</p>
+</li>
+<li><p>源代码-》 编译 -》目标文件.obj -》 链接 -》 可执行文件exe</p>
+</li>
+<li><p>进程交换是指将暂时不用的进程代码、数据等交换到磁盘</p>
+</li>
+<li><p>cpu 3% 磁盘 97% 此时磁盘较忙 cpu大部分资源都给了硬盘</p>
+</li>
+<li><p>为了提高内存利用率 可以根据需要采用多种不同大小的页面</p>
+</li>
+<li><p>时间局部性 大量循环 空间局部性 程序代码的顺序性</p>
+</li>
+<li><p>多级树形目录 复杂化了文件管理 对于用户来说 解决了文件重名的问题</p>
+</li>
+<li><p>最适合磁带的文件物理结构是 顺序结构</p>
+</li>
+<li><p>第六套23题了解一下 </p>
+</li>
+</ul>
+<p>柱面号=逻辑块号 / （每个柱面扇区数 * 磁盘结构盘面数） </p>
+<p>磁头号=逻辑块号 mod （每个柱面扇区数 * 磁盘结构盘面数） / 扇区数</p>
+<p>扇区号=逻辑块号 mod （每个柱面扇区数 * 磁盘结构盘面数）mod 扇区数</p>
+<ul>
+<li><p>第六套25题了解一下</p>
+</li>
+<li><p>键盘控制方式采用中断方式</p>
+</li>
+<li><p>设备独立层的作用 屏蔽IO设备驱动多样性 </p>
+</li>
+<li><p>进程控制块必须常驻内存</p>
+</li>
+<li><p>信号量初始化之后 只能实施PV原语操作</p>
+</li>
+<li><p>引入虚拟页式存储管理系统 会出现  页面都懂 belady异常 缺页中断  页面写错误</p>
+</li>
+<li><p>文件控制块：文件大小 文件创建时间 文件拥有者 文件访问权限</p>
+</li>
+<li><p>Spooling系统主要组成成分 输入井和输出井 输入缓冲区和输出缓冲区  输入进程和输出进程</p>
+</li>
+<li><p>死锁产生条件 进程推进不当 资源分配不当 产生环路是死锁的必要条件</p>
+</li>
+</ul>
+<h1 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a>计算机网络</h1><ul>
+<li><p>计算机网络是联网的自制计算机集合</p>
+</li>
+<li><p>EtherNet以太网数据帧长度最大1500B  64-1518B</p>
+</li>
+<li><p>跳频扩频可以使用2.4Ghz的ISM频段</p>
+</li>
+<li><p>CSMA/CA是一种介质访问控制方法 重发之前需要等待一段时间</p>
+</li>
+<li><p>IP 不靠谱 面向无连接 尽最大努力</p>
+</li>
+<li><p>多设备用一个IP NAT设备应该采用的工作模式 NAPT</p>
+</li>
+<li><p>POP3发送协议中 STAT查询报文总数和长度 PETR请求服务器发送指定编号的邮件 QUIT删除指定邮件</p>
+</li>
+<li><p>P2P网络：</p>
+</li>
+</ul>
+<p>集中式、分布式结构化、分布式非结构化、混合式</p>
+<p>集中式服务器存储目录和索引信息</p>
+<p>分布式非结构化网络通常使用完全随机图 </p>
+<p>分布式结构化网络通常采用分布式散列表</p>
+<ul>
+<li>SIP</li>
+</ul>
+<p>消息通常分为2类 </p>
+<p>起始行分为请求行和状态行</p>
+<p>消息头和消息体通过CRLF分割</p>
+<p>请求消息分为6中类型</p>
+<p>只有发送方发送Invite</p>
+<ul>
+<li>XMPP</li>
+</ul>
+<p>实体地址称为JID</p>
+<ul>
+<li>NetBIOS协议 </li>
+</ul>
+<p>名称15字符 </p>
+<p>话路数量 254</p>
+<p>4种SMB</p>
+<ul>
+<li>SNMP</li>
+</ul>
+<p>类似一个CMIS 轮询 中断 trap</p>
+<p>CMIP 终端用户负担轻</p>
+<ul>
+<li>802.11帧结构 </li>
+</ul>
+<p>帧控制字段长度2字节</p>
+<p>数据部分长度可变</p>
+<p>采用CRC效验</p>
+<ul>
+<li><p>IPV6注意事项：先导0可以省略 后导0不可以省略</p>
+</li>
+<li><p>服务器相应并发请求可以使用并发服务器或者重复服务器方案</p>
+</li>
+<li><p>Web服务采用CS BS工作模式</p>
+</li>
+<li><p>C1级别描述 数据保护以用户组为单位 用户和数据分离 比C2安全性低</p>
+</li>
+</ul>
+<p>橘皮书安全等级：桔皮书将计算机安全由低到高分为四类七级：D1、C1、C2、B1、B2、B3、A1。其中D1级是不具备最低安全限度的等级，C1和C2级是具备最低安全限度的等级，B1和B2级是具有中等安全保护能力的等级，B3和A1属于最高安全等级</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/14/ncre46/" data-id="cjeqhz1za0005p6fywu0mz7ls" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/03/13/ncre45/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">计算机四级-网络工程 Day5</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/03/14/ncre46/">计算机四级-网络工程 Day6</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/13/ncre45/">计算机四级-网络工程 Day5</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/12/ncre44/">计算机四级-网络工程 Day4</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/11/ncre43/">计算机四级-网络工程 Day3</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/08/ncre42/">ncre4 网络工程师 day2</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 GuoQingZhe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
