@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>打靶训练 | GTX HOME</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="题目1一个射击运动员打靶，靶一共有10环，连开10枪打中90环的情况有多少种？需要考虑10枪的先后关系，比如9环10环同10环9环是不同的。  可以直接暴力十个for 在最后一个for里面判断 空间和时间复杂度都太大了  使用递归的方式 减少空间复杂度   12345678910111213141516171819202122232425262728293031323334353637int su">
+<meta property="og:type" content="article">
+<meta property="og:title" content="打靶训练">
+<meta property="og:url" content="http://yoursite.com/2018/03/15/shooting/index.html">
+<meta property="og:site_name" content="GTX HOME">
+<meta property="og:description" content="题目1一个射击运动员打靶，靶一共有10环，连开10枪打中90环的情况有多少种？需要考虑10枪的先后关系，比如9环10环同10环9环是不同的。  可以直接暴力十个for 在最后一个for里面判断 空间和时间复杂度都太大了  使用递归的方式 减少空间复杂度   12345678910111213141516171819202122232425262728293031323334353637int su">
+<meta property="og:updated_time" content="2018-03-15T10:57:25.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="打靶训练">
+<meta name="twitter:description" content="题目1一个射击运动员打靶，靶一共有10环，连开10枪打中90环的情况有多少种？需要考虑10枪的先后关系，比如9环10环同10环9环是不同的。  可以直接暴力十个for 在最后一个for里面判断 空间和时间复杂度都太大了  使用递归的方式 减少空间复杂度   12345678910111213141516171819202122232425262728293031323334353637int su">
+  
+    <link rel="alternate" href="/atom.xml" title="GTX HOME" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">GTX HOME</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">my site!</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-shooting" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/15/shooting/" class="article-date">
+  <time datetime="2018-03-15T10:54:02.000Z" itemprop="datePublished">2018-03-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      打靶训练
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">一个射击运动员打靶，靶一共有10环，连开10枪打中90环的情况有多少种？需要考虑10枪的先后关系，比如9环10环同10环9环是不同的。</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>可以直接暴力十个for 在最后一个for里面判断 空间和时间复杂度都太大了</p>
+</li>
+<li><p>使用递归的方式 减少空间复杂度</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">int sum;</span><br><span class="line">int store[10];</span><br><span class="line">void Output()          //打印</span><br><span class="line">&#123;</span><br><span class="line">    for(int i=9;i&gt;=0;i--)</span><br><span class="line">    &#123;</span><br><span class="line">        cout&lt;&lt;store[i]&lt;&lt;&quot; &quot;;</span><br><span class="line">    &#125;</span><br><span class="line">    cout&lt;&lt;endl;</span><br><span class="line">    ++sum;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void Comput(int score, int num)</span><br><span class="line">&#123;</span><br><span class="line">    if(score&lt;0 || score&gt;(num+1)*10)       // 前者是因为已经打满了90环 在Comput的第一个参数有个减法 后者是不可能打满90环</span><br><span class="line">        return ;</span><br><span class="line">    if(num==0)                  //打到最后一次 直接将剩下的环数进行匹配 这样避免了最后一次的for循环</span><br><span class="line">    &#123;</span><br><span class="line">        store[num]=score;</span><br><span class="line">        Output();</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">    for(int i=0;i&lt;=10;i++)                 //没有出现上述情况，递归</span><br><span class="line">    &#123;</span><br><span class="line">        store[num]=i;                       // 这一发打了多少环 0-10环循环</span><br><span class="line">        Comput(score-i,num-1);              // 下一发应该打的目的</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    Comput(90,9);</span><br><span class="line">    cout&lt;&lt;sum&lt;&lt;endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">这样就理解了！</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/15/shooting/" data-id="cjesehk190006j6fyd1ugk8qo" class="article-share-link">Teilen</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/03/14/ncre46/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">计算机四级-网络工程 Day6</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/03/15/shooting/">打靶训练</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/14/ncre46/">计算机四级-网络工程 Day6</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/13/ncre45/">计算机四级-网络工程 Day5</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/12/ncre44/">计算机四级-网络工程 Day4</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/11/ncre43/">计算机四级-网络工程 Day3</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 GuoQingZhe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
