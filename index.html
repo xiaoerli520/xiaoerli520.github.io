@@ -68,6 +68,56 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-eight" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/15/eight/" class="article-date">
+  <time datetime="2018-03-15T14:56:11.000Z" itemprop="datePublished">2018-03-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/15/eight/">八皇后问题</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>#八皇后问题</p>
+<h3 id="依然是递归-看和之前shooting的代码很像"><a href="#依然是递归-看和之前shooting的代码很像" class="headerlink" title="依然是递归 看和之前shooting的代码很像"></a>依然是递归 看和之前shooting的代码很像</h3><h3 id="根据上述描述，我们可以得到如果两个皇后Q1-x-y-和Q2-row-col-不符合要求，则以下四个条件之一必符合。"><a href="#根据上述描述，我们可以得到如果两个皇后Q1-x-y-和Q2-row-col-不符合要求，则以下四个条件之一必符合。" class="headerlink" title="根据上述描述，我们可以得到如果两个皇后Q1(x, y)和Q2(row, col)不符合要求，则以下四个条件之一必符合。"></a>根据上述描述，我们可以得到如果两个皇后Q1(x, y)和Q2(row, col)不符合要求，则以下四个条件之一必符合。</h3><ul>
+<li><p>x == row</p>
+</li>
+<li><p>y == col</p>
+</li>
+<li><p>x + y == row + col （斜向正方向）</p>
+</li>
+<li><p>x - y == row - col（斜向反方向）</p>
+</li>
+</ul>
+<p>8个皇后都找到了安全位置代表棋局的成功，用一个长度为8的整数数组colume代表成功摆放的8个皇后.</p>
+<p>[数组索引代表棋盘的col向量，而数组的值为棋盘的row向量，所以(row,col)的皇后可以表示为(colume[col],col)]</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;cmath&gt;</span><br><span class="line"></span><br><span class="line">#define QUEEN_NUM 8</span><br><span class="line">int ResultCounter = 0;</span><br><span class="line"></span><br><span class="line">void printResult(int colume[]);</span><br><span class="line">bool check(int colume[], int col);</span><br><span class="line">void QueenSolution(int colume[], int col);</span><br><span class="line"></span><br><span class="line">int main(void)&#123;</span><br><span class="line">    //数组colume中存放的是行值</span><br><span class="line">    //即假设col[0]==3，表明第1列中皇后在第4行上</span><br><span class="line">    int colume[QUEEN_NUM] = &#123;0&#125;;</span><br><span class="line">    QueenSolution(colume, 0);</span><br><span class="line">    std::cout &lt;&lt; &quot;Solution Total Count: &quot; &lt;&lt; ResultCounter &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//输出数组中的一组结果</span><br><span class="line">void printResult(int colume[])&#123;</span><br><span class="line">    for(int i = 0; i &lt; QUEEN_NUM; i++)</span><br><span class="line">        std::cout &lt;&lt; &quot;(&quot; &lt;&lt; colume[i] &lt;&lt; &quot;, &quot; &lt;&lt; i &lt;&lt; &quot;) &quot;;</span><br><span class="line">    std::cout &lt;&lt; std::endl;</span><br><span class="line">    ResultCounter++;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//检查当前列col，在现有情况下，能否放置皇后</span><br><span class="line">//如果是以下四种情况，就返回false</span><br><span class="line">//1）x=row(在纵向不能有两个皇后)</span><br><span class="line">//2)  y=col（横向）</span><br><span class="line">//3）col + row = y+x;（斜向正方向）</span><br><span class="line">//4)  col - row = y-x;（斜向反方向）</span><br><span class="line">bool check(int colume[], int col)&#123;</span><br><span class="line">    //因为提供的是列信息，我们就逐列进行检查</span><br><span class="line">    for(int i = 0; i &lt; col; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        if(colume[i] == colume[col] ||</span><br><span class="line">           std::abs(colume[i] - colume[col]) == col - i )</span><br><span class="line">            return false;</span><br><span class="line">    &#125;</span><br><span class="line">    return true;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//尝试第col列上的所有解</span><br><span class="line">//即在第col列的所有行上依次检验</span><br><span class="line">//调用此函数时，表明从第0列到第col-1列都已经安置好了皇后</span><br><span class="line">void QueenSolution(int colume[], int col)&#123;</span><br><span class="line">    if(col == QUEEN_NUM)</span><br><span class="line">    &#123;</span><br><span class="line">        printResult(colume);</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //新的一列中，皇后有可能在 任意 一行</span><br><span class="line">    for(int i = 0; i &lt; QUEEN_NUM; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        colume[col] = i;  //将这个皇后放在第i行，进行检查</span><br><span class="line">        if( check(colume, col) )</span><br><span class="line">            QueenSolution(colume, col+1);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/15/eight/" data-id="cjesn54yq00004wfy594703oz" class="article-share-link">Teilen</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-shooting" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/03/15/shooting/" class="article-date">
@@ -102,7 +152,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/15/shooting/" data-id="cjesehk190006j6fyd1ugk8qo" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/15/shooting/" data-id="cjesn54z600084wfyd5deoe0b" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -249,7 +299,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/14/ncre46/" data-id="cjesehk1b0008j6fybxgjx365" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/14/ncre46/" data-id="cjesn54z700094wfymt6iwltr" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -389,7 +439,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/13/ncre45/" data-id="cjesehk1a0007j6fyt5vnenuf" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/13/ncre45/" data-id="cjesn54z500074wfy5cy78p9s" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -540,7 +590,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/12/ncre44/" data-id="cjesehk1c0009j6fyax3x6e64" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/12/ncre44/" data-id="cjesn54zq000b4wfyx8jitwaj" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -686,7 +736,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/11/ncre43/" data-id="cjesehk170004j6fyyzi4d6d5" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/11/ncre43/" data-id="cjesn54z300054wfydfw7c8zz" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -826,7 +876,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/08/ncre42/" data-id="cjesehk150003j6fyhsj6nlv2" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/08/ncre42/" data-id="cjesn54z400064wfy5vkhkaj4" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -1001,7 +1051,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/08/ncre41/" data-id="cjesehk180005j6fyzgrb5pyt" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/08/ncre41/" data-id="cjesn54z200044wfysemvktun" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -1048,7 +1098,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/06/about-docker/" data-id="cjesehk100001j6fytg0zmgms" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/06/about-docker/" data-id="cjesn54yw00014wfyq75y8v0j" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -1117,56 +1167,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/04/distributed-system/" data-id="cjesehk140002j6fyblp7z7g5" class="article-share-link">Teilen</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-test-speed" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/02/03/test-speed/" class="article-date">
-  <time datetime="2018-02-02T16:46:36.000Z" itemprop="datePublished">2018-02-03</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/03/test-speed/">SpringBoot Laravel(artisan serve) MIXPHP简单性能测试</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="测试条件："><a href="#测试条件：" class="headerlink" title="测试条件："></a>测试条件：</h3><p>CPU: 2C 4T 2.8GHZ</p>
-<p>MEM: 8G</p>
-<p>DISK: 512GB SSD</p>
-<p>OS: OS X 10.11.6</p>
-<h3 id="测试指令"><a href="#测试指令" class="headerlink" title="测试指令"></a>测试指令</h3><p>ab -n 2000 -c 10</p>
-<h3 id="测试表现"><a href="#测试表现" class="headerlink" title="测试表现"></a>测试表现</h3><p>MIXPHP RPS:8K</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Server Software:        swoole-http-server</span><br><span class="line">Server Hostname:        127.0.0.1</span><br><span class="line">Server Port:            9501</span><br><span class="line"></span><br><span class="line">Document Path:          /</span><br><span class="line">Document Length:        12 bytes</span><br><span class="line"></span><br><span class="line">Concurrency Level:      10</span><br><span class="line">Time taken for tests:   0.223 seconds</span><br><span class="line">Complete requests:      2000</span><br><span class="line">Failed requests:        0</span><br><span class="line">Total transferred:      348000 bytes</span><br><span class="line">HTML transferred:       24000 bytes</span><br><span class="line">Requests per second:    8969.49 [#/sec] (mean)</span><br><span class="line">Time per request:       1.115 [ms] (mean)</span><br><span class="line">Time per request:       0.111 [ms] (mean, across all concurrent requests)</span><br><span class="line">Transfer rate:          1524.11 [Kbytes/sec] received</span><br></pre></td></tr></table></figure>
-<p>Laravel(使用php artisan serve)</p>
-<p>RPS: 22…</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Server Software:</span><br><span class="line">Server Hostname:        127.0.0.1</span><br><span class="line">Server Port:            8000</span><br><span class="line"></span><br><span class="line">Document Path:          /t</span><br><span class="line">Document Length:        11 bytes</span><br><span class="line"></span><br><span class="line">Concurrency Level:      10</span><br><span class="line">Time taken for tests:   72.551 seconds</span><br><span class="line">Complete requests:      2000</span><br><span class="line">Failed requests:        0</span><br><span class="line">Total transferred:      2060448 bytes</span><br><span class="line">HTML transferred:       22000 bytes</span><br><span class="line">Requests per second:    27.57 [#/sec] (mean)</span><br><span class="line">Time per request:       362.757 [ms] (mean)</span><br><span class="line">Time per request:       36.276 [ms] (mean, across all concurrent requests)</span><br><span class="line">Transfer rate:          27.73 [Kbytes/sec] received</span><br></pre></td></tr></table></figure>
-<p>SpringBoot</p>
-<p>RPS 1900</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Server Software:</span><br><span class="line">Server Hostname:        127.0.0.1</span><br><span class="line">Server Port:            8080</span><br><span class="line"></span><br><span class="line">Document Path:          /hello</span><br><span class="line">Document Length:        11 bytes</span><br><span class="line"></span><br><span class="line">Concurrency Level:      10</span><br><span class="line">Time taken for tests:   1.050 seconds</span><br><span class="line">Complete requests:      2000</span><br><span class="line">Failed requests:        0</span><br><span class="line">Total transferred:      288000 bytes</span><br><span class="line">HTML transferred:       22000 bytes</span><br><span class="line">Requests per second:    1904.65 [#/sec] (mean)</span><br><span class="line">Time per request:       5.250 [ms] (mean)</span><br><span class="line">Time per request:       0.525 [ms] (mean, across all concurrent requests)</span><br><span class="line">Transfer rate:          267.84 [Kbytes/sec] received</span><br></pre></td></tr></table></figure>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/03/test-speed/" data-id="cjesehk1d000aj6fyreak57nn" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/04/distributed-system/" data-id="cjesn54yy00024wfyacjm7vtt" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -1212,6 +1213,10 @@
       <ul>
         
           <li>
+            <a href="/2018/03/15/eight/">八皇后问题</a>
+          </li>
+        
+          <li>
             <a href="/2018/03/15/shooting/">打靶训练</a>
           </li>
         
@@ -1225,10 +1230,6 @@
         
           <li>
             <a href="/2018/03/12/ncre44/">计算机四级-网络工程 Day4</a>
-          </li>
-        
-          <li>
-            <a href="/2018/03/11/ncre43/">计算机四级-网络工程 Day3</a>
           </li>
         
       </ul>

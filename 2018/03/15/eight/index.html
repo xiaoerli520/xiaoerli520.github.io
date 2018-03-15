@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>八皇后问题 | GTX HOME</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="#八皇后问题 依然是递归 看和之前shooting的代码很像根据上述描述，我们可以得到如果两个皇后Q1(x, y)和Q2(row, col)不符合要求，则以下四个条件之一必符合。 x == row  y == col  x + y == row + col （斜向正方向）  x - y == row - col（斜向反方向）   8个皇后都找到了安全位置代表棋局的成功，用一个长度为8的整数数组co">
+<meta property="og:type" content="article">
+<meta property="og:title" content="八皇后问题">
+<meta property="og:url" content="http://yoursite.com/2018/03/15/eight/index.html">
+<meta property="og:site_name" content="GTX HOME">
+<meta property="og:description" content="#八皇后问题 依然是递归 看和之前shooting的代码很像根据上述描述，我们可以得到如果两个皇后Q1(x, y)和Q2(row, col)不符合要求，则以下四个条件之一必符合。 x == row  y == col  x + y == row + col （斜向正方向）  x - y == row - col（斜向反方向）   8个皇后都找到了安全位置代表棋局的成功，用一个长度为8的整数数组co">
+<meta property="og:updated_time" content="2018-03-15T14:59:44.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="八皇后问题">
+<meta name="twitter:description" content="#八皇后问题 依然是递归 看和之前shooting的代码很像根据上述描述，我们可以得到如果两个皇后Q1(x, y)和Q2(row, col)不符合要求，则以下四个条件之一必符合。 x == row  y == col  x + y == row + col （斜向正方向）  x - y == row - col（斜向反方向）   8个皇后都找到了安全位置代表棋局的成功，用一个长度为8的整数数组co">
+  
+    <link rel="alternate" href="/atom.xml" title="GTX HOME" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">GTX HOME</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">my site!</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-eight" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/15/eight/" class="article-date">
+  <time datetime="2018-03-15T14:56:11.000Z" itemprop="datePublished">2018-03-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      八皇后问题
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>#八皇后问题</p>
+<h3 id="依然是递归-看和之前shooting的代码很像"><a href="#依然是递归-看和之前shooting的代码很像" class="headerlink" title="依然是递归 看和之前shooting的代码很像"></a>依然是递归 看和之前shooting的代码很像</h3><h3 id="根据上述描述，我们可以得到如果两个皇后Q1-x-y-和Q2-row-col-不符合要求，则以下四个条件之一必符合。"><a href="#根据上述描述，我们可以得到如果两个皇后Q1-x-y-和Q2-row-col-不符合要求，则以下四个条件之一必符合。" class="headerlink" title="根据上述描述，我们可以得到如果两个皇后Q1(x, y)和Q2(row, col)不符合要求，则以下四个条件之一必符合。"></a>根据上述描述，我们可以得到如果两个皇后Q1(x, y)和Q2(row, col)不符合要求，则以下四个条件之一必符合。</h3><ul>
+<li><p>x == row</p>
+</li>
+<li><p>y == col</p>
+</li>
+<li><p>x + y == row + col （斜向正方向）</p>
+</li>
+<li><p>x - y == row - col（斜向反方向）</p>
+</li>
+</ul>
+<p>8个皇后都找到了安全位置代表棋局的成功，用一个长度为8的整数数组colume代表成功摆放的8个皇后.</p>
+<p>[数组索引代表棋盘的col向量，而数组的值为棋盘的row向量，所以(row,col)的皇后可以表示为(colume[col],col)]</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">#include &lt;iostream&gt;</span><br><span class="line">#include &lt;cmath&gt;</span><br><span class="line"></span><br><span class="line">#define QUEEN_NUM 8</span><br><span class="line">int ResultCounter = 0;</span><br><span class="line"></span><br><span class="line">void printResult(int colume[]);</span><br><span class="line">bool check(int colume[], int col);</span><br><span class="line">void QueenSolution(int colume[], int col);</span><br><span class="line"></span><br><span class="line">int main(void)&#123;</span><br><span class="line">    //数组colume中存放的是行值</span><br><span class="line">    //即假设col[0]==3，表明第1列中皇后在第4行上</span><br><span class="line">    int colume[QUEEN_NUM] = &#123;0&#125;;</span><br><span class="line">    QueenSolution(colume, 0);</span><br><span class="line">    std::cout &lt;&lt; &quot;Solution Total Count: &quot; &lt;&lt; ResultCounter &lt;&lt; std::endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">//输出数组中的一组结果</span><br><span class="line">void printResult(int colume[])&#123;</span><br><span class="line">    for(int i = 0; i &lt; QUEEN_NUM; i++)</span><br><span class="line">        std::cout &lt;&lt; &quot;(&quot; &lt;&lt; colume[i] &lt;&lt; &quot;, &quot; &lt;&lt; i &lt;&lt; &quot;) &quot;;</span><br><span class="line">    std::cout &lt;&lt; std::endl;</span><br><span class="line">    ResultCounter++;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//检查当前列col，在现有情况下，能否放置皇后</span><br><span class="line">//如果是以下四种情况，就返回false</span><br><span class="line">//1）x=row(在纵向不能有两个皇后)</span><br><span class="line">//2)  y=col（横向）</span><br><span class="line">//3）col + row = y+x;（斜向正方向）</span><br><span class="line">//4)  col - row = y-x;（斜向反方向）</span><br><span class="line">bool check(int colume[], int col)&#123;</span><br><span class="line">    //因为提供的是列信息，我们就逐列进行检查</span><br><span class="line">    for(int i = 0; i &lt; col; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        if(colume[i] == colume[col] ||</span><br><span class="line">           std::abs(colume[i] - colume[col]) == col - i )</span><br><span class="line">            return false;</span><br><span class="line">    &#125;</span><br><span class="line">    return true;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//尝试第col列上的所有解</span><br><span class="line">//即在第col列的所有行上依次检验</span><br><span class="line">//调用此函数时，表明从第0列到第col-1列都已经安置好了皇后</span><br><span class="line">void QueenSolution(int colume[], int col)&#123;</span><br><span class="line">    if(col == QUEEN_NUM)</span><br><span class="line">    &#123;</span><br><span class="line">        printResult(colume);</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    //新的一列中，皇后有可能在 任意 一行</span><br><span class="line">    for(int i = 0; i &lt; QUEEN_NUM; i++)</span><br><span class="line">    &#123;</span><br><span class="line">        colume[col] = i;  //将这个皇后放在第i行，进行检查</span><br><span class="line">        if( check(colume, col) )</span><br><span class="line">            QueenSolution(colume, col+1);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/15/eight/" data-id="cjesn54yq00004wfy594703oz" class="article-share-link">Teilen</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/03/15/shooting/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">打靶训练</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/03/15/eight/">八皇后问题</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/15/shooting/">打靶训练</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/14/ncre46/">计算机四级-网络工程 Day6</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/13/ncre45/">计算机四级-网络工程 Day5</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/12/ncre44/">计算机四级-网络工程 Day4</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 GuoQingZhe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
