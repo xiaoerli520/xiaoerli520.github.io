@@ -57,7 +57,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+        <a id="nav-search-btn" class="nav-icon" title="검색"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -67,6 +67,53 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-about-docker" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/06/about-docker/" class="article-date">
+  <time datetime="2018-03-06T04:25:39.000Z" itemprop="datePublished">2018-03-06</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/06/about-docker/">关于Docker的一些常用</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="日常使用的一些命令"><a href="#日常使用的一些命令" class="headerlink" title="日常使用的一些命令"></a>日常使用的一些命令</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">docker pull mysql:tags // 拉mysql的tag版本</span><br><span class="line"></span><br><span class="line">docker run -it </span><br><span class="line">-p（端口映射-主机端口：容器端口） hostPort:containerPort </span><br><span class="line">-v $PWD:/var/www/html（目录映射 主机目录:容器目录 还可以起到持久化的作用）</span><br><span class="line">-e ADDITIONAL_ARGS （容器相关参数）</span><br><span class="line">--name myContainer（起别名）</span><br><span class="line">--link mysql:database（和某个容器建立联系）</span><br><span class="line">lnmp -d （daemon运行） </span><br><span class="line"></span><br><span class="line">docker rm containerName // 删除某个已经停止的容器</span><br><span class="line">docker stop containerName // 停止某个容器</span><br><span class="line">docker images // 出示所有映像</span><br><span class="line">docker rmi imageName // 删除映像</span><br></pre></td></tr></table></figure>
+<h2 id="日常踩坑"><a href="#日常踩坑" class="headerlink" title="日常踩坑"></a>日常踩坑</h2><ul>
+<li>当使用类似PHP等container的时候，如果想要和另外一个MySQL数据库container实例相连接，需要在启动PHP container的时候使用–link进行绑定，也就是两个容器组网，让其可以相互访问，使用localhost、127.0.0.1是不能直接访问到mysql实例的</li>
+</ul>
+<ul>
+<li><p>docker对于mysqlContainer的数据库文件持久化问题，需要使用-v参数将mysqlcontainer内 /var/lib/mysql映射，也就是使用</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker run  --name filed-mysql -p 3309:3306 -v $PWD/data:/var/lib/mysql  -e MYSQL_ROOT_PASSWORD=root -d mysql:5.7</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>CentOS Docker-ce安装完毕后出现 Cannot connect to the Docker daemon at unix:///var/run/docker.sock. Is the docker daemon running? 使用Service start docker 就可以了，或者使用sudo</p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/06/about-docker/" data-id="cjeyf0a5p0000o2m1aa1mks36" class="article-share-link">공유</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
   
     <article id="post-distributed-system" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -127,7 +174,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/04/distributed-system/" data-id="cjeya6zx40002h3fy1ald4kgf" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/04/distributed-system/" data-id="cjeyf0a5y0003o2m16ira7pd2" class="article-share-link">공유</a>
       
       
     </footer>
@@ -176,7 +223,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/03/test-speed/" data-id="cjeya6zxt000ch3fy0jubl3li" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/03/test-speed/" data-id="cjeyf0a6g000co2m1jdbelc2d" class="article-share-link">공유</a>
       
       
     </footer>
@@ -221,7 +268,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/02/hello-world/" data-id="cjeya6zx70004h3fyk8w0uqe4" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/02/hello-world/" data-id="cjeyf0a5w0002o2m1xp7sjo0p" class="article-share-link">공유</a>
       
       
     </footer>
@@ -235,7 +282,7 @@
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/">&laquo; zurück</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    <a class="extend prev" rel="prev" href="/">&laquo; 이전</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
   </nav>
 
 </section>
@@ -252,7 +299,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archiv</h3>
+    <h3 class="widget-title">아카이브</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li></ul>
     </div>
@@ -262,9 +309,13 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">letzter Beitrag</h3>
+    <h3 class="widget-title">최근 포스트</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/03/19/ncre47/">计算机四级-网络工程 Day7</a>
+          </li>
         
           <li>
             <a href="/2018/03/19/interview-xiaomi/">XiaoMi Interview Log</a>
@@ -280,10 +331,6 @@
         
           <li>
             <a href="/2018/03/14/ncre46/">计算机四级-网络工程 Day6</a>
-          </li>
-        
-          <li>
-            <a href="/2018/03/13/ncre45/">计算机四级-网络工程 Day5</a>
           </li>
         
       </ul>
