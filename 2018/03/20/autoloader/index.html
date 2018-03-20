@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>自动加载以及Composer的实现 | GTX HOME</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="类的自动加载两个函数 __autoload()魔术方法、spl_autoload_register 当php文件中使用了new关键字实例化一个对象时，如果该类没有在本php文件中被定义，将会触发__autoload函数 __autoload 运行到new Animal()时，发现 class Animal没有定义  触发了__autoload函数，该函数引进了Animal.php文件  实例化成功">
+<meta property="og:type" content="article">
+<meta property="og:title" content="自动加载以及Composer的实现">
+<meta property="og:url" content="http://yoursite.com/2018/03/20/autoloader/index.html">
+<meta property="og:site_name" content="GTX HOME">
+<meta property="og:description" content="类的自动加载两个函数 __autoload()魔术方法、spl_autoload_register 当php文件中使用了new关键字实例化一个对象时，如果该类没有在本php文件中被定义，将会触发__autoload函数 __autoload 运行到new Animal()时，发现 class Animal没有定义  触发了__autoload函数，该函数引进了Animal.php文件  实例化成功">
+<meta property="og:updated_time" content="2018-03-20T12:50:58.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="自动加载以及Composer的实现">
+<meta name="twitter:description" content="类的自动加载两个函数 __autoload()魔术方法、spl_autoload_register 当php文件中使用了new关键字实例化一个对象时，如果该类没有在本php文件中被定义，将会触发__autoload函数 __autoload 运行到new Animal()时，发现 class Animal没有定义  触发了__autoload函数，该函数引进了Animal.php文件  实例化成功">
+  
+    <link rel="alternate" href="/atom.xml" title="GTX HOME" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">GTX HOME</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">my site!</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-autoloader" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/20/autoloader/" class="article-date">
+  <time datetime="2018-03-20T10:47:45.000Z" itemprop="datePublished">2018-03-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      自动加载以及Composer的实现
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="类的自动加载"><a href="#类的自动加载" class="headerlink" title="类的自动加载"></a>类的自动加载</h1><p>两个函数 __autoload()魔术方法、spl_autoload_register</p>
+<p>当php文件中使用了new关键字实例化一个对象时，如果该类没有在本php文件中被定义，将会触发__autoload函数</p>
+<h3 id="autoload"><a href="#autoload" class="headerlink" title="__autoload"></a>__autoload</h3><ol>
+<li><p>运行到new Animal()时，发现 class Animal没有定义</p>
+</li>
+<li><p>触发了__autoload函数，该函数引进了Animal.php文件</p>
+</li>
+<li><p>实例化成功。</p>
+</li>
+</ol>
+<h3 id="spl-autoload-register"><a href="#spl-autoload-register" class="headerlink" title="spl_autoload_register"></a>spl_autoload_register</h3><p>（注意：当文件中同时出现__autoload和spl_autoload_register时，以spl_autoload_register为准）</p>
+<p>bool spl_autoload_register ([ callable autoloadfunction[,boolthrow = true [, bool $prepend = false ]]] )</p>
+<p>autoload_function</p>
+<ul>
+<li>欲注册的自动装载函数。如果没有提供任何参数，则自动注册 autoload 的默认实现函数spl_autoload()。</li>
+</ul>
+<p>throw</p>
+<ul>
+<li>此参数设置了 autoload_function 无法成功注册时， spl_autoload_register()是否抛出异常。</li>
+</ul>
+<p>prepend</p>
+<ul>
+<li>如果是 true，spl_autoload_register() 会添加函数到队列之首，而不是队列尾部。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">#main.php</span><br><span class="line">&lt;?php</span><br><span class="line">  function myLoad($classname)&#123;</span><br><span class="line">     $classpath = &quot;&#123;$classname&#125;.php&quot;;</span><br><span class="line">     if(file_exists($classpath))&#123;</span><br><span class="line">         require_once($classpath);</span><br><span class="line">     &#125;else&#123;</span><br><span class="line">         echo $classpath.&quot; not be found!&quot;;</span><br><span class="line">     &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  spl_autoload_register(&quot;myLoad&quot;); </span><br><span class="line">  </span><br><span class="line">  // 当系统找不到相应的类库的时候 调用 myload方法 如果没有规定 自动注册autoload的默认实现函数spl_autoload();</span><br><span class="line">  </span><br><span class="line">  </span><br><span class="line">  $ani = new Animal();</span><br><span class="line">?&gt;</span><br></pre></td></tr></table></figure>
+<h3 id="两者的区别"><a href="#两者的区别" class="headerlink" title="两者的区别"></a>两者的区别</h3><p>1，可以按需多次写spl_autoload_register注册加载函数，加载顺序按谁先注册谁先调用。__aotuload由于是全局函数只能定义一次，不够灵活。 自动加载对象方便</p>
+<p>2，可以被catch到错误，而__autoload不能。</p>
+<p>3，spl_autoload_register注册的加载函数可以按需被spl_autoload_unregister掉</p>
+<h3 id="Composer"><a href="#Composer" class="headerlink" title="Composer"></a>Composer</h3><p>运行 Composer 需要 PHP 5.3.2+ 以上版本。</p>
+<h4 id="composer的使用"><a href="#composer的使用" class="headerlink" title="composer的使用"></a>composer的使用</h4><ol>
+<li><p>在composer.json内包含 require</p>
+</li>
+<li><p>composer install</p>
+</li>
+<li><p>require vendor/autoload.php</p>
+</li>
+</ol>
+<p>以上就可以实现自动加载</p>
+<h4 id="composer-自动加载原理"><a href="#composer-自动加载原理" class="headerlink" title="composer 自动加载原理"></a>composer 自动加载原理</h4><p>Laravel </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">/public/index.php</span><br><span class="line"></span><br><span class="line">&lt;?php</span><br><span class="line"></span><br><span class="line">/**</span><br><span class="line"> * Laravel - A PHP Framework For Web Artisans</span><br><span class="line"> *</span><br><span class="line"> * @package  Laravel</span><br><span class="line"> * @author   Taylor Otwell &lt;taylor@laravel.com&gt;</span><br><span class="line"> */</span><br><span class="line"></span><br><span class="line">define(&apos;LARAVEL_START&apos;, microtime(true));</span><br><span class="line"></span><br><span class="line">/*</span><br><span class="line">|--------------------------------------------------------------------------</span><br><span class="line">| Register The Auto Loader</span><br><span class="line">|--------------------------------------------------------------------------</span><br><span class="line">|</span><br><span class="line">| Composer provides a convenient, automatically generated class loader for</span><br><span class="line">| our application. We just need to utilize it! We&apos;ll simply require it</span><br><span class="line">| into the script here so that we don&apos;t have to worry about manual</span><br><span class="line">| loading any of our classes later on. It feels great to relax.</span><br><span class="line">|</span><br><span class="line">*/</span><br><span class="line"></span><br><span class="line">require \_\_DIR__.&apos;/../vendor/autoload.php&apos;; // 发现使用autoload 看到getloader</span><br></pre></td></tr></table></figure>
+<p>composer内部代码GetLoader</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line">vendor/composer/autoload_real.php</span><br><span class="line"></span><br><span class="line">class ComposerAutoloaderInit175720aab51ecef5d6218812498b5793</span><br><span class="line">&#123;</span><br><span class="line">    private static $loader;</span><br><span class="line"></span><br><span class="line">    public static function loadClassLoader($class)</span><br><span class="line">    &#123;</span><br><span class="line">        if (&apos;Composer\Autoload\ClassLoader&apos; === $class) &#123;</span><br><span class="line">            require __DIR__ . &apos;/ClassLoader.php&apos;;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    public static function getLoader()</span><br><span class="line">    &#123;</span><br><span class="line">        if (null !== self::$loader) &#123;</span><br><span class="line">            return self::$loader;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        spl_autoload_register(array(&apos;ComposerAutoloaderInit175720aab51ecef5d6218812498b5793&apos;, &apos;loadClassLoader&apos;), true, true);</span><br><span class="line">        self::$loader = $loader = new \Composer\Autoload\ClassLoader();</span><br><span class="line">        spl_autoload_unregister(array(&apos;ComposerAutoloaderInit175720aab51ecef5d6218812498b5793&apos;, &apos;loadClassLoader&apos;));</span><br><span class="line"></span><br><span class="line">        $useStaticLoader = PHP_VERSION_ID &gt;= 50600 &amp;&amp; !defined(&apos;HHVM_VERSION&apos;) &amp;&amp; (!function_exists(&apos;zend_loader_file_encoded&apos;) || !zend_loader_file_encoded()); // 根据版本判断使用哪个loader</span><br><span class="line">        if ($useStaticLoader) &#123;</span><br><span class="line">            require_once __DIR__ . &apos;/autoload_static.php&apos;;</span><br><span class="line"></span><br><span class="line">            call_user_func(\Composer\Autoload\ComposerStaticInit175720aab51ecef5d6218812498b5793::getInitializer($loader));</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            $map = require __DIR__ . &apos;/autoload_namespaces.php&apos;;</span><br><span class="line">            foreach ($map as $namespace =&gt; $path) &#123;</span><br><span class="line">                $loader-&gt;set($namespace, $path);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            $map = require __DIR__ . &apos;/autoload_psr4.php&apos;;</span><br><span class="line">            foreach ($map as $namespace =&gt; $path) &#123;</span><br><span class="line">                $loader-&gt;setPsr4($namespace, $path);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            $classMap = require __DIR__ . &apos;/autoload_classmap.php&apos;;</span><br><span class="line">            if ($classMap) &#123;</span><br><span class="line">                $loader-&gt;addClassMap($classMap);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        $loader-&gt;register(true);</span><br><span class="line"></span><br><span class="line">        if ($useStaticLoader) &#123;</span><br><span class="line">            $includeFiles = Composer\Autoload\ComposerStaticInit175720aab51ecef5d6218812498b5793::$files;</span><br><span class="line">        &#125; else &#123;</span><br><span class="line">            $includeFiles = require __DIR__ . &apos;/autoload_files.php&apos;;</span><br><span class="line">        &#125;</span><br><span class="line">        foreach ($includeFiles as $fileIdentifier =&gt; $file) &#123;</span><br><span class="line">            composerRequire175720aab51ecef5d6218812498b5793($fileIdentifier, $file);</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        return $loader;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>步骤 ：首先判断PHP版本决定使用Staticloader还是普通的Namespaceloader</p>
+<p>加载PSR-0规范的类 方法在ClassLoader内</p>
+<p>加载PSR-4规范的类 方法在ClassLoader内 </p>
+<p>加载上面两个类就是对ClassLoader内的需要加载的类进行编辑操作</p>
+<p>register进行类注册加载 方法在ClassLoader内 调用spl_autoloader_register();</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/20/autoloader/" data-id="cjeznrfp600001ufy4uf0rq1q" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/03/20/php-code-4/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">PHP代码实现2 [函数角度] 1</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/03/20/autoloader/">自动加载以及Composer的实现</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/20/php-code-4/">PHP代码实现2 [函数角度] 1</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/20/php-code-3/">PHP代码实现2 [从变量和数据的角度] 2</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/20/php-code-2/">PHP代码实现2 [从变量和数据的角度] 1</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/20/php-code-1/">PHP代码实现 1 [宏观角度]</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 GuoQingZhe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

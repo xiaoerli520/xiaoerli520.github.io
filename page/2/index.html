@@ -68,6 +68,146 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-ncre45" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/13/ncre45/" class="article-date">
+  <time datetime="2018-03-13T03:40:12.000Z" itemprop="datePublished">2018-03-13</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/13/ncre45/">计算机四级-网络工程 Day5</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="操作系统"><a href="#操作系统" class="headerlink" title="操作系统"></a>操作系统</h1><ul>
+<li><p>多通道技术增加了系统的并发性 后面还有共享 随机性</p>
+</li>
+<li><p>用户使用打印输出 系统调用应该是write（）； 是系统提供的调用 printf也会调用write</p>
+</li>
+<li><p>微内核结构特点 较高的灵活性和可扩充性 提高了系统的可靠性 【更适合分布式系统】</p>
+</li>
+<li><p>设备忙的 时候不会导致进程终止 比如打印机 Divide 0 的时候会引发异常中断 保留现场 引发中断 </p>
+</li>
+<li><p>当程序从运行态转换为就绪态的时候，处理机现场信息必须保留在进程控制块中 理解为保留现场</p>
+</li>
+<li><p>进程控制块对读者不透明 系统对其进行控制 所以用户不可读</p>
+</li>
+<li><p>申请处理机得不到满足 将进入饥饿状态</p>
+</li>
+<li><p>管程用来解决同步问题  在条件变量上面进行PV操作 w管程不能同时有两个活跃进程</p>
+</li>
+<li><p>PV对共享资源读写的代码段称为临界区</p>
+</li>
+<li><p>在进程同步中 可以对信号量的操作是 初始化信号量 PV操作 不可进行加减</p>
+</li>
+<li><p>进程在得到处理机运行之前 必须将部分装入内存</p>
+</li>
+<li><p>优先使用低地址区的算法是首次适应算法 顺序分配算法 </p>
+</li>
+<li><p>实现页式虚拟存储管理的硬件基础是缺页中断机制</p>
+</li>
+<li><p>空间局部性是指程序代码的顺序性</p>
+</li>
+<li><p>建立文件系统的主要目标是实现文件的按名存取</p>
+</li>
+<li><p>文件的物理结构 ： 顺序结构 索引结构 链接结构</p>
+</li>
+<li><p>close的操作的目的是将文件控制块写入磁盘或者缓存</p>
+</li>
+<li><p>设备分配方案是把资源分配给进程</p>
+</li>
+<li><p>磁盘IO控制主要采用DMA</p>
+</li>
+<li><p>设备分配的主要数据结构以及分配顺序是 ： 系统设备表 -》 设备控制表 -》 控制器控制表</p>
+</li>
+<li><p>操作系统类型 ：批处理 交互式 实时 分布式 个人操作系统 网络操作系统 智能卡操作系统</p>
+</li>
+<li><p>CPU进程优先级和IO没有办法比较</p>
+</li>
+<li><p>进程调度分为高级调度 中级调度 和低级调度</p>
+</li>
+<li><p>任何进程必须通过调度才能运行 </p>
+</li>
+<li><p>交互式系统一般采用时间片轮转的调度方法</p>
+</li>
+<li><p>信号量初值一定大于等于0</p>
+</li>
+<li><p>一个进程变化 如果异步 另外的进程不一定变化 同步的话是一定的</p>
+</li>
+<li><p>进程是资源分配的基本单位 线程是处理机调用的基本单位</p>
+</li>
+<li><p>页表项中 有效位 修改位 访问位</p>
+</li>
+<li><p>文件存储空间的管理办法有：空闲块表 空闲块链表 位示图 成组链接法</p>
+</li>
+<li><p>通道类型 字节多路通道 数据选择通道 数组多路通道</p>
+</li>
+<li><p>死锁的必要条件 资源互斥使用 部分分配资源 不可剥夺 资源申请成为环路</p>
+</li>
+</ul>
+<h1 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a>计算机网络</h1><ul>
+<li><p>协议中 语法 控制信息结构和格式 语义控制时间顺序上的推进</p>
+</li>
+<li><p>万兆网必须的光纤 ae</p>
+</li>
+<li><p>以太网地址 不兼容IPV6</p>
+</li>
+<li><p>CSMA/CD 集线器协议 介质访问控制阀 用于多点共享总线 发送数据需要边侦听边发送</p>
+</li>
+<li><p>802.11采用的是层次结构模型</p>
+</li>
+<li><p>IP协议三个特点 不可靠 面向无连接 尽最大努力</p>
+</li>
+<li><p>B向A直接广播 + 255</p>
+</li>
+<li><p>要求域名服务器系统一次性完成全部名字 - 地址的变换 递归解析</p>
+</li>
+<li><p>SIP使用URL表示用户 可以基于UDP和TCP</p>
+</li>
+<li><p>SIMPLE基于SIP XMPP基于URL</p>
+</li>
+<li><p>社交网络又称社会网络 基于六度分割理论</p>
+</li>
+<li><p>DES是堆成秘钥 NIST制定 也称DEA Rc5算法属于对称加密算法</p>
+</li>
+<li><p>OSI模型 不同节点同等层使用协议通信 同一节点相邻层之间通过接口通信</p>
+</li>
+<li><p>IP路由器功能 转发所受到的IP数据报 为IP数据报选择最佳路径 维护路由表</p>
+</li>
+<li><p>分片爆头和原来数据报中字段 标识和目的地址相同</p>
+</li>
+<li><p>混合式P2P网络包含用户节点 搜索节点 索引节点</p>
+</li>
+<li><p>提高系统解析域名效率 解析从本地域名开始 采用缓存技术</p>
+</li>
+<li><p>Maze 有种子 有积点 混合P2P结构 URL标识文件位置</p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/13/ncre45/" data-id="cjeznrfpk000a1ufyzy6mu2p4" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-ncre44" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/03/12/ncre44/" class="article-date">
@@ -209,7 +349,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/12/ncre44/" data-id="cjezivcod0008yifyyw6idyq0" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/12/ncre44/" data-id="cjeznrfpj00091ufyt19pdaty" class="article-share-link">Share</a>
       
       
     </footer>
@@ -355,7 +495,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/11/ncre43/" data-id="cjezivcoa0006yifywbfywxpt" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/11/ncre43/" data-id="cjeznrfpi00081ufyd81juhl4" class="article-share-link">Share</a>
       
       
     </footer>
@@ -495,7 +635,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/08/ncre42/" data-id="cjezivcoc0007yifyoblib7qg" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/08/ncre42/" data-id="cjeznrfph00071ufysqrwm53u" class="article-share-link">Share</a>
       
       
     </footer>
@@ -670,7 +810,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/08/ncre41/" data-id="cjezivco90005yifyurkrnhh0" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/08/ncre41/" data-id="cjeznrfpg00061ufyvp7q90le" class="article-share-link">Share</a>
       
       
     </footer>
@@ -717,7 +857,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/06/about-docker/" data-id="cjezivcnz0000yifyhajr8lvc" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/06/about-docker/" data-id="cjeznrfp900011ufy7v21s9r6" class="article-share-link">Share</a>
       
       
     </footer>
@@ -786,7 +926,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/04/distributed-system/" data-id="cjezivco30001yify9kbmonjh" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/02/04/distributed-system/" data-id="cjeznrfpc00031ufywvuu2362" class="article-share-link">Share</a>
       
       
     </footer>
@@ -835,7 +975,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/03/test-speed/" data-id="cjezivcor000gyifyn3fkfmlq" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/02/03/test-speed/" data-id="cjeznrfpt000i1ufyz7sszy94" class="article-share-link">Share</a>
       
       
     </footer>
@@ -880,7 +1020,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/02/hello-world/" data-id="cjezivco60003yify0xw2vl1j" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/02/02/hello-world/" data-id="cjeznrfpe00041ufybe8zvhoy" class="article-share-link">Share</a>
       
       
     </footer>
@@ -926,6 +1066,10 @@
       <ul>
         
           <li>
+            <a href="/2018/03/20/autoloader/">自动加载以及Composer的实现</a>
+          </li>
+        
+          <li>
             <a href="/2018/03/20/php-code-4/">PHP代码实现2 [函数角度] 1</a>
           </li>
         
@@ -939,10 +1083,6 @@
         
           <li>
             <a href="/2018/03/20/php-code-1/">PHP代码实现 1 [宏观角度]</a>
-          </li>
-        
-          <li>
-            <a href="/2018/03/19/ncre47/">计算机四级-网络工程 Day7</a>
           </li>
         
       </ul>
