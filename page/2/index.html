@@ -57,7 +57,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="검색"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -67,6 +67,181 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-ncre41" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/08/ncre41/" class="article-date">
+  <time datetime="2018-03-07T16:01:27.000Z" itemprop="datePublished">2018-03-08</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/08/ncre41/">ncre4 网络工程师 day1</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="操作系统"><a href="#操作系统" class="headerlink" title="操作系统"></a>操作系统</h2><ul>
+<li><p>操作系统构造三大方法 ： 整体结构、层次结构、微内核C/S结构</p>
+</li>
+<li><p>批处理系统的优点 作业流程自动化高，资源利用率高 作业吞吐量大  缺点 缺少交互性（批处理不就是交互性差么~）</p>
+</li>
+<li><p>操作系统内核态下运行 -》 屏蔽中断 内核态即管态</p>
+</li>
+<li><p>操作系统提供给用户用于应用程序编程的唯一接口是 系统调用</p>
+</li>
+<li><p>与进程具有一一对应关系的是PCB 进程控制块 （包含进程标识符 进程当前状态 代码起始指针）</p>
+</li>
+<li><p>进程中有线程被调用投入运行，进程运行状态是 运行状态</p>
+</li>
+<li><p>Pthread线程包中</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">pthread_create 创建一个新的进程</span><br><span class="line"></span><br><span class="line">pthread_exit 撤销一个进程</span><br><span class="line"></span><br><span class="line">pthread_join 等待一个特定的线程退出</span><br><span class="line"></span><br><span class="line">pthread_yield 释放CPU来运行另外一个线程 PHP Yield 协程调度有木有</span><br><span class="line"></span><br><span class="line">pthread_attr 线程属性结构相关</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>一定不会引起进程调度的：一个进程从就绪状态变成运行状态</p>
+</li>
+<li><p>P：申请资源 V：释放资源 信号量mutex初值为1 当K个进程在Mutex的等待队列，信号量值为 - k</p>
+</li>
+<li><p>允许动态扩充内存容量的方案：虚拟页式</p>
+</li>
+<li><p>可变分区回收 S:起始地址 L：长度 上邻分区空闲 登记项地址 = S - L 下邻分区空间 S + L</p>
+</li>
+<li><p>页式存储管理方案 虚拟地址空间2GB 页面大小4KB 4字节表示物理页号 2048 / 4 = 512</p>
+</li>
+<li><p>FIFO 页面置换方法有可能产生Belady异常现象</p>
+</li>
+<li><p>LRU 页面置换 最近最少使用：缺页时，置换掉最长时间未被使用的页面</p>
+</li>
+<li><p>LFU 最近不常用： 置换掉被访问次数最少的页面</p>
+</li>
+<li><p>OPT 理想页面置换方法 置换以后不再需要或者最长时间采用的页面</p>
+</li>
+<li><p>NRU 从类编号中最小的非空类中选出一个页面置换掉</p>
+</li>
+<li><p>虚拟存储管理方案 抖动 是页面置换算法不合理导致</p>
+</li>
+<li><p>文件存取方式依赖于 文件的存储结构  存放设备的物理特性</p>
+</li>
+<li><p>文件系统实现文件按名存取是通过 文件目录查找工作完成的</p>
+</li>
+<li><p>打开文件系统调用后 系统会返回fd 文件描述符</p>
+</li>
+<li><p>无分组操作磁盘空间利用率 = 每个逻辑记录长度 / 块大小</p>
+</li>
+<li><p>分组操作利用率 = 块因子 * 每个逻辑记录长度 / 块大小</p>
+</li>
+<li><p>磁盘读写性能 寻道时间main 传输时间 旋转延迟</p>
+</li>
+<li><p>死锁产生原因 资源分配不当 进程推进顺序不当</p>
+</li>
+<li><p>死锁状态一定是不安全状态 安全状态不可能进入死锁状态</p>
+</li>
+<li><p>最多申请资源数 = ceil(资源数 / 进程数)</p>
+</li>
+<li><p>存储设备： 寄存器 高速缓存 内存 硬盘</p>
+</li>
+<li><p>进程从运行状态变为就绪状态： 被调度程序抢占处理机 进程创建完成 时间片用完</p>
+</li>
+<li><p>第一套多选4 很重要 看一下！</p>
+</li>
+<li><p>地址映射通常是硬件完成的 将虚拟地址转化为物理地址</p>
+</li>
+<li><p>块表 存在于高速缓存之中 TLB 切换进程需要刷新块表 对块表的查找内容是并行的</p>
+</li>
+<li><p>FCB 文件控制块 文件名 文件大小 文件创建时间 磁盘起始地址 FD是文件打开之后生成的</p>
+</li>
+<li><p>提升文件系统性能： 块高速缓存 磁盘空间合理分配 磁盘驱动调度</p>
+</li>
+<li><p>设备和CPU数据传送方式 程序直接控制 中断 DMA 通道控制</p>
+</li>
+<li><p>解除死锁的方法 剥夺 撤销 重启</p>
+</li>
+</ul>
+<h2 id="NET-网络"><a href="#NET-网络" class="headerlink" title="NET 网络"></a>NET 网络</h2><ul>
+<li><p>对计算机发展重要影响的广域网 ARPANET</p>
+</li>
+<li><p>TCP 传输控制协议 面向连接 UDP 用户数据报协议 面向非链接</p>
+</li>
+<li><p>网络协议由语法 语义 时序 三要素组成 组织方式为分层 语法是对事件的时序顺序说明</p>
+</li>
+<li><p>OSI参考模型各层功能</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">OSI参考模型共分7层，其内容如下：</span><br><span class="line"></span><br><span class="line">①应用层是OSI中的最高层。应用层确定进程之间通信的性质，以满足用户的需要。</span><br><span class="line"></span><br><span class="line">②表示层主要用于处理两个通信系统中交换信息的表示方式。</span><br><span class="line"></span><br><span class="line">③会话层是在两个结点之间建立端连接。</span><br><span class="line"></span><br><span class="line">④传输层用于常规数据递送(面向连接或无连接)，包括全双工或半双工、流控制和错误恢复服务。</span><br><span class="line"></span><br><span class="line">⑤网络层通过寻址来建立两个结点之间的连接，它包括通过互联网络来路由和中继数据。</span><br><span class="line"></span><br><span class="line">⑥数据链路层将数据分帧，并处理流控制，指定拓扑结构并提供硬件寻址。</span><br><span class="line"></span><br><span class="line">⑦物理层处于OSI参考模型的最底层。它的主要功能是利用物理传输介质为数据链路层提供物理连接，以便透明地传送比特流</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>共享介质局域网 采用一个发送 其他收听 广播数据帧的方式 不可避免冲突 总线型</p>
+</li>
+<li><p>以太网长度字段值不包含前导码 帧前定界符</p>
+</li>
+<li><p>MTU 一个帧最多能携带的数据量</p>
+</li>
+<li><p>IPV6 书写规范</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">表述和书写时，把长度为128个二进制位（bit）的IPv6地址分成8个16位的二进制段、每一个16位的二进制段用4位的16进制数表示，段间用“：”（冒号）隔开（其书写方法和IPv4的十进制数加“.”不同）。</span><br><span class="line">    例如：1000:0000:0000:0000:000A:000B:000C:000D就是每一个16位的二进制数的段用4位16进制数的段来表示、段间用“：”（冒号）隔开的一个IPv6地址；其中：各个4位16进制数的段中的高位0允许省略；因此，上面的IPv6地址也可以缩写成：1000:0:0:0:A:B:C:D。</span><br><span class="line">    为了更进一步简化，IPv6的地址规范中还规定，可以在一个IPv6地址中最多使用一次双冒号（::）来取代IPv6地址中紧密相连的多个全0的16进制数的段（因为如果允许在一个IPv6地址中使用一次以上的双冒号时将无法判断IPv6地址的长度，所以IPv6的地址规范中才规定：在一个IPv6地址中最多只能使用一次双冒号），这样上面的IPv6地址还可以缩写成：1000::A:B:C:D。</span><br><span class="line">    双冒号使用的地点可以在IPv6地址的前面、后面或者是中间；例如：对于1000:0:0:0:A:B:0:0这样的一个IPv6地址，可以写成1000::A:B:0:0，也可以写成1000:0:0:0:A:B::；但是不能写成1000::A:B::。</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>CS模型中 服务器相应客户请求有两种方案 并发服务器方案 重复服务器方案</p>
+</li>
+<li><p>pop3 中 PASS 用户邮箱口令 RETR 请求服务器发送制定编号邮件 STAT 查询报文总数和长度</p>
+</li>
+<li><p>即时通讯最早是以色列 Mirabils 的ICQ 使用P2P 并非CS模式 RFC2778规定了通讯模型</p>
+</li>
+<li><p>SIP工作在应用层 基于SIMPLE XMPP基于JABBER</p>
+</li>
+<li><p>netbios最早在Windows使用 名称可以由19个英文字符组成 限制254个线路</p>
+</li>
+<li><p>NES 采用CS模式</p>
+</li>
+<li><p>全文搜索引擎模块组成 搜索器 检索器 用户接口 索引器</p>
+</li>
+<li><p>X.800 由ITU-T指定 分为被动攻击和主动攻心 提供5类14个安全服务</p>
+</li>
+<li><p>BlowFish 是BS设计的对称分组码 对称加密 分组长度64B 迭代16轮</p>
+</li>
+<li><p>kerberos协议 MIT开发 包含CS 可以产生回话秘钥 基于对称秘钥</p>
+</li>
+<li><p>可信任计算机评估  A -&gt; D 3 -&gt; 1 五级 -&gt; 一级</p>
+</li>
+<li><p>TCP由kahn指定 最底层是主机-网络层 OSI由ISO指定</p>
+</li>
+<li><p>属于无线网络的 WSN WMN ADHOC WLAN BT</p>
+</li>
+<li><p>线路类型：</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">1000BASE-T</span><br><span class="line">1000表示速率为1000Mb\s</span><br><span class="line">BASE表示电缆上是基带信号</span><br><span class="line">T表示双绞线 使用 非屏蔽双绞线</span><br><span class="line">F表示光纤</span><br><span class="line"></span><br><span class="line">TX 两对五类双绞线上的快速以太网</span><br><span class="line"></span><br><span class="line">FX 光纤上的快速以太网 光纤类型可以是单模或者多摸</span><br><span class="line"></span><br><span class="line">SX 多模光纤的短距离链接 最长距离为550M</span><br><span class="line"></span><br><span class="line">CX 运行在同轴电缆上的快速以太网</span><br><span class="line"></span><br><span class="line">LX：用于单模或多模光纤的链接，单模光纤最长距离为10公里，多模光纤距离为550米；</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>RIP协议解决缓慢瘦脸 可以采取 水平分割 毒性逆转 出发刷新 限制最大距离</p>
+</li>
+<li><p>IP服务特点 不可靠 无连接 尽最大努力</p>
+</li>
+<li><p>IP电话中 网关的功能 号码查询 信号调制 路由控制</p>
+</li>
+</ul>
+<p>-</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/08/ncre41/" data-id="cjez38epr0006mgfy7f2gbw16" class="article-share-link">Teilen</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
   
     <article id="post-about-docker" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -105,7 +280,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/06/about-docker/" data-id="cjeyf0a5p0000o2m1aa1mks36" class="article-share-link">공유</a>
+      <a data-url="http://yoursite.com/2018/03/06/about-docker/" data-id="cjez38epm0002mgfyfk92yo5c" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -174,7 +349,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/04/distributed-system/" data-id="cjeyf0a5y0003o2m16ira7pd2" class="article-share-link">공유</a>
+      <a data-url="http://yoursite.com/2018/02/04/distributed-system/" data-id="cjez38epf0000mgfyvxffeaf8" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -223,7 +398,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/03/test-speed/" data-id="cjeyf0a6g000co2m1jdbelc2d" class="article-share-link">공유</a>
+      <a data-url="http://yoursite.com/2018/02/03/test-speed/" data-id="cjez38eq3000emgfyms9ibr86" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -268,7 +443,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/02/hello-world/" data-id="cjeyf0a5w0002o2m1xp7sjo0p" class="article-share-link">공유</a>
+      <a data-url="http://yoursite.com/2018/02/02/hello-world/" data-id="cjez38epk0001mgfyuxueifsk" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -282,7 +457,7 @@
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/">&laquo; 이전</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    <a class="extend prev" rel="prev" href="/">&laquo; zurück</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
   </nav>
 
 </section>
@@ -299,7 +474,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">아카이브</h3>
+    <h3 class="widget-title">Archiv</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li></ul>
     </div>
@@ -309,9 +484,13 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">최근 포스트</h3>
+    <h3 class="widget-title">letzter Beitrag</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/03/20/php-code-1/">PHP代码实现 1</a>
+          </li>
         
           <li>
             <a href="/2018/03/19/ncre47/">计算机四级-网络工程 Day7</a>
@@ -327,10 +506,6 @@
         
           <li>
             <a href="/2018/03/15/shooting/">打靶训练</a>
-          </li>
-        
-          <li>
-            <a href="/2018/03/14/ncre46/">计算机四级-网络工程 Day6</a>
           </li>
         
       </ul>

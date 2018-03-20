@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>PHP代码实现 1 | GTX HOME</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="$PHP-SRC/run-test.php 因为如果在同一个进程中执行， 测试就会停止，后面的测试也将无法执行，php中有很多将脚本隔离的方法比如： system()，exec()等函数，这样可以使用主测试进程服务调度被测脚本和检测测试结果，通过这些外部调用执行测试。 php测试使用了proc_open()函数， 这样就可以保证测试脚本和被测试脚本之间能隔离开。  如果只需要简单的进程单向进程通道">
+<meta property="og:type" content="article">
+<meta property="og:title" content="PHP代码实现 1">
+<meta property="og:url" content="http://yoursite.com/2018/03/20/php-code-1/index.html">
+<meta property="og:site_name" content="GTX HOME">
+<meta property="og:description" content="$PHP-SRC/run-test.php 因为如果在同一个进程中执行， 测试就会停止，后面的测试也将无法执行，php中有很多将脚本隔离的方法比如： system()，exec()等函数，这样可以使用主测试进程服务调度被测脚本和检测测试结果，通过这些外部调用执行测试。 php测试使用了proc_open()函数， 这样就可以保证测试脚本和被测试脚本之间能隔离开。  如果只需要简单的进程单向进程通道">
+<meta property="og:updated_time" content="2018-03-20T03:12:42.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="PHP代码实现 1">
+<meta name="twitter:description" content="$PHP-SRC/run-test.php 因为如果在同一个进程中执行， 测试就会停止，后面的测试也将无法执行，php中有很多将脚本隔离的方法比如： system()，exec()等函数，这样可以使用主测试进程服务调度被测脚本和检测测试结果，通过这些外部调用执行测试。 php测试使用了proc_open()函数， 这样就可以保证测试脚本和被测试脚本之间能隔离开。  如果只需要简单的进程单向进程通道">
+  
+    <link rel="alternate" href="/atom.xml" title="GTX HOME" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">GTX HOME</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">my site!</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-php-code-1" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/20/php-code-1/" class="article-date">
+  <time datetime="2018-03-20T01:20:37.000Z" itemprop="datePublished">2018-03-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      PHP代码实现 1
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="PHP-SRC-run-test-php"><a href="#PHP-SRC-run-test-php" class="headerlink" title="$PHP-SRC/run-test.php"></a>$PHP-SRC/run-test.php</h1><ul>
+<li>因为如果在同一个进程中执行， 测试就会停止，后面的测试也将无法执行，php中有很多将脚本隔离的方法比如： system()，exec()等函数，这样可以使用主测试进程服务调度被测脚本和检测测试结果，通过这些外部调用执行测试。 php测试使用了proc_open()函数， 这样就可以保证测试脚本和被测试脚本之间能隔离开。</li>
+</ul>
+<p>如果只需要简单的进程单向进程通道 可以使用 popen</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">&lt;?php</span><br><span class="line">function foo() &#123;</span><br><span class="line">    echo date(&apos;Y-m-d H:i:s&apos;).&quot;\n&quot;;</span><br><span class="line">    echo shell_exec(&apos;php -r \&apos;sleep(1); echo date(&quot;Y-m-d H:i:s&quot;).&quot; by shell_exec:blocking\n&quot;;\&apos;&apos;);       //阻塞</span><br><span class="line">    $pipe1 =  popen(&apos;php -r \&apos;sleep(2); echo date(&quot;Y-m-d H:i:s&quot;).&quot; by popen1:non-blocking\n&quot;;\&apos;&apos;, &apos;r&apos;);  //非阻塞(管道)</span><br><span class="line">    $pipe2 =  popen(&apos;php -r \&apos;sleep(1); echo date(&quot;Y-m-d H:i:s&quot;).&quot; by popen2:non-blocking\n&quot;;\&apos;&apos;, &apos;r&apos;);  //非阻塞(管道)</span><br><span class="line">    echo date(&apos;Y-m-d H:i:s&apos;).&quot;\n&quot;;</span><br><span class="line">    register_shutdown_function(function() use ($pipe1, $pipe2) &#123; //事件驱动(脚本结束事件),异步回调</span><br><span class="line">        echo stream_get_contents($pipe1); //输出子进程返回的数据</span><br><span class="line">        echo stream_get_contents($pipe2); //输出子进程返回的数据</span><br><span class="line">        pclose($pipe1);</span><br><span class="line">        pclose($pipe2);</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line">foo();</span><br></pre></td></tr></table></figure>
+<p>但是如果需要双方向的功能更多的进程控制 可以使用proc_open()打开新的子进程非阻塞的执行PHP脚本</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">function foo() &#123;</span><br><span class="line">    $proc = proc_open(</span><br><span class="line">    //task.php 内容为 $arr = unserialize(stream_get_contents(STDIN)); $arr[&apos;time&apos;] = date(&apos;Y-m-d H:i:s&apos;, $arr[&apos;time&apos;]); echo serialize($arr);</span><br><span class="line">        &apos;/png/php/5.4.45/bin/php /home/eechen/task.php&apos;,</span><br><span class="line">        array(</span><br><span class="line">            0 =&gt; array(&apos;pipe&apos;,&apos;r&apos;), //stdin (用fwrite写入数据给管道)</span><br><span class="line">            1 =&gt; array(&apos;pipe&apos;,&apos;w&apos;), //stdout(用stream_get_contents获取管道输出)</span><br><span class="line">            2 =&gt; array(&apos;pipe&apos;,&apos;w&apos;), //stderr(用stream_get_contents获取管道输出)</span><br><span class="line">            //2 =&gt; array(&apos;file&apos;,&apos;/tmp/err.txt&apos;,&apos;a&apos;) //stderr(写入到文件)</span><br><span class="line">        ),</span><br><span class="line">        $pipes, //管道(stdin/stdout/stderr)</span><br><span class="line">        &apos;/tmp&apos;, //当前PHP进程的工作目录</span><br><span class="line">        array(&apos;foo&apos; =&gt; &apos;bar&apos;) //php.ini 配置 variables_order = &quot;EGPCS&quot; 其中E表示$_ENV,否则$_ENV输出为空 要执行脚本所需要的环境变量</span><br><span class="line">    );</span><br><span class="line">    //var_dump($pipes); //resource of type (stream)</span><br><span class="line">    if(is_resource($proc)) &#123;</span><br><span class="line">        //stdin</span><br><span class="line">        $stdin = serialize(array(&apos;time&apos; =&gt; time()));</span><br><span class="line">        fwrite($pipes[0], $stdin); //把参数传给脚本task.php</span><br><span class="line">        fclose($pipes[0]); //fclose关闭管道后proc_close才能退出子进程,否则会发生死锁</span><br><span class="line">        register_shutdown_function(function() use($pipes, $proc) &#123; //事件驱动(脚本结束事件),异步回调</span><br><span class="line">            //stdout</span><br><span class="line">            $stdout = stream_get_contents($pipes[1]);</span><br><span class="line">            fclose($pipes[1]);</span><br><span class="line">            //stderr</span><br><span class="line">            $stderr = stream_get_contents($pipes[2]);</span><br><span class="line">            fclose($pipes[2]);</span><br><span class="line">            //exit code (返回进程的终止状态码,如果发生错则返回-1)</span><br><span class="line">            $status = proc_close($proc);</span><br><span class="line">            $data = array(</span><br><span class="line">                &apos;stdout&apos; =&gt; $stdout,</span><br><span class="line">                &apos;stderr&apos; =&gt; $stderr,</span><br><span class="line">                &apos;status&apos; =&gt; $status,</span><br><span class="line">            );</span><br><span class="line">            var_export($data); //echo json_encode($data);</span><br><span class="line">        &#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">foo();</span><br></pre></td></tr></table></figure>
+<h1 id="宏定义-C"><a href="#宏定义-C" class="headerlink" title="宏定义 C"></a>宏定义 C</h1><p>PHP代码中的宏定义包含 # 和 ##</p>
+<p>‘##’代表 连接符 用来把两个语言符号(Token)组合成单个语言符号。 这里的语言符号不一定是宏的变量。并且双井号不能作为第一个或最后一个元素存在。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">#define PHP_FUNCTION            ZEND_FUNCTION</span><br><span class="line">#define ZEND_FUNCTION(name)             ZEND_NAMED_FUNCTION(ZEND_FN(name))</span><br><span class="line">#define ZEND_FN(name) zif_##name</span><br><span class="line">#define ZEND_NAMED_FUNCTION(name)       void name(INTERNAL_FUNCTION_PARAMETERS)</span><br><span class="line">#define INTERNAL_FUNCTION_PARAMETERS int ht, zval *return_value, zval **return_value_ptr, \</span><br></pre></td></tr></table></figure>
+<p>“#”是一种预处理运算符，它的功能是将其后面的宏参数进行 字符串化操作</p>
+<h1 id="PHP中代码的do-while宏"><a href="#PHP中代码的do-while宏" class="headerlink" title="PHP中代码的do-while宏"></a>PHP中代码的do-while宏</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">#define ALLOC_ZVAL(z)                                   \</span><br><span class="line">do &#123;                                                \</span><br><span class="line">    (z) = (zval*)emalloc(sizeof(zval_gc_info));     \</span><br><span class="line">    GC_ZVAL_INIT(z);                                \</span><br><span class="line">&#125; while (0)</span><br></pre></td></tr></table></figure>
+<p>显而易见代码只执行一次，常用用例举例</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#define TEST(a, b)  a++;b++;</span><br><span class="line"> </span><br><span class="line">if (expr)</span><br><span class="line">    TEST(a, b);</span><br><span class="line">else</span><br><span class="line">    do_else();</span><br></pre></td></tr></table></figure>
+<p>如果直接编译会造成if 后面的单句规则被破坏。</p>
+<p>以及需要考虑到平台移植，空操作也使用 do{}while(0)来进行宏定义</p>
+<h1 id="PHP运行时的全局参数-PHP-CORE-GLOBALS"><a href="#PHP运行时的全局参数-PHP-CORE-GLOBALS" class="headerlink" title="PHP运行时的全局参数 PHP CORE GLOBALS"></a>PHP运行时的全局参数 PHP<em> CORE</em> GLOBALS</h1><p>首先会根据ZTS 或者NTS （线程安全） 来有一些变化</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br></pre></td><td class="code"><pre><span class="line">struct _php_core_globals &#123;</span><br><span class="line">        zend_bool magic_quotes_gpc; //  是否对输入的GET/POST/Cookie数据使用自动字符串转义。</span><br><span class="line">        zend_bool magic_quotes_runtime; //是否对运行时从外部资源产生的数据使用自动字符串转义</span><br><span class="line">        zend_bool magic_quotes_sybase;  //   是否采用Sybase形式的自动字符串转义</span><br><span class="line"> </span><br><span class="line">        zend_bool safe_mode;    //  是否启用安全模式</span><br><span class="line"> </span><br><span class="line">        zend_bool allow_call_time_pass_reference;   //是否强迫在函数调用时按引用传递参数 引用传值 值复制传值</span><br><span class="line">        zend_bool implicit_flush;   //是否要求PHP输出层在每个输出块之后自动刷新数据</span><br><span class="line"> </span><br><span class="line">        long output_buffering;  //输出缓冲区大小(字节)</span><br><span class="line"> </span><br><span class="line">        char *safe_mode_include_dir;    //在安全模式下，该组目录和其子目录下的文件被包含时，将跳过UID/GID检查。</span><br><span class="line">        zend_bool safe_mode_gid;    //在安全模式下，默认在访问文件时会做UID比较检查</span><br><span class="line">        zend_bool sql_safe_mode;</span><br><span class="line">        zend_bool enable_dl;    //是否允许使用dl()函数。dl()函数仅在将PHP作为apache模块安装时才有效。</span><br><span class="line"> </span><br><span class="line">        char *output_handler;   // 将所有脚本的输出重定向到一个输出处理函数。</span><br><span class="line"> </span><br><span class="line">        char *unserialize_callback_func;    // 如果解序列化处理器需要实例化一个未定义的类，这里指定的回调函数将以该未定义类的名字作为参数被unserialize()调用，</span><br><span class="line">        long serialize_precision;   //将浮点型和双精度型数据序列化存储时的精度(有效位数)。</span><br><span class="line"> </span><br><span class="line">        char *safe_mode_exec_dir;   //在安全模式下，只有该目录下的可执行程序才允许被执行系统程序的函数执行。</span><br><span class="line"> </span><br><span class="line">        long memory_limit;  //一个脚本所能够申请到的最大内存字节数(可以使用K和M作为单位)。</span><br><span class="line">        long max_input_time;    // 每个脚本解析输入数据(POST, GET, upload)的最大允许时间(秒)。</span><br><span class="line"> </span><br><span class="line">        zend_bool track_errors; //是否在变量$php_errormsg中保存最近一个错误或警告消息。</span><br><span class="line">        zend_bool display_errors;   //是否将错误信息作为输出的一部分显示。</span><br><span class="line">        zend_bool display_startup_errors;   //是否显示PHP启动时的错误。</span><br><span class="line">        zend_bool log_errors;   // 是否在日志文件里记录错误，具体在哪里记录取决于error_log指令</span><br><span class="line">        long      log_errors_max_len;   //设置错误日志中附加的与错误信息相关联的错误源的最大长度。</span><br><span class="line">        zend_bool ignore_repeated_errors;   //   记录错误日志时是否忽略重复的错误信息。</span><br><span class="line">        zend_bool ignore_repeated_source;   //是否在忽略重复的错误信息时忽略重复的错误源。</span><br><span class="line">        zend_bool report_memleaks;  //是否报告内存泄漏。</span><br><span class="line">        char *error_log;    //将错误日志记录到哪个文件中。</span><br><span class="line"> </span><br><span class="line">        char *doc_root; //PHP的”根目录”。</span><br><span class="line">        char *user_dir; //告诉php在使用 /~username 打开脚本时到哪个目录下去找</span><br><span class="line">        char *include_path; //指定一组目录用于require(), include(), fopen_with_path()函数寻找文件。</span><br><span class="line">        char *open_basedir; // 将PHP允许操作的所有文件(包括文件自身)都限制在此组目录列表下。</span><br><span class="line">        char *extension_dir;    //存放扩展库(模块)的目录，也就是PHP用来寻找动态扩展模块的目录。</span><br><span class="line"> </span><br><span class="line">        char *upload_tmp_dir;   // 文件上传时存放文件的临时目录</span><br><span class="line">        long upload_max_filesize;   // 允许上传的文件的最大尺寸。</span><br><span class="line"> </span><br><span class="line">        char *error_append_string;  // 用于错误信息后输出的字符串</span><br><span class="line">        char *error_prepend_string; //用于错误信息前输出的字符串</span><br><span class="line"> </span><br><span class="line">        char *auto_prepend_file;    //指定在主文件之前自动解析的文件名。</span><br><span class="line">        char *auto_append_file; //指定在主文件之后自动解析的文件名。</span><br><span class="line"> </span><br><span class="line">        arg_separators arg_separator;   //PHP所产生的URL中用来分隔参数的分隔符。</span><br><span class="line"> </span><br><span class="line">        char *variables_order;  // PHP注册 Environment, GET, POST, Cookie, Server 变量的顺序。</span><br><span class="line"> </span><br><span class="line">        HashTable rfc1867_protected_variables;  //  RFC1867保护的变量名，在main/rfc1867.c文件中有用到此变量</span><br><span class="line"> </span><br><span class="line">        short connection_status;    //  连接状态，有三个状态，正常，中断，超时</span><br><span class="line">        short ignore_user_abort;    //  是否即使在用户中止请求后也坚持完成整个请求。</span><br><span class="line"> </span><br><span class="line">        unsigned char header_is_being_sent; //  是否头信息正在发送</span><br><span class="line"> </span><br><span class="line">        zend_llist tick_functions;  //  仅在main目录下的php_ticks.c文件中有用到，此处定义的函数在register_tick_function等函数中有用到。</span><br><span class="line"> </span><br><span class="line">        zval *http_globals[6];  // 存放GET、POST、SERVER等信息</span><br><span class="line"> </span><br><span class="line">        zend_bool expose_php;   //  是否展示php的信息</span><br><span class="line"> </span><br><span class="line">        zend_bool register_globals; //  是否将 E, G, P, C, S 变量注册为全局变量。</span><br><span class="line">        zend_bool register_long_arrays; //   是否启用旧式的长式数组(HTTP_*_VARS)。</span><br><span class="line">        zend_bool register_argc_argv;   //  是否声明$argv和$argc全局变量(包含用GET方法的信息)。</span><br><span class="line">        zend_bool auto_globals_jit; //  是否仅在使用到$_SERVER和$_ENV变量时才创建(而不是在脚本一启动时就自动创建)。</span><br><span class="line"> </span><br><span class="line">        zend_bool y2k_compliance;   //是否强制打开2000年适应(可能在非Y2K适应的浏览器中导致问题)。</span><br><span class="line"> </span><br><span class="line">        char *docref_root;  // 如果打开了html_errors指令，PHP将会在出错信息上显示超连接，</span><br><span class="line">        char *docref_ext;   //指定文件的扩展名(必须含有’.&apos;)。</span><br><span class="line"> </span><br><span class="line">        zend_bool html_errors;  //是否在出错信息中使用HTML标记。</span><br><span class="line">        zend_bool xmlrpc_errors;   </span><br><span class="line"> </span><br><span class="line">        long xmlrpc_error_number;</span><br><span class="line"> </span><br><span class="line">        zend_bool activated_auto_globals[8];</span><br><span class="line"> </span><br><span class="line">        zend_bool modules_activated;    //  是否已经激活模块</span><br><span class="line">        zend_bool file_uploads; //是否允许HTTP文件上传。</span><br><span class="line">        zend_bool during_request_startup;   //是否在请求初始化过程中</span><br><span class="line">        zend_bool allow_url_fopen;  //是否允许打开远程文件</span><br><span class="line">        zend_bool always_populate_raw_post_data;    //是否总是生成$HTTP_RAW_POST_DATA变量(原始POST数据)。</span><br><span class="line">        zend_bool report_zend_debug;    //  是否打开zend debug，仅在main/main.c文件中有使用。</span><br><span class="line"> </span><br><span class="line">        int last_error_type;    //  最后的错误类型</span><br><span class="line">        char *last_error_message;   //  最后的错误信息</span><br><span class="line">        char *last_error_file;  //  最后的错误文件</span><br><span class="line">        int  last_error_lineno; //  最后的错误行</span><br><span class="line"> </span><br><span class="line">        char *disable_functions;    //该指令接受一个用逗号分隔的函数名列表，以禁用特定的函数。</span><br><span class="line">        char *disable_classes;  //该指令接受一个用逗号分隔的类名列表，以禁用特定的类。</span><br><span class="line">        zend_bool allow_url_include;    //是否允许include/require远程文件。</span><br><span class="line">        zend_bool exit_on_timeout;  //  超时则退出</span><br><span class="line">#ifdef PHP_WIN32</span><br><span class="line">        zend_bool com_initialized;</span><br><span class="line">#endif</span><br><span class="line">        long max_input_nesting_level;   //最大的嵌套层数</span><br><span class="line">        zend_bool in_user_include;  //是否在用户包含空间</span><br><span class="line"> </span><br><span class="line">        char *user_ini_filename;    //  用户的ini文件名</span><br><span class="line">        long user_ini_cache_ttl;    //  ini缓存过期限制</span><br><span class="line"> </span><br><span class="line">        char *request_order;    //  优先级比variables_order高，在request变量生成时用到，个人觉得是历史遗留问题</span><br><span class="line"> </span><br><span class="line">        zend_bool mail_x_header;    //  仅在ext/standard/mail.c文件中使用，</span><br><span class="line">        char *mail_log;</span><br><span class="line"> </span><br><span class="line">        zend_bool in_error_log;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<h1 id="PHP-生命周期"><a href="#PHP-生命周期" class="headerlink" title="PHP 生命周期"></a>PHP 生命周期</h1><p>PHPINIT 调用模块前的初始化：</p>
+<p>初始化若干全局变量 大都设置为NULL</p>
+<p>初始化若干常量 PHP_Version等</p>
+<p>初始化zend Engine 和 核心组件</p>
+<ul>
+<li>包括内存管理初始化、 全局使用的函数指针初始化（如前面所说的zend_printf等），对PHP源文件进行词法分析、语法分析、 中间代码执行的函数指针的赋值，初始化若干HashTable（比如函数表，常量表等等），为ini文件解析做准备， 为PHP源文件解析做准备，注册内置函数（如strlen、define等），注册标准常量（如E_ALL、TRUE、NULL等）、注册GLOBALS全局变量等。</li>
+</ul>
+<p>解析PHPini到PHP core globals</p>
+<p>全局操作函数初始化</p>
+<p>初始化静态构建的模块和共享模块MINIT 模块初始化 扩展模块的函数初始化 注册常量 定义模块的使用 Web Server启动或者脚本开始执行</p>
+<ul>
+<li>通过php_register_internal_extensions_func函数用来注册静态构建的模块，也就是默认加载的模块， 我们可以将其认为内置模块</li>
+</ul>
+<p>RINIT 模块激活阶段 开始使用模块</p>
+<p>解析</p>
+<p>RSHUTDOWN 停用模块 </p>
+<p>MSHUTDOWN WebServer关闭或者脚本停止使用</p>
+<h1 id="关于扩展重用"><a href="#关于扩展重用" class="headerlink" title="关于扩展重用"></a>关于扩展重用</h1><p>因为PHP的实现是和zend引擎实现紧耦合，所以PHP的扩展并不具有很好的移植性，比如移植到JVM虚拟机，移植到HHVM等，如果实现解耦合，那么扩展的重用将会容易。</p>
+<h1 id="PHP的运行模式"><a href="#PHP的运行模式" class="headerlink" title="PHP的运行模式"></a>PHP的运行模式</h1><p>FastCGI、CGI、SAPI模块形式、嵌入式</p>
+<p>SAPI:Server Application Program Interface</p>
+<p>CGI：“通用网关接口”(Common Gateway Interface)</p>
+<p>FastCGI：long-live 常驻内存型升级版高性能CGI 防止CGI的fork-and-execute模式。</p>
+<h1 id="PHP脚本运行"><a href="#PHP脚本运行" class="headerlink" title="PHP脚本运行"></a>PHP脚本运行</h1><p>目前编程语言可以分为两大类:</p>
+<ul>
+<li><p>第一类是像C/C++， .NET， Java之类的编译型语言， 它们的共性是: 运行之前必须对源代码进行编译，然后运行编译后的目标文件。</p>
+</li>
+<li><p>第二类比如:PHP， Javascript， Ruby， Python这些解释型语言， 他们都无需经过编译即可”运行”，虽然可以理解为直接运行，</p>
+</li>
+</ul>
+<p>PHP完成基本准备工作</p>
+<p>启动PHP以及Zend引擎</p>
+<p>加载注册扩展模块</p>
+<p>Zend引擎进行 </p>
+<p>lex生成的 词法分析：将代码转换为一个个标记token </p>
+<ul>
+<li>很多编程语言都使用lex/yacc或他们的变体(flex/bison)来作为语言的词法语法分析生成器</li>
+</ul>
+<p>语法分析 bison生成 语法分析器</p>
+<p>转换为opcode</p>
+<h4 id="opcode结构体"><a href="#opcode结构体" class="headerlink" title="opcode结构体"></a>opcode结构体</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">struct _zend_op &#123; // 这里是struct实现</span><br><span class="line">    opcode_handler_t handler; // 执行该opcode时调用的处理函数</span><br><span class="line">    znode result;</span><br><span class="line">    znode op1;</span><br><span class="line">    znode op2;</span><br><span class="line">    ulong extended_value; // 脚本执行时候需要的其他信息</span><br><span class="line">    uint lineno;</span><br><span class="line">    zend_uchar opcode;  // opcode代码</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>函数是在编译器遇到echo语句的时候进行编译的函数:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">void zend_do_echo(const znode *arg TSRMLS_DC) &#123;</span><br><span class="line">    zend_op *opline = get_next_op(CG(active_op_array) TSRMLS_CC);</span><br><span class="line">     </span><br><span class="line">    opline-&gt;opcode = ZEND_ECHO;</span><br><span class="line">    </span><br><span class="line">    opline-&gt;op1 = *arg;</span><br><span class="line">    </span><br><span class="line">    SET_UNUSED(opline-&gt;op2);</span><br><span class="line">    </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>编译器遇到print语句的时候进行编译的函数</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">void zend_do_print(znode *result，const znode *arg TSRMLS_DC) &#123;</span><br><span class="line">    zend_op *opline = get_next_op(CG(active_op_array) TSRMLS_CC);</span><br><span class="line"> </span><br><span class="line">    opline-&gt;result.op_type = IS_TMP_VAR;</span><br><span class="line">    </span><br><span class="line">    opline-&gt;result.u.var = get_temporary_variable(CG(active_op_array));</span><br><span class="line">    </span><br><span class="line">    opline-&gt;opcode = ZEND_PRINT;</span><br><span class="line">    </span><br><span class="line">    opline-&gt;op1 = *arg;</span><br><span class="line">    </span><br><span class="line">    SET_UNUSED(opline-&gt;op2);</span><br><span class="line">    </span><br><span class="line">    *result = opline-&gt;result;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>【这里可以看到print和echo的根本区别 print有返回值 echo并没有 两者都是语法结构，返回null也是有返回值！】</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/20/php-code-1/" data-id="cjez38epz000cmgfynevz7cr1" class="article-share-link">Teilen</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/03/19/ncre47/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Älter</strong>
+      <div class="article-nav-title">计算机四级-网络工程 Day7</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archiv</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">letzter Beitrag</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/03/20/php-code-1/">PHP代码实现 1</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/19/ncre47/">计算机四级-网络工程 Day7</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/19/interview-xiaomi/">XiaoMi Interview Log</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/15/eight/">八皇后问题</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/15/shooting/">打靶训练</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 GuoQingZhe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
