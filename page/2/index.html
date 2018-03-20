@@ -68,6 +68,152 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-ncre43" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/11/ncre43/" class="article-date">
+  <time datetime="2018-03-11T02:35:22.000Z" itemprop="datePublished">2018-03-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/11/ncre43/">计算机四级-网络工程 Day3</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="操作系统"><a href="#操作系统" class="headerlink" title="操作系统"></a>操作系统</h1><ul>
+<li><p>现代操作系统：并发性、共享性、随机性</p>
+</li>
+<li><p>组成操作系统的主要部分是：进程线程管理 内存管理 设备管理 文件管理</p>
+</li>
+<li><p>当由用户态转化为内核态 需要使用的指令是访管指令 内核态即管态</p>
+</li>
+<li><p>进程从运行换为阻塞 是需要的数据没有准备好</p>
+</li>
+<li><p>进程共享不能使用PV进行共享</p>
+</li>
+<li><p>已经满的邮件槽不能在申请互斥锁</p>
+</li>
+<li><p>将零碎的空闲区域集中为一个大的空闲区的技术是内存紧缩 页式分配内存利用率高且管理简单</p>
+</li>
+<li><p>第三套 16题 计算公式 块表 1 - 90%</p>
+</li>
+<li><p>决定虚拟内存空间最大容量的要素是计算机位宽</p>
+</li>
+<li><p>文件存储空间的分配单位通常是：数据块</p>
+</li>
+<li><p>电梯算法 扫描算法SCAN</p>
+</li>
+<li><p>Unix中 对文件系统的空闲区管理通常采用成组链接法</p>
+</li>
+<li><p>FAT32采用的是链接结构</p>
+</li>
+<li><p>IO层次结构 用户应用层 设备独立层 设备驱动层 中断处理层</p>
+</li>
+<li><p>解除死锁  剥夺 撤销 重启</p>
+</li>
+<li><p>PCB包含进程标识符 进程当前状态 进程优先级</p>
+</li>
+<li><p>调度算法 交互式操作系统 多级反馈队列（先进先出，时间片流转，可抢占最高级） 时间片流转 高优先级优先</p>
+</li>
+<li><p>Test&amp;Set指令 W=1 返回重新测试 W = 0,设置W = 1 进入临界区</p>
+</li>
+<li><p>页式 段式 段页式可以和虚拟存储技术结合使用</p>
+</li>
+<li><p>虚拟存储系统中，进程的部分程序装入后便可以运行</p>
+</li>
+<li><p>连续结构，索引结构，多级索引结构更适合文件的随机存取</p>
+</li>
+<li><p>提高检索速度，应该将文件进行链接</p>
+</li>
+<li><p>IO程序设备返回准备就绪 可以向输出缓冲区写数据</p>
+</li>
+<li><p>预防死锁 简历SPOOLing系统 一次性分配所有资源 有序分配资源 剥夺 撤销 重启</p>
+</li>
+</ul>
+<h1 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a>计算机网络</h1><ul>
+<li><p>TCPIP模型 提供可靠端到端的层次 传输层</p>
+</li>
+<li><p>无线网状网WMN</p>
+</li>
+<li><p>星型拓扑结构的瓶颈是中心节点，网状拓扑结构复杂，但是可靠性高</p>
+</li>
+<li><p>Unix系统描述 具有分时 多任务 多用户 通用的系统</p>
+</li>
+<li><p>802.3AE 10G 802.3Z 1G 802.3U 802.3 10M</p>
+</li>
+<li><p>以太网 目前地址字段使用的地址长度 48bit</p>
+</li>
+<li><p>IEEE 802模型 在链路层解决介质访问问题 仅仅对于OSI参考模型的访问控制自层和物理层</p>
+</li>
+<li><p>第三套单选42题目 看一下计算方式</p>
+</li>
+<li><p>发现数据报存在错误，应该抛弃该数据报</p>
+</li>
+<li><p>SMTP发送 POP3接受</p>
+</li>
+<li><p>Internet 的DNS服务器使用的逻辑结构是树形结构</p>
+</li>
+<li><p>FTP采用被动式建立数据连接的命令是PASV ABOR是放弃之前的连接</p>
+</li>
+<li><p>CS模型，服务器标示一个特定的服务器通常使用端口号进行标示</p>
+</li>
+<li><p>NFS文件系统由Sun推出 CIFS是Win2000后系统使用</p>
+</li>
+<li><p>NetBIOS名称最多有15个字符 254个通路 4种SMB 使用TCP 139端口</p>
+</li>
+<li><p>P2P理论基础是六度分割</p>
+</li>
+<li><p>Maze是PKU开发的，支持断点续传 支持即时通信和BBS</p>
+</li>
+<li><p>SNMP超越TCPIP 采用轮询和中断 管理者和代理是一对多关系 </p>
+</li>
+<li><p>CMIP由ISO指定，IETF指定SETF 针对OSI模型 采用报告机制</p>
+</li>
+<li><p>AES由NIST指定 对称加密算法 </p>
+</li>
+<li><p>共享式以太网 核心设备是集线器或者交换机</p>
+</li>
+<li><p>无线局域网 可采用直接序列扩频技术 </p>
+</li>
+<li><p>IP物联网特点 隐藏低层物理网络细节 信息可以跨网传输 使用同一的地址描述法 平等的对待每一个网络</p>
+</li>
+<li><p>组播组管理协议IGMP CGMP</p>
+</li>
+<li><p>NVT Telnet 功能是屏蔽不同的系统对键盘解释的差异</p>
+</li>
+<li><p>P2P网络 采用分布式结构化拓扑的 Pastry Tapestry Chord CAN 第三套 17题</p>
+</li>
+<li><p>BT 百宝箱不支持积点机制 PP点点通 百宝箱不支持种子</p>
+</li>
+<li><p>RSA 公钥密码 由罗纳德·李维斯特（Ron Rivest）、阿迪·萨莫尔（Adi Shamir）和伦纳德·阿德曼（Leonard Adleman）</p>
+</li>
+<li><p>认证中心 将公共秘钥和特定实体进行绑定 ITU指定了CA标准 CA不负责管理用户的私钥 </p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/11/ncre43/" data-id="cjezge3zk0006wzfyzhnw4lo1" class="article-share-link">Teilen</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-ncre42" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/03/08/ncre42/" class="article-date">
@@ -198,7 +344,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/08/ncre42/" data-id="cjez7xfr00005srfy819picxv" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/08/ncre42/" data-id="cjezge3zm0007wzfy513qtzkv" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -373,7 +519,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/08/ncre41/" data-id="cjez7xfra000fsrfyc4dcu0in" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/08/ncre41/" data-id="cjezge3zj0005wzfyoknfig0k" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -420,7 +566,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/06/about-docker/" data-id="cjez7xfqp0000srfyydf35sz2" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/06/about-docker/" data-id="cjezge3z80000wzfyrau7okwo" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -489,7 +635,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/04/distributed-system/" data-id="cjez7xfqv0001srfy5xh73eb3" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/04/distributed-system/" data-id="cjezge3zh0003wzfyqhmga0z6" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -538,7 +684,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/03/test-speed/" data-id="cjez7xfr8000dsrfyi7jr1saf" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/03/test-speed/" data-id="cjezge3zw000ewzfysih55oor" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -583,7 +729,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/02/hello-world/" data-id="cjez7xfqx0003srfyady1rc5u" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/02/hello-world/" data-id="cjezge3zd0001wzfy4pxo0yw6" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -629,6 +775,10 @@
       <ul>
         
           <li>
+            <a href="/2018/03/20/php-code-3/">PHP代码实现2 [从变量和数据的角度] 2</a>
+          </li>
+        
+          <li>
             <a href="/2018/03/20/php-code-2/">PHP代码实现2 [从变量和数据的角度] 1</a>
           </li>
         
@@ -642,10 +792,6 @@
         
           <li>
             <a href="/2018/03/19/interview-xiaomi/">XiaoMi Interview Log</a>
-          </li>
-        
-          <li>
-            <a href="/2018/03/15/eight/">八皇后问题</a>
           </li>
         
       </ul>
