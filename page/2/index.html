@@ -57,7 +57,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -67,6 +67,157 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-ncre44" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/12/ncre44/" class="article-date">
+  <time datetime="2018-03-12T01:53:34.000Z" itemprop="datePublished">2018-03-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/12/ncre44/">计算机四级-网络工程 Day4</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="操作系统"><a href="#操作系统" class="headerlink" title="操作系统"></a>操作系统</h1><ul>
+<li><p>单核处理机，进程并发，宏观上同时执行，微观上交替进行，是在同一时段发送，并行，围观宏观上都是同时执行的</p>
+</li>
+<li><p>操作系统组成部分 存储管理 进程线程管理 设备管理 文件管理 用户接口</p>
+</li>
+<li><p>进程控制块PCB 进程状态 进程优先级 输入输出状态 存储器管理</p>
+</li>
+<li><p>进程从等待状态转为就绪状态 唤醒</p>
+</li>
+<li><p>新的进程创建完成之后，控制块被插入到就绪队列之中</p>
+</li>
+<li><p>Fork 分叉方法</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">fork</span><br><span class="line">分叉函数</span><br><span class="line"></span><br><span class="line">计算机程序设计中的分叉函数。返回值： 若成功调用一次则返回两个值，子进程返回0，父进程返回子进程标记；否则，出错返回-1。</span><br><span class="line">fork函数将运行着的程序分成2个（几乎）完全一样的进程，每个进程都启动一个从代码的同一位置开始执行的线程。这两个进程中的线程继续执行，就像是两个用户同时启动了该应用程序的两个副本。</span><br><span class="line">一个现有进程可以调用fork函数创建一个新进程。由fork创建的新进程被称为子进程（child process）。fork函数被调用一次但返回两次。两次返回的唯一区别是子进程中返回0值而父进程中返回子进程ID。</span><br><span class="line">fork返回两次 一次是子进程返回0 一次是父进程返回pid</span><br><span class="line"></span><br><span class="line">子进程是父进程的副本，它将获得父进程数据空间、堆、栈等资源的副本。注意，子进程持有的是上述存储空间的“副本”，这意味着父子进程间不共享这些存储空间。</span><br><span class="line"></span><br><span class="line">fork调用的一个奇妙之处就是它仅仅被调用一次，却能够返回两次，它可能有三种不同的返回值：</span><br><span class="line"></span><br><span class="line">在父进程中，fork返回新创建子进程的进程ID；</span><br><span class="line"></span><br><span class="line">在子进程中，fork返回0；</span><br><span class="line"></span><br><span class="line">如果出现错误，fork返回一个负值。</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>进程并发执行的时候，两个进程需要互相通信大量信息 可以进行共享内存 消息传递过程麻烦，并且数据量不大</p>
+</li>
+<li><p>PV：生产者往缓冲区放产品需要先用P确保缓冲区有空闲槽、消费者需要V确保缓冲区互斥使用</p>
+</li>
+<li><p>满足多道程序设计切设计上最简单 可变分区</p>
+</li>
+<li><p>不考虑高速缓存和快表，进程执行一条指令 页目录 -》 页表 -》 内存块</p>
+</li>
+<li><p>页式存储管理方案，为了提高内存利用率并且减少碎片，页面的划分与页表数量相关，可以找到平衡点</p>
+</li>
+<li><p>为了出现抖动 可以采用工作集算法</p>
+</li>
+<li><p>FCB 文件控制块 最重要的字段是文件名 对于用户来说~</p>
+</li>
+<li><p>文件的逻辑结构是无结构，物理结构有：连续（顺序）结构 链接结构，索引结构</p>
+</li>
+<li><p>SSTF算法平均寻道时间短，但是容易引起饥饿现象</p>
+</li>
+<li><p>键盘是外设的字符设备</p>
+</li>
+<li><p>用户控制外设 用户应用层 -》 设备独立层 -》 设备驱动层 -》 设备硬件</p>
+</li>
+<li><p>资源有序分配法 死锁预防 银行家法 死锁避免</p>
+</li>
+<li><p>设备分配的时候是给予进程所需的资源 不能够创建进程</p>
+</li>
+<li><p>管程解决时间同步关系，在管程内使用的对象 共享数据结构 一组操作过程</p>
+</li>
+<li><p>页式存储管理方案系统中 采用 空闲块链表 位示图 管理空闲内存</p>
+</li>
+<li><p>将内存分为大小为POW（2，n）的内存块 称为页框</p>
+</li>
+<li><p>系统将虚拟地址分为若干页面，大小与页框想通 硬件机制实现逻辑地址到物理地址的动态转换</p>
+</li>
+<li><p>文件的存取控制和保护 ： 存取控制矩阵 用户权限表 口令或密码</p>
+</li>
+<li><p>设备分配应该考虑哪些因素：设备固有属性 设备分配算法 设备分配的安全性 设备独立性</p>
+</li>
+</ul>
+<p><img src="http://ong7eqtw5.bkt.clouddn.com/ositcp.png" alt="Alt text" title="Optional title"></p>
+<ul>
+<li><p>tcp是一种传输层协议 </p>
+</li>
+<li><p>IEEE 802.11G 使用的标准波段是2.4G</p>
+</li>
+<li><p>交换式局域网 核心设备是集线器支持 多节点并发链接 </p>
+</li>
+<li><p>BASET 非屏蔽双绞线 BASESX 多模光纤短距离链接 BASECX 同轴电缆快速以太网 BASELX 单模光纤远距离 多模光纤近距离</p>
+</li>
+</ul>
+<h3 id="以太网帧结构"><a href="#以太网帧结构" class="headerlink" title="以太网帧结构"></a>以太网帧结构</h3><p>以太网帧结构</p>
+<p>字段    字段长度（字节）    目的</p>
+<p>前导码（Preamble）    7    同步</p>
+<p>帧开始符（SFD)    1    标明下一个字节为目的MAC字段</p>
+<p>目的MAC地址    6    指明帧的接受者</p>
+<p>源MAC地址    6    指明帧的发送者</p>
+<p>长度（Length）    2    帧的数据字段的长度（长度或类型）</p>
+<p>类型（Type）    2    帧中数据的协议类型（长度或类型）</p>
+<p>数据和填充（Data and Pad）注    46~1500    高层的数据，通常为3层协议数据单元。对于TCP/IP是IP数据包</p>
+<p>帧校验序列（FCS）    4    对接收网卡提供判断是否传输错误的一种方法，如果发现错误，丢弃此帧</p>
+<p>帧长度 64-1518</p>
+<ul>
+<li><p>第四套41题了解一下</p>
+</li>
+<li><p>有限广播地址也称为本地广播地址，TCP/IP协议规定32字节全为1的IP地址（255.255.255.255）用于本网广播。</p>
+</li>
+<li><p>集线器采用CSMA/CD协议 对收到的信号进行整形放大 扩大网络传输距离</p>
+</li>
+<li><p>负责数据报分片充足的是目的主机</p>
+</li>
+<li><p>分布式非结构化P2P网络 采用洪泛方式进行搜索</p>
+</li>
+<li><p>FTP下载图片采用二进制方式</p>
+</li>
+<li><p>RFC2778 规定了IM的主要功能</p>
+</li>
+<li><p>IM文件传输包含服务器中转模式 P2P传输模式</p>
+</li>
+<li><p>XMPP基于Jabber Simple基于SIP</p>
+</li>
+<li><p>NFS是SUN公司开发 用于访问远程文件系统</p>
+</li>
+<li><p>Maze使用心跳服务器 支持多点下载</p>
+</li>
+<li><p>网络管理模型 集中式和分布式各有千秋 代理程序运行在被管理设备 管理者-代理模型</p>
+</li>
+<li><p>SNMP由IETF指定 V1安全性交叉 支持中断和轮询 以及包含两者的Trap方式</p>
+</li>
+<li><p>MIB由代理软件更新</p>
+</li>
+<li><p>网络安全等级 由NCSC制定 X.800 由ITU-T制定 国际电信联盟 安全服务 五类14个</p>
+</li>
+<li><p>总线型以太网 核心连接设备集线器 采用随机争用型 CSMA/CD 不支持全双工 使用广播的形式发送 </p>
+</li>
+<li><p>802.11网络结构 端站是有无线网卡的用户节点 </p>
+</li>
+<li><p>KDC保存用户的秘密秘钥 是独立的可信实体</p>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/12/ncre44/" data-id="cjezivcod0008yifyyw6idyq0" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
   
     <article id="post-ncre43" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -204,7 +355,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/11/ncre43/" data-id="cjezge3zk0006wzfyzhnw4lo1" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/11/ncre43/" data-id="cjezivcoa0006yifywbfywxpt" class="article-share-link">Share</a>
       
       
     </footer>
@@ -344,7 +495,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/08/ncre42/" data-id="cjezge3zm0007wzfy513qtzkv" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/08/ncre42/" data-id="cjezivcoc0007yifyoblib7qg" class="article-share-link">Share</a>
       
       
     </footer>
@@ -519,7 +670,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/08/ncre41/" data-id="cjezge3zj0005wzfyoknfig0k" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/08/ncre41/" data-id="cjezivco90005yifyurkrnhh0" class="article-share-link">Share</a>
       
       
     </footer>
@@ -566,7 +717,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/06/about-docker/" data-id="cjezge3z80000wzfyrau7okwo" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/03/06/about-docker/" data-id="cjezivcnz0000yifyhajr8lvc" class="article-share-link">Share</a>
       
       
     </footer>
@@ -635,7 +786,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/04/distributed-system/" data-id="cjezge3zh0003wzfyqhmga0z6" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/04/distributed-system/" data-id="cjezivco30001yify9kbmonjh" class="article-share-link">Share</a>
       
       
     </footer>
@@ -684,7 +835,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/03/test-speed/" data-id="cjezge3zw000ewzfysih55oor" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/03/test-speed/" data-id="cjezivcor000gyifyn3fkfmlq" class="article-share-link">Share</a>
       
       
     </footer>
@@ -729,7 +880,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/02/hello-world/" data-id="cjezge3zd0001wzfy4pxo0yw6" class="article-share-link">Teilen</a>
+      <a data-url="http://yoursite.com/2018/02/02/hello-world/" data-id="cjezivco60003yify0xw2vl1j" class="article-share-link">Share</a>
       
       
     </footer>
@@ -743,7 +894,7 @@
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/">&laquo; zurück</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    <a class="extend prev" rel="prev" href="/">&laquo; Prev</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
   </nav>
 
 </section>
@@ -760,7 +911,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archiv</h3>
+    <h3 class="widget-title">Archives</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li></ul>
     </div>
@@ -770,9 +921,13 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">letzter Beitrag</h3>
+    <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/03/20/php-code-4/">PHP代码实现2 [函数角度] 1</a>
+          </li>
         
           <li>
             <a href="/2018/03/20/php-code-3/">PHP代码实现2 [从变量和数据的角度] 2</a>
@@ -788,10 +943,6 @@
         
           <li>
             <a href="/2018/03/19/ncre47/">计算机四级-网络工程 Day7</a>
-          </li>
-        
-          <li>
-            <a href="/2018/03/19/interview-xiaomi/">XiaoMi Interview Log</a>
           </li>
         
       </ul>
