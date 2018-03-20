@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>MySQL 事务处理 | GTX HOME</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="#MySQL 事务 事务是为了控制并发并且保护数据完整性的一种解决办法事务四要素 ACID1、原子性（Atomicity）：事务开始后所有操作，要么全部做完，要么全部不做，不可能停滞在中间环节。事务执行过程中出错，会回滚到事务开始前的状态，所有的操作就像没有发生一样。也就是说事务是一个不可分割的整体，就像化学中学过的原子，是物质构成的基本单位。 2、一致性（Consistency）：事务开始前和结">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MySQL 事务处理">
+<meta property="og:url" content="http://yoursite.com/2018/03/20/mysql-acid/index.html">
+<meta property="og:site_name" content="GTX HOME">
+<meta property="og:description" content="#MySQL 事务 事务是为了控制并发并且保护数据完整性的一种解决办法事务四要素 ACID1、原子性（Atomicity）：事务开始后所有操作，要么全部做完，要么全部不做，不可能停滞在中间环节。事务执行过程中出错，会回滚到事务开始前的状态，所有的操作就像没有发生一样。也就是说事务是一个不可分割的整体，就像化学中学过的原子，是物质构成的基本单位。 2、一致性（Consistency）：事务开始前和结">
+<meta property="og:updated_time" content="2018-03-20T13:21:05.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="MySQL 事务处理">
+<meta name="twitter:description" content="#MySQL 事务 事务是为了控制并发并且保护数据完整性的一种解决办法事务四要素 ACID1、原子性（Atomicity）：事务开始后所有操作，要么全部做完，要么全部不做，不可能停滞在中间环节。事务执行过程中出错，会回滚到事务开始前的状态，所有的操作就像没有发生一样。也就是说事务是一个不可分割的整体，就像化学中学过的原子，是物质构成的基本单位。 2、一致性（Consistency）：事务开始前和结">
+  
+    <link rel="alternate" href="/atom.xml" title="GTX HOME" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">GTX HOME</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">my site!</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSSフィード"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="検索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-mysql-acid" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/20/mysql-acid/" class="article-date">
+  <time datetime="2018-03-20T12:53:40.000Z" itemprop="datePublished">2018-03-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      MySQL 事务处理
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>#MySQL 事务</p>
+<h3 id="事务是为了控制并发并且保护数据完整性的一种解决办法"><a href="#事务是为了控制并发并且保护数据完整性的一种解决办法" class="headerlink" title="事务是为了控制并发并且保护数据完整性的一种解决办法"></a>事务是为了控制并发并且保护数据完整性的一种解决办法</h3><h2 id="事务四要素-ACID"><a href="#事务四要素-ACID" class="headerlink" title="事务四要素 ACID"></a>事务四要素 ACID</h2><p>1、原子性（Atomicity）：事务开始后所有操作，要么全部做完，要么全部不做，不可能停滞在中间环节。事务执行过程中出错，会回滚到事务开始前的状态，所有的操作就像没有发生一样。也就是说事务是一个不可分割的整体，就像化学中学过的原子，是物质构成的基本单位。</p>
+<p>2、一致性（Consistency）：事务开始前和结束后，数据库的完整性约束没有被破坏 。比如A向B转账，不可能A扣了钱，B却没收到。</p>
+<p>3、隔离性（Isolation）：同一时间，只允许一个事务请求同一数据，不同的事务之间彼此没有任何干扰。比如A正在从一张银行卡中取钱，在A取钱的过程结束前，B不能向这张卡转账。</p>
+<p>4、持久性（Durability）：事务完成后，事务对数据库的所有更新将被保存到数据库，不能回滚。</p>
+<h2 id="事务的问题"><a href="#事务的问题" class="headerlink" title="事务的问题"></a>事务的问题</h2><p>1、脏读：事务A读取了事务B更新的数据，然后B回滚操作，那么A读取到的数据是脏数据</p>
+<p>2、不可重复读：事务 A 多次读取同一数据，事务 B 在事务A多次读取的过程中，对数据作了更新并提交，导致事务A多次读取同一数据时，结果 不一致。</p>
+<p>3、幻读：系统管理员A将数据库中所有学生的成绩从具体分数改为ABCDE等级，但是系统管理员B就在这个时候插入了一条具体分数的记录，当系统管理员A改结束后发现还有一条记录没有改过来，就好像发生了幻觉一样，这就叫幻读。</p>
+<h2 id="数据的范式"><a href="#数据的范式" class="headerlink" title="数据的范式"></a>数据的范式</h2><p>1NF 原子性 字段不可再分</p>
+<p>2NF 唯一性 字段唯一</p>
+<p>3NF 冗余性 字段不可由其他字段派生</p>
+<h2 id="MYSQL事务隔离级别"><a href="#MYSQL事务隔离级别" class="headerlink" title="MYSQL事务隔离级别"></a>MYSQL事务隔离级别</h2><table><br>  <tr><br>    <th>事务隔离级别</th><br>    <th>脏读</th><br>    <th>不可重复读</th><br>    <th>幻读</th><br>  </tr><br>  <tr><br>    <td bgcolor="#eeeeee">读未提交（read-uncommitted）</td><br>    <td> 是  </td><br>    <td> 是  </td><br>    <td> 是  </td><br>  </tr><br>  <tr><br>    <td bgcolor="#eeeeee">读提交（read-committed）</td><br>    <td> 否  </td><br>    <td> 是  </td><br>    <td> 是  </td><br>  </tr><tr><br>    <td bgcolor="#eeeeee">可重复读（repeatable-read）</td><br>    <td> 否  </td><br>    <td> 否  </td><br>    <td> 是  </td><br>  </tr><br>  <tr><br>    <td bgcolor="#eeeeee">串行化（serializable）</td><br>    <td> 否  </td><br>    <td> 否  </td><br>    <td> 否  </td><br>  </tr><br></table>
+
+<h2 id="PS"><a href="#PS" class="headerlink" title="PS"></a>PS</h2><p>1、SQL规范所规定的标准，不同的数据库具体的实现可能会有些差异</p>
+<p>2、mysql中默认事务隔离级别是可重复读时并不会锁住读取到的行</p>
+<p>3、事务隔离级别为读提交时，写数据只会锁住相应的行</p>
+<p>4、事务隔离级别为可重复读时，写数据会锁住整张表</p>
+<p>5、事务隔离级别为串行化时，读写数据都会锁住整张表</p>
+<p>6、隔离级别越高，越能保证数据的完整性和一致性，但是对并发性能的影响也越大，鱼和熊掌不可兼得。对于多数应用程序，可以优先考虑把数据库系统的隔离级别设为Read Committed，它能够避免脏读取，而且具有较好的并发性能。尽管它会导致不可重复读、幻读这些并发问题，在可能出现这类问题的个别场合，可以由应用程序采用悲观锁或乐观锁来控制。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/20/mysql-acid/" data-id="cjezouano00034sfyo2rivo2q" class="article-share-link">共有</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/03/20/autoloader/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前の記事</strong>
+      <div class="article-nav-title">自动加载以及Composer的实现</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">アーカイブ</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最近の投稿</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/03/20/mysql-acid/">MySQL 事务处理</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/20/autoloader/">自动加载以及Composer的实现</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/20/php-code-4/">PHP代码实现2 [函数角度] 1</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/20/php-code-3/">PHP代码实现2 [从变量和数据的角度] 2</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/20/php-code-2/">PHP代码实现2 [从变量和数据的角度] 1</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 GuoQingZhe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

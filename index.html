@@ -55,9 +55,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSSフィード"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="検索"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -67,6 +67,61 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-mysql-acid" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/20/mysql-acid/" class="article-date">
+  <time datetime="2018-03-20T12:53:40.000Z" itemprop="datePublished">2018-03-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/20/mysql-acid/">MySQL 事务处理</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>#MySQL 事务</p>
+<h3 id="事务是为了控制并发并且保护数据完整性的一种解决办法"><a href="#事务是为了控制并发并且保护数据完整性的一种解决办法" class="headerlink" title="事务是为了控制并发并且保护数据完整性的一种解决办法"></a>事务是为了控制并发并且保护数据完整性的一种解决办法</h3><h2 id="事务四要素-ACID"><a href="#事务四要素-ACID" class="headerlink" title="事务四要素 ACID"></a>事务四要素 ACID</h2><p>1、原子性（Atomicity）：事务开始后所有操作，要么全部做完，要么全部不做，不可能停滞在中间环节。事务执行过程中出错，会回滚到事务开始前的状态，所有的操作就像没有发生一样。也就是说事务是一个不可分割的整体，就像化学中学过的原子，是物质构成的基本单位。</p>
+<p>2、一致性（Consistency）：事务开始前和结束后，数据库的完整性约束没有被破坏 。比如A向B转账，不可能A扣了钱，B却没收到。</p>
+<p>3、隔离性（Isolation）：同一时间，只允许一个事务请求同一数据，不同的事务之间彼此没有任何干扰。比如A正在从一张银行卡中取钱，在A取钱的过程结束前，B不能向这张卡转账。</p>
+<p>4、持久性（Durability）：事务完成后，事务对数据库的所有更新将被保存到数据库，不能回滚。</p>
+<h2 id="事务的问题"><a href="#事务的问题" class="headerlink" title="事务的问题"></a>事务的问题</h2><p>1、脏读：事务A读取了事务B更新的数据，然后B回滚操作，那么A读取到的数据是脏数据</p>
+<p>2、不可重复读：事务 A 多次读取同一数据，事务 B 在事务A多次读取的过程中，对数据作了更新并提交，导致事务A多次读取同一数据时，结果 不一致。</p>
+<p>3、幻读：系统管理员A将数据库中所有学生的成绩从具体分数改为ABCDE等级，但是系统管理员B就在这个时候插入了一条具体分数的记录，当系统管理员A改结束后发现还有一条记录没有改过来，就好像发生了幻觉一样，这就叫幻读。</p>
+<h2 id="数据的范式"><a href="#数据的范式" class="headerlink" title="数据的范式"></a>数据的范式</h2><p>1NF 原子性 字段不可再分</p>
+<p>2NF 唯一性 字段唯一</p>
+<p>3NF 冗余性 字段不可由其他字段派生</p>
+<h2 id="MYSQL事务隔离级别"><a href="#MYSQL事务隔离级别" class="headerlink" title="MYSQL事务隔离级别"></a>MYSQL事务隔离级别</h2><table><br>  <tr><br>    <th>事务隔离级别</th><br>    <th>脏读</th><br>    <th>不可重复读</th><br>    <th>幻读</th><br>  </tr><br>  <tr><br>    <td bgcolor="#eeeeee">读未提交（read-uncommitted）</td><br>    <td> 是  </td><br>    <td> 是  </td><br>    <td> 是  </td><br>  </tr><br>  <tr><br>    <td bgcolor="#eeeeee">读提交（read-committed）</td><br>    <td> 否  </td><br>    <td> 是  </td><br>    <td> 是  </td><br>  </tr><tr><br>    <td bgcolor="#eeeeee">可重复读（repeatable-read）</td><br>    <td> 否  </td><br>    <td> 否  </td><br>    <td> 是  </td><br>  </tr><br>  <tr><br>    <td bgcolor="#eeeeee">串行化（serializable）</td><br>    <td> 否  </td><br>    <td> 否  </td><br>    <td> 否  </td><br>  </tr><br></table>
+
+<h2 id="PS"><a href="#PS" class="headerlink" title="PS"></a>PS</h2><p>1、SQL规范所规定的标准，不同的数据库具体的实现可能会有些差异</p>
+<p>2、mysql中默认事务隔离级别是可重复读时并不会锁住读取到的行</p>
+<p>3、事务隔离级别为读提交时，写数据只会锁住相应的行</p>
+<p>4、事务隔离级别为可重复读时，写数据会锁住整张表</p>
+<p>5、事务隔离级别为串行化时，读写数据都会锁住整张表</p>
+<p>6、隔离级别越高，越能保证数据的完整性和一致性，但是对并发性能的影响也越大，鱼和熊掌不可兼得。对于多数应用程序，可以优先考虑把数据库系统的隔离级别设为Read Committed，它能够避免脏读取，而且具有较好的并发性能。尽管它会导致不可重复读、幻读这些并发问题，在可能出现这类问题的个别场合，可以由应用程序采用悲观锁或乐观锁来控制。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/20/mysql-acid/" data-id="cjezouano00034sfyo2rivo2q" class="article-share-link">共有</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
   
     <article id="post-autoloader" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -141,7 +196,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/20/autoloader/" data-id="cjeznrfp600001ufy4uf0rq1q" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/20/autoloader/" data-id="cjezouanh00004sfyb7l5vv0q" class="article-share-link">共有</a>
       
       
     </footer>
@@ -189,7 +244,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/20/php-code-4/" data-id="cjeznrfpo000d1ufyskvq0ukc" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/20/php-code-4/" data-id="cjezouao1000e4sfyzlkl1ns0" class="article-share-link">共有</a>
       
       
     </footer>
@@ -282,7 +337,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/20/php-code-3/" data-id="cjeznrfpq000f1ufyjm6ph4st" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/20/php-code-3/" data-id="cjezouao4000h4sfyyltoxhfg" class="article-share-link">共有</a>
       
       
     </footer>
@@ -365,7 +420,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/20/php-code-2/" data-id="cjeznrfpp000e1ufypmqjq5dd" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/20/php-code-2/" data-id="cjezouao2000f4sfyaxj8k1ju" class="article-share-link">共有</a>
       
       
     </footer>
@@ -464,7 +519,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/20/php-code-1/" data-id="cjeznrfpt000h1ufyuoyuifz4" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/20/php-code-1/" data-id="cjezouao3000g4sfykew13lga" class="article-share-link">共有</a>
       
       
     </footer>
@@ -582,7 +637,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/19/ncre47/" data-id="cjeznrfpl000b1ufyvdydfy8o" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/19/ncre47/" data-id="cjezouany000c4sfyuorxkaic" class="article-share-link">共有</a>
       
       
     </footer>
@@ -637,7 +692,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/19/interview-xiaomi/" data-id="cjeznrfpf00051ufymz3d4blv" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/19/interview-xiaomi/" data-id="cjezouans00074sfywfvmjj3t" class="article-share-link">共有</a>
       
       
     </footer>
@@ -687,7 +742,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/15/eight/" data-id="cjeznrfpb00021ufyuymzk7j5" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/15/eight/" data-id="cjezouanm00024sfyepacdznr" class="article-share-link">共有</a>
       
       
     </footer>
@@ -731,154 +786,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/15/shooting/" data-id="cjeznrfpr000g1ufym0lnmmjz" class="article-share-link">Share</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-ncre46" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/14/ncre46/" class="article-date">
-  <time datetime="2018-03-14T02:19:06.000Z" itemprop="datePublished">2018-03-14</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/14/ncre46/">计算机四级-网络工程 Day6</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="操作系统"><a href="#操作系统" class="headerlink" title="操作系统"></a>操作系统</h1><ul>
-<li><p>配置操作系统的目的是提高计算机系统资源的利用率</p>
-</li>
-<li><p>使进程从阻塞态转换为挂起的原语是 suspend</p>
-</li>
-<li><p>pthread_mutex_init() 表示创建一个互斥量 pthread_mutex_unlock表示释放一个互斥量</p>
-</li>
-<li><p>直接通信中  系统提供的发送原语是 send(receiver, message)</p>
-</li>
-<li><p>源代码-》 编译 -》目标文件.obj -》 链接 -》 可执行文件exe</p>
-</li>
-<li><p>进程交换是指将暂时不用的进程代码、数据等交换到磁盘</p>
-</li>
-<li><p>cpu 3% 磁盘 97% 此时磁盘较忙 cpu大部分资源都给了硬盘</p>
-</li>
-<li><p>为了提高内存利用率 可以根据需要采用多种不同大小的页面</p>
-</li>
-<li><p>时间局部性 大量循环 空间局部性 程序代码的顺序性</p>
-</li>
-<li><p>多级树形目录 复杂化了文件管理 对于用户来说 解决了文件重名的问题</p>
-</li>
-<li><p>最适合磁带的文件物理结构是 顺序结构</p>
-</li>
-<li><p>第六套23题了解一下 </p>
-</li>
-</ul>
-<p>柱面号=逻辑块号 / （每个柱面扇区数 * 磁盘结构盘面数） </p>
-<p>磁头号=逻辑块号 mod （每个柱面扇区数 * 磁盘结构盘面数） / 扇区数</p>
-<p>扇区号=逻辑块号 mod （每个柱面扇区数 * 磁盘结构盘面数）mod 扇区数</p>
-<ul>
-<li><p>第六套25题了解一下</p>
-</li>
-<li><p>键盘控制方式采用中断方式</p>
-</li>
-<li><p>设备独立层的作用 屏蔽IO设备驱动多样性 </p>
-</li>
-<li><p>进程控制块必须常驻内存</p>
-</li>
-<li><p>信号量初始化之后 只能实施PV原语操作</p>
-</li>
-<li><p>引入虚拟页式存储管理系统 会出现  页面都懂 belady异常 缺页中断  页面写错误</p>
-</li>
-<li><p>文件控制块：文件大小 文件创建时间 文件拥有者 文件访问权限</p>
-</li>
-<li><p>Spooling系统主要组成成分 输入井和输出井 输入缓冲区和输出缓冲区  输入进程和输出进程</p>
-</li>
-<li><p>死锁产生条件 进程推进不当 资源分配不当 产生环路是死锁的必要条件</p>
-</li>
-</ul>
-<h1 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a>计算机网络</h1><ul>
-<li><p>计算机网络是联网的自制计算机集合</p>
-</li>
-<li><p>EtherNet以太网数据帧长度最大1500B  64-1518B</p>
-</li>
-<li><p>跳频扩频可以使用2.4Ghz的ISM频段</p>
-</li>
-<li><p>CSMA/CA是一种介质访问控制方法 重发之前需要等待一段时间</p>
-</li>
-<li><p>IP 不靠谱 面向无连接 尽最大努力</p>
-</li>
-<li><p>多设备用一个IP NAT设备应该采用的工作模式 NAPT</p>
-</li>
-<li><p>POP3发送协议中 STAT查询报文总数和长度 PETR请求服务器发送指定编号的邮件 QUIT删除指定邮件</p>
-</li>
-<li><p>P2P网络：</p>
-</li>
-</ul>
-<p>集中式、分布式结构化、分布式非结构化、混合式</p>
-<p>集中式服务器存储目录和索引信息</p>
-<p>分布式非结构化网络通常使用完全随机图 </p>
-<p>分布式结构化网络通常采用分布式散列表</p>
-<ul>
-<li>SIP</li>
-</ul>
-<p>消息通常分为2类 </p>
-<p>起始行分为请求行和状态行</p>
-<p>消息头和消息体通过CRLF分割</p>
-<p>请求消息分为6中类型</p>
-<p>只有发送方发送Invite</p>
-<ul>
-<li>XMPP</li>
-</ul>
-<p>实体地址称为JID</p>
-<ul>
-<li>NetBIOS协议 </li>
-</ul>
-<p>名称15字符 </p>
-<p>话路数量 254</p>
-<p>4种SMB</p>
-<ul>
-<li>SNMP</li>
-</ul>
-<p>类似一个CMIS 轮询 中断 trap</p>
-<p>CMIP 终端用户负担轻</p>
-<ul>
-<li>802.11帧结构 </li>
-</ul>
-<p>帧控制字段长度2字节</p>
-<p>数据部分长度可变</p>
-<p>采用CRC效验</p>
-<ul>
-<li><p>IPV6注意事项：先导0可以省略 后导0不可以省略</p>
-</li>
-<li><p>服务器相应并发请求可以使用并发服务器或者重复服务器方案</p>
-</li>
-<li><p>Web服务采用CS BS工作模式</p>
-</li>
-<li><p>C1级别描述 数据保护以用户组为单位 用户和数据分离 比C2安全性低</p>
-</li>
-</ul>
-<p>橘皮书安全等级：桔皮书将计算机安全由低到高分为四类七级：D1、C1、C2、B1、B2、B3、A1。其中D1级是不具备最低安全限度的等级，C1和C2级是具备最低安全限度的等级，B1和B2级是具有中等安全保护能力的等级，B3和A1属于最高安全等级</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/14/ncre46/" data-id="cjeznrfpn000c1ufys1sorv4g" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/15/shooting/" data-id="cjezouao5000i4sfypqrpc16r" class="article-share-link">共有</a>
       
       
     </footer>
@@ -892,7 +800,7 @@
 
   <nav id="page-nav">
     
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">次へ &raquo;</a>
   </nav>
 
 </section>
@@ -909,7 +817,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">アーカイブ</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li></ul>
     </div>
@@ -919,9 +827,13 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">最近の投稿</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/03/20/mysql-acid/">MySQL 事务处理</a>
+          </li>
         
           <li>
             <a href="/2018/03/20/autoloader/">自动加载以及Composer的实现</a>
@@ -937,10 +849,6 @@
         
           <li>
             <a href="/2018/03/20/php-code-2/">PHP代码实现2 [从变量和数据的角度] 1</a>
-          </li>
-        
-          <li>
-            <a href="/2018/03/20/php-code-1/">PHP代码实现 1 [宏观角度]</a>
           </li>
         
       </ul>
