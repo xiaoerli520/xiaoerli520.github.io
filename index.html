@@ -57,7 +57,7 @@
         
           <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -82,7 +82,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/20/php-code-2/">PHP代码实现2 [从变量和数据的角度]</a>
+      <a class="article-title" href="/2018/03/20/php-code-2/">PHP代码实现2 [从变量和数据的角度] 1</a>
     </h1>
   
 
@@ -122,11 +122,26 @@
 <p>PHP的对象只有在运行时才会被创建，前面的章节介绍了EG宏，这是一个全局结构体用于保存在运行时的数据。 其中就包括了用来保存所有被创建的对象的对象池</p>
 <p>而object对象值内容的zend_object_handle域就是当前 对象在对象池中所在的索引，handlers字段则是将对象进行操作时的处理函数保存起来。 这个结构体及对象相关的类的结构_zend_class_entry，将在第五章作详细介绍</p>
 <h3 id="PHP-HashTable实现"><a href="#PHP-HashTable实现" class="headerlink" title="PHP HashTable实现"></a>PHP HashTable实现</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">typedef struct _hashtable &#123; </span><br><span class="line">    uint nTableSize;        // hash Bucket的大小，最小为8，以2x增长。</span><br><span class="line">    uint nTableMask;        // nTableSize-1 ， 索引取值的优化</span><br><span class="line">    uint nNumOfElements;    // hash Bucket中当前存在的元素个数，count()函数会直接返回此值 </span><br><span class="line">    ulong nNextFreeElement; // 下一个数字索引的位置</span><br><span class="line">    Bucket *pInternalPointer;   // 当前遍历的指针（foreach比for快的原因之一）</span><br><span class="line">    Bucket *pListHead;          // 存储数组头元素指针</span><br><span class="line">    Bucket *pListTail;          // 存储数组尾元素指针</span><br><span class="line">    Bucket **arBuckets;         // 存储hash数组</span><br><span class="line">    dtor_func_t pDestructor;    // 在删除元素时执行的回调函数，用于资源的释放</span><br><span class="line">    zend_bool persistent;       //指出了Bucket内存分配的方式。如果persisient为TRUE，则使用操作系统本身的内存分配函数为Bucket分配内存，否则使用PHP的内存分配函数。</span><br><span class="line">    unsigned char nApplyCount; // 标记当前hash Bucket被递归访问的次数（防止多次递归）</span><br><span class="line">    zend_bool bApplyProtection;// 标记当前hash桶允许不允许多次访问，不允许时，最多只能递归3次</span><br><span class="line">#if ZEND_DEBUG</span><br><span class="line">    int inconsistent;</span><br><span class="line">#endif</span><br><span class="line">&#125; HashTable;</span><br></pre></td></tr></table></figure>
+<p>PS：mask的作用就是将哈希值映射到槽位所能存储的索引范围内。 例如：某个key的索引值是21， 哈希表的大小为8，则mask为7，则求与时的二进制表示为： 10101 &amp; 111 = 101 也就是十进制的5。 因为2的整数次方-1的二进制比较特殊：后面N位的值都是1，这样比较容易能将值进行映射， 如果是普通数字进行了二进制与之后会影响哈希值的结果。那么哈希函数计算的值的平均分布就可能出现影响。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">typedef struct bucket &#123;</span><br><span class="line">    ulong h;            // 对char *key进行hash后的值，或者是用户指定的数字索引值</span><br><span class="line">    uint nKeyLength;    // hash关键字的长度，如果数组索引为数字，此值为0</span><br><span class="line">    void *pData;        // 指向value，一般是用户数据的副本，如果是指针数据，则指向pDataPtr</span><br><span class="line">    void *pDataPtr;     //如果是指针数据，此值会指向真正的value，同时上面pData会指向此值</span><br><span class="line">    struct bucket *pListNext;   // 整个hash表的下一元素</span><br><span class="line">    struct bucket *pListLast;   // 整个哈希表该元素的上一个元素</span><br><span class="line">    struct bucket *pNext;       // 存放在同一个hash Bucket内的下一个元素</span><br><span class="line">    struct bucket *pLast;       // 同一个哈希bucket的上一个元素</span><br><span class="line">    // 保存当前值所对于的key字符串，这个字段只能定义在最后，实现变长结构体</span><br><span class="line">    char arKey[1];              // 是变长结构体 在插入的时候进行单独申请空间就可以</span><br><span class="line">&#125; Bucket;</span><br></pre></td></tr></table></figure>
+<p>PS：如上面各字段的注释。h字段保存哈希表key哈希后的值。这里保存的哈希值而不是在哈希表中的索引值， 这是因为索引值和哈希表的容量有直接关系，如果哈希表扩容了，那么这些索引还得重新进行哈希在进行索引映射， 这也是一种优化手段。</p>
+<p>在PHP数组中如果索引字符串可以被转换成数字也会被转换成数字索引。 所以在PHP中例如’10’，’11’这类的字符索引和数字索引10， 11没有区别。</p>
+<p>HashTable的操作接口常见：</p>
+<ul>
+<li>初始化操作，例如zend_hash_init()函数，用于初始化哈希表接口，分配空间等。</li>
+<li>查找，插入，删除和更新操作接口，这是比较常规的操作。</li>
+<li>迭代和循环，这类的接口用于循环对哈希表进行操作。</li>
+<li>复制，排序，倒置和销毁等操作。</li>
+</ul>
+<p>PS：在PHP中不管是对数组的添加操作（zend_hash_add），还是对数组的更新操作（zend_hash_update）， 其最终都是调用_zend_hash_add_or_update函数完成，这在面向对象编程中相当于两个公有方法和一个公共的私有方法的结构， 以实现一定程度上的代码复用。</p>
+<h3 id="PHP-List链表实现"><a href="#PHP-List链表实现" class="headerlink" title="PHP List链表实现"></a>PHP List链表实现</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">typedef struct _zend_llist_element &#123;</span><br><span class="line">    struct _zend_llist_element *next;</span><br><span class="line">    struct _zend_llist_element *prev;</span><br><span class="line">    char data[1]; /* Needs to always be last in the struct */</span><br><span class="line">&#125; zend_llist_element;</span><br><span class="line"> </span><br><span class="line">typedef struct _zend_llist &#123;</span><br><span class="line">    zend_llist_element *head;</span><br><span class="line">    zend_llist_element *tail;</span><br><span class="line">    size_t count;</span><br><span class="line">    size_t size;</span><br><span class="line">    llist_dtor_func_t dtor;</span><br><span class="line">    unsigned char persistent;</span><br><span class="line">    zend_llist_element *traverse_ptr;</span><br><span class="line">&#125; zend_llist;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">ZEND_API void zend_llist_add_element(zend_llist *l, void *element) // List插入操作</span><br><span class="line">&#123;</span><br><span class="line">    zend_llist_element *tmp = pemalloc(sizeof(zend_llist_element)+l-&gt;size-1, l-&gt;persistent);</span><br><span class="line"> </span><br><span class="line">    tmp-&gt;prev = l-&gt;tail;</span><br><span class="line">    tmp-&gt;next = NULL;</span><br><span class="line">    if (l-&gt;tail) &#123;</span><br><span class="line">        l-&gt;tail-&gt;next = tmp;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        l-&gt;head = tmp;</span><br><span class="line">    &#125;</span><br><span class="line">    l-&gt;tail = tmp;</span><br><span class="line">    memcpy(tmp-&gt;data, element, l-&gt;size);</span><br><span class="line"> </span><br><span class="line">    ++l-&gt;count;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>PS：PHP中很多的函数都会有*_ex()以及不带ex两个版本的函数，这主要是为了方便使用， 和上面的代码一样，ex版本的通常是一个功能较全或者可选参数较多的版本， 而在代码中很多地方默认的参数值都一样，为了方便使用，再封装一个普通版本。</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/20/php-code-2/" data-id="cjez6d2yk000cr1fyk0w0huua" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/20/php-code-2/" data-id="cjez7xfr30009srfydmogdzr8" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -225,7 +240,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/20/php-code-1/" data-id="cjez6d2yo000fr1fybmi52rl3" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/20/php-code-1/" data-id="cjez7xfr9000esrfyhlc2t4el" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -343,7 +358,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/19/ncre47/" data-id="cjez6d2yi000br1fyatr7osvg" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/19/ncre47/" data-id="cjez7xfr6000bsrfy939l457v" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -398,7 +413,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/19/interview-xiaomi/" data-id="cjez6d2ya0004r1fyuoaqq7mf" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/19/interview-xiaomi/" data-id="cjez7xfqz0004srfy9o816s5w" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -448,7 +463,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/15/eight/" data-id="cjez6d2y60001r1fysh0w3dt7" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/15/eight/" data-id="cjez7xfqw0002srfylnnxcqlf" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -492,7 +507,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/15/shooting/" data-id="cjez6d2ym000dr1fy6ko3yug7" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/15/shooting/" data-id="cjez7xfr7000csrfykov81isd" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -639,7 +654,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/14/ncre46/" data-id="cjez6d2yg000ar1fyuh2t1a4l" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/14/ncre46/" data-id="cjez7xfr4000asrfyda6b6fsm" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -779,7 +794,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/13/ncre45/" data-id="cjez6d2yf0008r1fy6mjgvsv8" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/13/ncre45/" data-id="cjez7xfr00006srfy73x0pdqb" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -930,7 +945,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/12/ncre44/" data-id="cjez6d2yf0009r1fyjw3tam1m" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/12/ncre44/" data-id="cjez7xfr10007srfyg8rgxyc5" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -1076,7 +1091,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/11/ncre43/" data-id="cjez6d2ye0007r1fy1tgzgbr8" class="article-share-link">Share</a>
+      <a data-url="http://yoursite.com/2018/03/11/ncre43/" data-id="cjez7xfr20008srfy2rfjai08" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -1090,7 +1105,7 @@
 
   <nav id="page-nav">
     
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &raquo;</a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">weiter &raquo;</a>
   </nav>
 
 </section>
@@ -1107,7 +1122,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Archives</h3>
+    <h3 class="widget-title">Archiv</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li></ul>
     </div>
@@ -1117,12 +1132,12 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">Recent Posts</h3>
+    <h3 class="widget-title">letzter Beitrag</h3>
     <div class="widget">
       <ul>
         
           <li>
-            <a href="/2018/03/20/php-code-2/">PHP代码实现2 [从变量和数据的角度]</a>
+            <a href="/2018/03/20/php-code-2/">PHP代码实现2 [从变量和数据的角度] 1</a>
           </li>
         
           <li>
