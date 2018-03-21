@@ -5,19 +5,19 @@
   
 
   
-  <title>GTX HOME</title>
+  <title>GTX Ultimate</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="DropBox">
+  <meta name="description" content="Force to fuck off!">
 <meta property="og:type" content="website">
-<meta property="og:title" content="GTX HOME">
+<meta property="og:title" content="GTX Ultimate">
 <meta property="og:url" content="http://yoursite.com/page/2/index.html">
-<meta property="og:site_name" content="GTX HOME">
-<meta property="og:description" content="DropBox">
+<meta property="og:site_name" content="GTX Ultimate">
+<meta property="og:description" content="Force to fuck off!">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="GTX HOME">
-<meta name="twitter:description" content="DropBox">
+<meta name="twitter:title" content="GTX Ultimate">
+<meta name="twitter:description" content="Force to fuck off!">
   
-    <link rel="alternate" href="/atom.xml" title="GTX HOME" type="application/atom+xml">
+    <link rel="alternate" href="/atom.xml" title="GTX Ultimate" type="application/atom+xml">
   
   
     <link rel="icon" href="/favicon.png">
@@ -36,11 +36,11 @@
   <div id="header-outer" class="outer">
     <div id="header-title" class="inner">
       <h1 id="logo-wrap">
-        <a href="/" id="logo">GTX HOME</a>
+        <a href="/" id="logo">GTX Ultimate</a>
       </h1>
       
         <h2 id="subtitle-wrap">
-          <a href="/" id="subtitle">my site!</a>
+          <a href="/" id="subtitle">Force Or Blood</a>
         </h2>
       
     </div>
@@ -55,9 +55,9 @@
       </nav>
       <nav id="sub-nav">
         
-          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSSフィード"></a>
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
         
-        <a id="nav-search-btn" class="nav-icon" title="検索"></a>
+        <a id="nav-search-btn" class="nav-icon" title="Suche"></a>
       </nav>
       <div id="search-form-wrap">
         <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
@@ -67,6 +67,50 @@
 </header>
       <div class="outer">
         <section id="main">
+  
+    <article id="post-shooting" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/15/shooting/" class="article-date">
+  <time datetime="2018-03-15T10:54:02.000Z" itemprop="datePublished">2018-03-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/15/shooting/">打靶训练</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">一个射击运动员打靶，靶一共有10环，连开10枪打中90环的情况有多少种？需要考虑10枪的先后关系，比如9环10环同10环9环是不同的。</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>可以直接暴力十个for 在最后一个for里面判断 空间和时间复杂度都太大了</p>
+</li>
+<li><p>使用递归的方式 减少空间复杂度</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">int sum;</span><br><span class="line">int store[10];</span><br><span class="line">void Output()          //打印</span><br><span class="line">&#123;</span><br><span class="line">    for(int i=9;i&gt;=0;i--)</span><br><span class="line">    &#123;</span><br><span class="line">        cout&lt;&lt;store[i]&lt;&lt;&quot; &quot;;</span><br><span class="line">    &#125;</span><br><span class="line">    cout&lt;&lt;endl;</span><br><span class="line">    ++sum;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void Comput(int score, int num)</span><br><span class="line">&#123;</span><br><span class="line">    if(score&lt;0 || score&gt;(num+1)*10)       // 前者是因为已经打满了90环 在Comput的第一个参数有个减法 后者是不可能打满90环</span><br><span class="line">        return ;</span><br><span class="line">    if(num==0)                  //打到最后一次 直接将剩下的环数进行匹配 这样避免了最后一次的for循环</span><br><span class="line">    &#123;</span><br><span class="line">        store[num]=score;</span><br><span class="line">        Output();</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">    for(int i=0;i&lt;=10;i++)                 //没有出现上述情况，递归</span><br><span class="line">    &#123;</span><br><span class="line">        store[num]=i;                       // 这一发打了多少环 0-10环循环</span><br><span class="line">        Comput(score-i,num-1);              // 下一发应该打的目的</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    Comput(90,9);</span><br><span class="line">    cout&lt;&lt;sum&lt;&lt;endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">这样就理解了！</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/15/shooting/" data-id="cjf0h2g31000khqfybkuj2yda" class="article-share-link">Teilen</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
   
     <article id="post-ncre46" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
@@ -205,7 +249,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/14/ncre46/" data-id="cjezouao0000d4sfyzoo68yck" class="article-share-link">共有</a>
+      <a data-url="http://yoursite.com/2018/03/14/ncre46/" data-id="cjf0h2g2v000dhqfycfzc33bq" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -345,7 +389,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/13/ncre45/" data-id="cjezouanv000a4sfy782gynma" class="article-share-link">共有</a>
+      <a data-url="http://yoursite.com/2018/03/13/ncre45/" data-id="cjf0h2g2t000chqfyulxwkak1" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -496,7 +540,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/12/ncre44/" data-id="cjezouanw000b4sfyojn0k6nk" class="article-share-link">共有</a>
+      <a data-url="http://yoursite.com/2018/03/12/ncre44/" data-id="cjf0h2g2r000bhqfy3ulpjqu2" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -642,7 +686,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/11/ncre43/" data-id="cjezouant00084sfyf8kw81e6" class="article-share-link">共有</a>
+      <a data-url="http://yoursite.com/2018/03/11/ncre43/" data-id="cjf0h2g2p0009hqfy89vjehmn" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -782,7 +826,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/08/ncre42/" data-id="cjezouanu00094sfy8ljkme9x" class="article-share-link">共有</a>
+      <a data-url="http://yoursite.com/2018/03/08/ncre42/" data-id="cjf0h2g2q000ahqfycsl1ptc9" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -957,7 +1001,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/08/ncre41/" data-id="cjezouanr00064sfyvk8b29n2" class="article-share-link">共有</a>
+      <a data-url="http://yoursite.com/2018/03/08/ncre41/" data-id="cjf0h2g2o0008hqfyt71rwuk7" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -1004,7 +1048,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/06/about-docker/" data-id="cjezouanl00014sfyd4maam0z" class="article-share-link">共有</a>
+      <a data-url="http://yoursite.com/2018/03/06/about-docker/" data-id="cjf0h2g2d0001hqfyzrx5avje" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -1073,7 +1117,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/04/distributed-system/" data-id="cjezouanq00054sfya5pg4hh2" class="article-share-link">共有</a>
+      <a data-url="http://yoursite.com/2018/02/04/distributed-system/" data-id="cjf0h2g2i0003hqfyizbnjuhn" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -1122,52 +1166,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/03/test-speed/" data-id="cjezouao5000j4sfyhyh3z2tz" class="article-share-link">共有</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/02/02/hello-world/" class="article-date">
-  <time datetime="2018-02-02T09:59:25.000Z" itemprop="datePublished">2018-02-02</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/02/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/02/hello-world/" data-id="cjezouanp00044sfyb701k46q" class="article-share-link">共有</a>
+      <a data-url="http://yoursite.com/2018/02/03/test-speed/" data-id="cjf0h2g31000jhqfy0bp9ddf9" class="article-share-link">Teilen</a>
       
       
     </footer>
@@ -1181,7 +1180,7 @@
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/">&laquo; 戻る</a><a class="page-number" href="/">1</a><span class="page-number current">2</span>
+    <a class="extend prev" rel="prev" href="/">&laquo; zurück</a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/3/">weiter &raquo;</a>
   </nav>
 
 </section>
@@ -1198,7 +1197,7 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">アーカイブ</h3>
+    <h3 class="widget-title">Archiv</h3>
     <div class="widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">March 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">February 2018</a></li></ul>
     </div>
@@ -1208,9 +1207,13 @@
   
     
   <div class="widget-wrap">
-    <h3 class="widget-title">最近の投稿</h3>
+    <h3 class="widget-title">letzter Beitrag</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/03/21/before-storm1/">Before-Storm1 Sina Telephone interview</a>
+          </li>
         
           <li>
             <a href="/2018/03/20/mysql-acid/">MySQL 事务处理</a>
@@ -1221,15 +1224,11 @@
           </li>
         
           <li>
-            <a href="/2018/03/20/php-code-4/">PHP代码实现2 [函数角度] 1</a>
+            <a href="/2018/03/20/php-code-4/">PHP代码实现3 [函数角度] 1</a>
           </li>
         
           <li>
             <a href="/2018/03/20/php-code-3/">PHP代码实现2 [从变量和数据的角度] 2</a>
-          </li>
-        
-          <li>
-            <a href="/2018/03/20/php-code-2/">PHP代码实现2 [从变量和数据的角度] 1</a>
           </li>
         
       </ul>
