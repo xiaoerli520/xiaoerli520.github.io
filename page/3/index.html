@@ -69,6 +69,55 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-test-speed" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/02/03/test-speed/" class="article-date">
+  <time datetime="2018-02-02T16:46:36.000Z" itemprop="datePublished">2018-02-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/02/03/test-speed/">SpringBoot Laravel(artisan serve) MIXPHP简单性能测试</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="测试条件："><a href="#测试条件：" class="headerlink" title="测试条件："></a>测试条件：</h3><p>CPU: 2C 4T 2.8GHZ</p>
+<p>MEM: 8G</p>
+<p>DISK: 512GB SSD</p>
+<p>OS: OS X 10.11.6</p>
+<h3 id="测试指令"><a href="#测试指令" class="headerlink" title="测试指令"></a>测试指令</h3><p>ab -n 2000 -c 10</p>
+<h3 id="测试表现"><a href="#测试表现" class="headerlink" title="测试表现"></a>测试表现</h3><p>MIXPHP RPS:8K</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Server Software:        swoole-http-server</span><br><span class="line">Server Hostname:        127.0.0.1</span><br><span class="line">Server Port:            9501</span><br><span class="line"></span><br><span class="line">Document Path:          /</span><br><span class="line">Document Length:        12 bytes</span><br><span class="line"></span><br><span class="line">Concurrency Level:      10</span><br><span class="line">Time taken for tests:   0.223 seconds</span><br><span class="line">Complete requests:      2000</span><br><span class="line">Failed requests:        0</span><br><span class="line">Total transferred:      348000 bytes</span><br><span class="line">HTML transferred:       24000 bytes</span><br><span class="line">Requests per second:    8969.49 [#/sec] (mean)</span><br><span class="line">Time per request:       1.115 [ms] (mean)</span><br><span class="line">Time per request:       0.111 [ms] (mean, across all concurrent requests)</span><br><span class="line">Transfer rate:          1524.11 [Kbytes/sec] received</span><br></pre></td></tr></table></figure>
+<p>Laravel(使用php artisan serve)</p>
+<p>RPS: 22…</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Server Software:</span><br><span class="line">Server Hostname:        127.0.0.1</span><br><span class="line">Server Port:            8000</span><br><span class="line"></span><br><span class="line">Document Path:          /t</span><br><span class="line">Document Length:        11 bytes</span><br><span class="line"></span><br><span class="line">Concurrency Level:      10</span><br><span class="line">Time taken for tests:   72.551 seconds</span><br><span class="line">Complete requests:      2000</span><br><span class="line">Failed requests:        0</span><br><span class="line">Total transferred:      2060448 bytes</span><br><span class="line">HTML transferred:       22000 bytes</span><br><span class="line">Requests per second:    27.57 [#/sec] (mean)</span><br><span class="line">Time per request:       362.757 [ms] (mean)</span><br><span class="line">Time per request:       36.276 [ms] (mean, across all concurrent requests)</span><br><span class="line">Transfer rate:          27.73 [Kbytes/sec] received</span><br></pre></td></tr></table></figure>
+<p>SpringBoot</p>
+<p>RPS 1900</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">Server Software:</span><br><span class="line">Server Hostname:        127.0.0.1</span><br><span class="line">Server Port:            8080</span><br><span class="line"></span><br><span class="line">Document Path:          /hello</span><br><span class="line">Document Length:        11 bytes</span><br><span class="line"></span><br><span class="line">Concurrency Level:      10</span><br><span class="line">Time taken for tests:   1.050 seconds</span><br><span class="line">Complete requests:      2000</span><br><span class="line">Failed requests:        0</span><br><span class="line">Total transferred:      288000 bytes</span><br><span class="line">HTML transferred:       22000 bytes</span><br><span class="line">Requests per second:    1904.65 [#/sec] (mean)</span><br><span class="line">Time per request:       5.250 [ms] (mean)</span><br><span class="line">Time per request:       0.525 [ms] (mean, across all concurrent requests)</span><br><span class="line">Transfer rate:          267.84 [Kbytes/sec] received</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/02/03/test-speed/" data-id="cjfdw3z3z000k4rfywbwb9kpy" class="article-share-link">共有</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/02/02/hello-world/" class="article-date">
@@ -104,7 +153,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/02/hello-world/" data-id="cjf66f5270004iefyqwj8z5qc" class="article-share-link">共有</a>
+      <a data-url="http://yoursite.com/2018/02/02/hello-world/" data-id="cjfdw3z3f00044rfyhhd7t2xr" class="article-share-link">共有</a>
       
       
     </footer>
@@ -150,6 +199,10 @@
       <ul>
         
           <li>
+            <a href="/2018/03/30/weekend2/">3.30一周拾遗</a>
+          </li>
+        
+          <li>
             <a href="/2018/03/25/weekend1/">3.25周 一周拾遗</a>
           </li>
         
@@ -163,10 +216,6 @@
         
           <li>
             <a href="/2018/03/20/php-code-4/">PHP代码实现3 [函数角度] 1</a>
-          </li>
-        
-          <li>
-            <a href="/2018/03/20/php-code-3/">PHP代码实现2 [从变量和数据的角度] 2</a>
           </li>
         
       </ul>
