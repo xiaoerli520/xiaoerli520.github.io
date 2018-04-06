@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Weekend Log 4.6 | GTX Ultimate</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="PHP相关常用PHP编译 .\/configure12./configure -prefix=/usr/local/php --with-config-file-path=/usr/local/php/etc --with-mysql=/usr/local/mysql --with-mysqli=/usr/bin/mysql_config --with-iconv-dir=/usr/local -">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Weekend Log 4.6">
+<meta property="og:url" content="http://yoursite.com/2018/04/06/weekend3/index.html">
+<meta property="og:site_name" content="GTX Ultimate">
+<meta property="og:description" content="PHP相关常用PHP编译 .\/configure12./configure -prefix=/usr/local/php --with-config-file-path=/usr/local/php/etc --with-mysql=/usr/local/mysql --with-mysqli=/usr/bin/mysql_config --with-iconv-dir=/usr/local -">
+<meta property="og:locale" content="ja">
+<meta property="og:updated_time" content="2018-04-06T14:11:27.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Weekend Log 4.6">
+<meta name="twitter:description" content="PHP相关常用PHP编译 .\/configure12./configure -prefix=/usr/local/php --with-config-file-path=/usr/local/php/etc --with-mysql=/usr/local/mysql --with-mysqli=/usr/bin/mysql_config --with-iconv-dir=/usr/local -">
+  
+    <link rel="alternate" href="/atom.xml" title="GTX Ultimate" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">GTX Ultimate</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Force Or Blood</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSSフィード"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="検索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-weekend3" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/06/weekend3/" class="article-date">
+  <time datetime="2018-04-06T13:55:53.000Z" itemprop="datePublished">2018-04-06</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Weekend Log 4.6
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="PHP相关"><a href="#PHP相关" class="headerlink" title="PHP相关"></a>PHP相关</h1><h3 id="常用PHP编译-configure"><a href="#常用PHP编译-configure" class="headerlink" title="常用PHP编译 .\/configure"></a>常用PHP编译 .\/configure</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">./configure -prefix=/usr/local/php --with-config-file-path=/usr/local/php/etc --with-mysql=/usr/local/mysql --with-mysqli=/usr/bin/mysql_config --with-iconv-dir=/usr/local --with-jpeg-dir --with-png-dir --with-zlib --with-libxml-dir=/usr --enable-xml --disable-rpath --enable-discard-path   --enable-mbregex --enable-fastcgi --enable-fpm --enable-mbstring --with-mcrypt --with-gd --enable-gd-native-ttf --with-openssl --with-mhash  --enable-sockets --with-xmlrpc --enable-zip --enable-pdo --with-pdo-mysql --with-mysql</span><br><span class="line">// 需要安装MySQL 以及一些其他的常用lib</span><br></pre></td></tr></table></figure>
+<h3 id="PHP-JSON处理"><a href="#PHP-JSON处理" class="headerlink" title="PHP JSON处理"></a>PHP JSON处理</h3><p>对于返回的util 可以使用5.4开始使用的trait进行嵌入 然后self\:\:调用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">return json_encode($body, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);</span><br><span class="line"></span><br><span class="line">JSON_UNESCAPED_SLASHES (integer)</span><br><span class="line">不要编码 /。 自 PHP 5.4.0 起生效。</span><br><span class="line">JSON_UNESCAPED_UNICODE (integer)</span><br><span class="line">以字面编码多字节 Unicode 字符（默认是编码成 \uXXXX）。 自 PHP 5.4.0 起生效</span><br><span class="line"></span><br><span class="line">string json_last_error_msg ( void ) // php55以上才有这个方法 得到json转换的错误</span><br></pre></td></tr></table></figure></p>
+<h3 id="PHP-FPM搭建中NGINX出现file-not-found的问题-参见备忘录"><a href="#PHP-FPM搭建中NGINX出现file-not-found的问题-参见备忘录" class="headerlink" title="PHP-FPM搭建中NGINX出现file not found的问题-参见备忘录"></a>PHP-FPM搭建中NGINX出现file not found的问题-参见备忘录</h3><h1 id="TODOLIST"><a href="#TODOLIST" class="headerlink" title="TODOLIST"></a>TODOLIST</h1><h3 id="centos上配一个LNMP"><a href="#centos上配一个LNMP" class="headerlink" title="centos上配一个LNMP"></a>centos上配一个LNMP</h3><h3 id="Linux-MOUNT-AWK等命令"><a href="#Linux-MOUNT-AWK等命令" class="headerlink" title="Linux MOUNT AWK等命令"></a>Linux MOUNT AWK等命令</h3><h3 id="Kafka、RabbitMQ、Hadoop、Spark、Redis、Memcached等工具类的使用"><a href="#Kafka、RabbitMQ、Hadoop、Spark、Redis、Memcached等工具类的使用" class="headerlink" title="Kafka、RabbitMQ、Hadoop、Spark、Redis、Memcached等工具类的使用"></a>Kafka、RabbitMQ、Hadoop、Spark、Redis、Memcached等工具类的使用</h3><h3 id="PHP-YII框架实现"><a href="#PHP-YII框架实现" class="headerlink" title="PHP YII框架实现"></a>PHP YII框架实现</h3><p>目前就这些，争取很快赶上公司的进度，能够出一些代码贡献！</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/04/06/weekend3/" data-id="cjfo0va9i000kjpfy1i6kyt09" class="article-share-link">共有</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/03/30/weekend2/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前の記事</strong>
+      <div class="article-nav-title">3.30一周拾遗</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">アーカイブ</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">4月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">3月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">2月 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最近の投稿</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/04/06/weekend3/">Weekend Log 4.6</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/30/weekend2/">3.30一周拾遗</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/25/weekend1/">3.25周 一周拾遗</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/20/mysql-acid/">MySQL 事务处理</a>
+          </li>
+        
+          <li>
+            <a href="/2018/03/20/autoloader/">自动加载以及Composer的实现</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 GuoQingZhe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
