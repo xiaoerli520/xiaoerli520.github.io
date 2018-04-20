@@ -69,6 +69,106 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-weekend4" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/04/20/weekend4/" class="article-date">
+  <time datetime="2018-04-20T10:43:44.000Z" itemprop="datePublished">2018-04-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/04/20/weekend4/">4.7-4.20周记</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Composer-autoload-static-php报错（PHP54）原因"><a href="#Composer-autoload-static-php报错（PHP54）原因" class="headerlink" title="Composer autoload_static.php报错（PHP54）原因"></a>Composer autoload_static.php报错（PHP54）原因</h1><p>初步定为php版本问题 下次运行composer update/install 的时候使用php5进行运行 防止生成优化class loader代码</p>
+<p>可以改为composer 1.10版本以下进行使用</p>
+<h1 id="svn包含不到子文件夹问题"><a href="#svn包含不到子文件夹问题" class="headerlink" title="svn包含不到子文件夹问题"></a>svn包含不到子文件夹问题</h1><p>子文件夹中包含.svn文件夹，删除之可以提交</p>
+<h1 id="kill-amp-kill-9"><a href="#kill-amp-kill-9" class="headerlink" title="kill &amp; kill -9"></a>kill &amp; kill -9</h1><p>kill和kill -9，两个命令在linux中都有杀死进程的效果，然而两命令的执行过程却大有不同，在程序中如果用错了，可能会造成莫名其妙的现象。<br>执行kill命令，系统会发送一个SIGTERM信号给对应的程序。当程序接收到该signal信号后，将会发生以下事情：</p>
+<p>程序立刻停止<br>当程序释放相应资源后再停止<br>程序可能仍然继续运行</p>
+<p>大部分程序接收到SIGTERM信号后，会先释放自己的资源，然后再停止。但是也有程序可能接收信号后，做一些其他的事情（如果程序正在等待IO，可能就不会立马做出响应，我在使用wkhtmltopdf转pdf的项目中遇到这现象），也就是说，SIGTERM多半是会被阻塞的。</p>
+<p>然而kill -9命令，系统给对应程序发送的信号是SIGKILL，即exit。exit信号不会被系统阻塞，所以kill -9能顺利杀掉进程。</p>
+<h1 id="php反引号"><a href="#php反引号" class="headerlink" title="php反引号"></a>php反引号</h1><p>直接执行bash指令</p>
+<h1 id="supervisor-Deamons管理工具"><a href="#supervisor-Deamons管理工具" class="headerlink" title="supervisor Deamons管理工具"></a>supervisor Deamons管理工具</h1><p>XXX.conf example<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">[program:docpub]</span><br><span class="line">command=php /data1/ms/app_docpub/bin/DocPub.php              ; the program (relative uses PATH, can take args)</span><br><span class="line"></span><br><span class="line">process_name=DOCPUB_%(process_num)s ; process_name expr (default %(program_name)s)</span><br><span class="line"></span><br><span class="line">numprocs=10                    ; number of processes copies to start (def 1)</span><br><span class="line"></span><br><span class="line">autostart=true                ; start at supervisord start (default: true)</span><br><span class="line"></span><br><span class="line">autorestart=true ; whether/when to restart (default: unexpected)</span><br><span class="line"></span><br><span class="line">user=www ; setuid to this UNIX account to run the program</span><br><span class="line"></span><br><span class="line">stdout_logfile=/data1/ms/log/docpub/DOCPUB_%(process_num)s.log        ; stdout log path, NONE for none; default AUTO</span><br><span class="line"></span><br><span class="line">stdout_logfile_maxbytes=50MB   ; max # logfile bytes b4 rotation (default 50MB)</span><br><span class="line"></span><br><span class="line">stdout_logfile_backups=10     ; # of stdout logfile backups (default 10)</span><br><span class="line"></span><br><span class="line">stderr_logfile=/data1/ms/log/docpub/DOCPUB.error.log        ; stderr log path, NONE for none; default AUTO</span><br></pre></td></tr></table></figure></p>
+<h1 id="CI-持续集成-—-jenkins"><a href="#CI-持续集成-—-jenkins" class="headerlink" title="CI 持续集成 — jenkins"></a>CI 持续集成 — jenkins</h1><p>CI平台 可以持续的从仓库中拉代码 然后准备执行</p>
+<p>Continuous integration，简称CI</p>
+<p>持续集成指的是，频繁地（一天多次）将代码集成到主干。</p>
+<p>它的好处主要有两个。<br>（1）快速发现错误。每完成一点更新，就集成到主干，可以快速发现错误，定位错误也比较容易。<br>（2）防止分支大幅偏离主干。如果不是经常集成，主干又在不断更新，会导致以后集成的难度变大，甚至难以集成。</p>
+<p>持续交付（Continuous delivery）指的是，频繁地将软件的新版本，交付给质量团队或者用户，以供评审。如果评审通过，代码就进入生产阶段。</p>
+<p>持续部署（continuous deployment）是持续交付的下一步，指的是代码通过评审以后，自动部署到生产环境。</p>
+<p>持续部署的前提是能自动化完成测试、构建、部署等步骤。它与持续交付的区别，可以参考下图。</p>
+<p>流程<br>根据持续集成的设计，代码从提交到生产，整个过程有以下几步。</p>
+<p>4.1 提交<br>流程的第一步，是开发者向代码仓库提交代码。所有后面的步骤都始于本地代码的一次提交（commit）。</p>
+<p>4.2 测试（第一轮）<br>代码仓库对commit操作配置了钩子（hook），只要提交代码或者合并进主干，就会跑自动化测试。</p>
+<p>测试有好几种。</p>
+<p>单元测试：针对函数或模块的测试</p>
+<p>集成测试：针对整体产品的某个功能的测试，又称功能测试</p>
+<p>端对端测试：从用户界面直达数据库的全链路测试</p>
+<p>第一轮至少要跑单元测试。<br>4.3 构建<br>通过第一轮测试，代码就可以合并进主干，就算可以交付了。</p>
+<p>交付后，就先进行构建（build），再进入第二轮测试。所谓构建，指的是将源码转换为可以运行的实际代码，比如安装依赖，配置各种资源（样式表、JS脚本、图片）等等。</p>
+<p>常用的构建工具如下。</p>
+<p>Jenkins</p>
+<p>Travis</p>
+<p>Codeship</p>
+<p>Strider<br>Jenkins和Strider是开源软件，Travis和Codeship对于开源项目可以免费使用。它们都会将构建和测试，在一次运行中执行完成。</p>
+<p>4.4 测试（第二轮）</p>
+<p>构建完成，就要进行第二轮测试。如果第一轮已经涵盖了所有测试内容，第二轮可以省略，当然，这时构建步骤也要移到第一轮测试前面。</p>
+<p>第二轮是全面测试，单元测试和集成测试都会跑，有条件的话，也要做端对端测试。所有测试以自动化为主，少数无法自动化的测试用例，就要人工跑。</p>
+<p>需要强调的是，新版本的每一个更新点都必须测试到。如果测试的覆盖率不高，进入后面的部署阶段后，很可能会出现严重的问题。</p>
+<p>4.5 部署</p>
+<p>通过了第二轮测试，当前代码就是一个可以直接部署的版本（artifact）。将这个版本的所有文件打包（ tar filename.tar * ）存档，发到生产服务器。</p>
+<p>生产服务器将打包文件，解包成本地的一个目录，再将运行路径的符号链接（symlink）指向这个目录，然后重新启动应用。这方面的部署工具有Ansible，Chef，Puppet等。</p>
+<p>4.6 回滚<br>一旦当前版本发生问题，就要回滚到上一个版本的构建结果。最简单的做法就是修改一下符号链接，指向上一个版本的目录。</p>
+<p>Jenkins 检查日程</p>
+<p><em>/3 </em> <em> </em> *</p>
+<h1 id="Yii请求流程"><a href="#Yii请求流程" class="headerlink" title="Yii请求流程"></a>Yii请求流程</h1><ol>
+<li>用户发出了访问 URL <a href="http://www.example.com/index.php?r=post/show&amp;id=1" target="_blank" rel="noopener">http://www.example.com/index.php?r=post/show&amp;id=1</a> 的请求， Web 服务器通过执行入口脚本 index.php 处理此请求。</li>
+<li>入口脚本创建了一个 应用 实例并执行。</li>
+<li>应用从一个叫做 request 的 应用组件 中获得了用户请求的详细信息。</li>
+<li>应用在一个名叫 urlManager 的应用组件的帮助下，决定请求的 控制器 和 动作 。在这个例子中，控制器是 post，它代表PostController 类； 动作是 show ，其实际含义由控制器决定。</li>
+<li>应用创建了一个所请求控制器的实例以进一步处理用户请求。控制器决定了动作 show 指向控制器类中的一个名为 actionShow 的方法。然后它创建并持行了与动作关联的过滤器（例如访问控制，基准测试）。 如果过滤器允许，动作将被执行。</li>
+<li>动作从数据库中读取一个 ID 为 1 的 Post 模型。</li>
+<li>动作通过 Post 模型渲染一个名为 show 的 视图。</li>
+<li>视图读取并显示 Post 模型的属性。</li>
+<li>视图执行一些 小物件。</li>
+<li>视图的渲染结果被插入一个 布局。</li>
+<li>动作完成视图渲染并将其呈现给用户。</li>
+</ol>
+<h1 id="如何确认自己是root"><a href="#如何确认自己是root" class="headerlink" title="如何确认自己是root"></a>如何确认自己是root</h1><p>sudo -s -&gt; no reply -&gt; root</p>
+<h1 id="saltStack"><a href="#saltStack" class="headerlink" title="saltStack"></a>saltStack</h1><p>远程运维工具</p>
+<p>salt ‘ip’ module.function ‘params &amp; commands’</p>
+<h1 id="lsyncd"><a href="#lsyncd" class="headerlink" title="lsyncd"></a>lsyncd</h1><p>TDB</p>
+<h1 id="事件驱动模型、单进程、多进程比较"><a href="#事件驱动模型、单进程、多进程比较" class="headerlink" title="事件驱动模型、单进程、多进程比较"></a>事件驱动模型、单进程、多进程比较</h1><p><img src="http://ong7eqtw5.bkt.clouddn.com/Pasted%20Graphic%202.tiff" alt="Alt text" title="进程模型比较"></p>
+<p>事件驱动编程是一种编程范式，这里程序的执行流由外部事件来决定。它的特点是包含一个事件循环，当外部事件发生时使用回调机制来触发相应的处理。另外两种常见的编程范式是（单线程）同步以及多线程编程。</p>
+<p>在单线程同步模型中，任务按照顺序执行。如果某个任务因为I/O而阻塞，其他所有的任务都必须等待，直到它完成之后它们才能依次执行。这种明确的执行顺序和串行化处理的行为是很容易推断得出的。如果任务之间并没有互相依赖的关系，但仍然需要互相等待的话这就使得程序不必要的降低了运行速度。</p>
+<p>在多线程版本中，这3个任务分别在独立的线程中执行。这些线程由操作系统来管理，在多处理器系统上可以并行处理，或者在单处理器系统上交错执行。这使得当某个线程阻塞在某个资源的同时其他线程得以继续执行。与完成类似功能的同步程序相比，这种方式更有效率，但程序员必须写代码来保护共享资源，防止其被多个线程同时访问。多线程程序更加难以推断，因为这类程序不得不通过线程同步机制如锁、可重入函数、线程局部存储或者其他机制来处理线程安全问题，如果实现不当就会导致出现微妙且令人痛不欲生的bug。</p>
+<p>在事件驱动版本的程序中，3个任务交错执行，但仍然在一个单独的线程控制中。当处理I/O或者其他昂贵的操作时，注册一个回调到事件循环中，然后当I/O操作完成时继续执行。回调描述了该如何处理某个事件。事件循环轮询所有的事件，当事件到来时将它们分配给等待处理事件的回调函数。这种方式让程序尽可能的得以执行而不需要用到额外的线程。事件驱动型程序比多线程程序更容易推断出行为，因为程序员不需要关心线程安全问题。</p>
+<h1 id="HAProxy"><a href="#HAProxy" class="headerlink" title="HAProxy"></a>HAProxy</h1><h1 id="curl-常用命令"><a href="#curl-常用命令" class="headerlink" title="curl 常用命令"></a>curl 常用命令</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">curl -o page.html http://www.linuxidc.com -o 将page存储下来</span><br><span class="line"></span><br><span class="line">curl -x 123.45.67.89:1080 -o page.html http://www.linuxidc.com -x 制定proxy和port</span><br><span class="line"></span><br><span class="line">curl -x 123.45.67.89:1080 -o page.html -D cookie0001.txt http://www.linuxidc.com  -D 存储COOKIE信息</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">curl -x 123.45.67.89:1080 -o page1.html -D cookie0002.txt -b cookie0001.txt http://www.linuxidc.com -b 将文件cookie取出并且使用</span><br><span class="line"></span><br><span class="line">-A 确定浏览器信息</span><br><span class="line"></span><br><span class="line">-e 设定Referer 就是从哪里来的链接</span><br><span class="line"></span><br><span class="line">curl一样可以下载文件</span><br><span class="line"></span><br><span class="line">curl -o php.php www.php.php/php.php</span><br><span class="line"></span><br><span class="line">-O 直接按照线上的文件名进行下载</span><br><span class="line"></span><br><span class="line">curl -O </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">批量下载</span><br><span class="line"></span><br><span class="line">curl -O http://cgi2.tky.3web.ne.jp/~&#123;zzh,nick&#125;/[001-201].JPG</span><br><span class="line"></span><br><span class="line">curl -u FTP协议下载</span><br><span class="line"></span><br><span class="line">curl -u name:passed ftp://</span><br><span class="line"></span><br><span class="line">curl -d 以POST形式传输数据</span><br><span class="line"></span><br><span class="line">-H 一个个的http头</span><br></pre></td></tr></table></figure>
+<h1 id="KMP-敏感词"><a href="#KMP-敏感词" class="headerlink" title="KMP 敏感词"></a>KMP 敏感词</h1><p>TBD</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/04/20/weekend4/" data-id="cjg7ugt6c000nffm1ev7qt2jl" class="article-share-link">共有</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-weekend3" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/04/06/weekend3/" class="article-date">
@@ -98,7 +198,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/06/weekend3/" data-id="cjfo0va9i000kjpfy1i6kyt09" class="article-share-link">共有</a>
+      <a data-url="http://yoursite.com/2018/04/06/weekend3/" data-id="cjg7ugt6b000mffm10vv9sa0k" class="article-share-link">共有</a>
       
       
     </footer>
@@ -230,7 +330,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/30/weekend2/" data-id="cjfo0va9j000ljpfyrdco928d" class="article-share-link">共有</a>
+      <a data-url="http://yoursite.com/2018/03/30/weekend2/" data-id="cjg7ugt6a000lffm1k46mj3u0" class="article-share-link">共有</a>
       
       
     </footer>
@@ -358,7 +458,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/25/weekend1/" data-id="cjfo0va9k000mjpfyw7moodpk" class="article-share-link">共有</a>
+      <a data-url="http://yoursite.com/2018/03/25/weekend1/" data-id="cjg7ugt69000kffm1uddynmf6" class="article-share-link">共有</a>
       
       
     </footer>
@@ -413,7 +513,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/20/mysql-acid/" data-id="cjfo0va940006jpfynelxazkd" class="article-share-link">共有</a>
+      <a data-url="http://yoursite.com/2018/03/20/mysql-acid/" data-id="cjg7ugt5r0006ffm1wjar25zf" class="article-share-link">共有</a>
       
       
     </footer>
@@ -496,7 +596,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/20/autoloader/" data-id="cjfo0va8y0001jpfy2n4amwah" class="article-share-link">共有</a>
+      <a data-url="http://yoursite.com/2018/03/20/autoloader/" data-id="cjg7ugt5k0001ffm1vsx6wwd7" class="article-share-link">共有</a>
       
       
     </footer>
@@ -544,7 +644,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/20/php-code-4/" data-id="cjfo0va9f000gjpfyif2aytem" class="article-share-link">共有</a>
+      <a data-url="http://yoursite.com/2018/03/20/php-code-4/" data-id="cjg7ugt66000hffm1dmyv1fwm" class="article-share-link">共有</a>
       
       
     </footer>
@@ -637,7 +737,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/20/php-code-3/" data-id="cjfo0va9g000hjpfyhtfhyp1e" class="article-share-link">共有</a>
+      <a data-url="http://yoursite.com/2018/03/20/php-code-3/" data-id="cjg7ugt65000gffm1fyxnmkdk" class="article-share-link">共有</a>
       
       
     </footer>
@@ -720,7 +820,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/20/php-code-2/" data-id="cjfo0va9e000ejpfyj480pkuk" class="article-share-link">共有</a>
+      <a data-url="http://yoursite.com/2018/03/20/php-code-2/" data-id="cjg7ugt64000fffm1rgv4u9es" class="article-share-link">共有</a>
       
       
     </footer>
@@ -819,125 +919,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/20/php-code-1/" data-id="cjfo0va9e000fjpfy6qv9b6xf" class="article-share-link">共有</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-ncre47" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/19/ncre47/" class="article-date">
-  <time datetime="2018-03-19T15:25:06.000Z" itemprop="datePublished">2018-03-19</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/19/ncre47/">计算机四级-网络工程 Day7</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="操作系统"><a href="#操作系统" class="headerlink" title="操作系统"></a>操作系统</h1><ul>
-<li><p>组成计算机各类资源中 主要包含 硬件 代码 数据</p>
-</li>
-<li><p>硬盘可以做到实时同时共享</p>
-</li>
-<li><p>多道程序使得程序能够并发运行，相比单通道程序 不再具有可再现性</p>
-</li>
-<li><p>每个订票点服务器上发送订票进程相互的关系是互斥关系</p>
-</li>
-<li><p>在对临界资源访问前，必须调用进入区代码</p>
-</li>
-<li><p>逻辑地址转换为内存物理地址的过程为 重定位</p>
-</li>
-<li><p>将驻留在内存中最长的页面调出的策略是FIFO</p>
-</li>
-<li><p>逻辑上连续的文件信息依次存放在连续编号的磁盘块中 顺序结构</p>
-</li>
-<li><p>适合随机访问并且易于文件扩展的  索引结构</p>
-</li>
-<li><p>第七套 23 - 25题目注意看一下</p>
-</li>
-<li><p>设置设备管理的功能主要目的是方便用户使用</p>
-</li>
-<li><p>资源有序分配法 是死锁的预防</p>
-</li>
-<li><p>30题目看一下</p>
-</li>
-<li><p>研究操作系统的观点 软件、资源管理、进程、虚拟机、服务提供者</p>
-</li>
-<li><p>进程生命状态 就绪状态 运行状态 等待状态</p>
-</li>
-<li><p>相互并发引发的问题 同步问题 互斥问题 死锁问题 饥饿问题</p>
-</li>
-<li><p>固定分区 可变分区可以为进程分配一组连续的单元</p>
-</li>
-<li><p>虚拟页式存储方案中 当判断页面是否调入内存 驻留位 有效位 存在位 中断位</p>
-</li>
-<li><p>文件分为 普通文件 目录文件 特殊文件</p>
-</li>
-<li><p>IO硬件包含 适配器和接口部件 设备控制器 设备硬件</p>
-</li>
-</ul>
-<h1 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a>计算机网络</h1><ul>
-<li><p>OSI 提供路由选择功能层次 网络层</p>
-</li>
-<li><p>CSMA\CD 第一步是侦听总线</p>
-</li>
-<li><p>千兆以太网 和普通的Ethernet的帧结构是一样的</p>
-</li>
-<li><p>局域网交换机 核心技术是 端口 Mac地址映射</p>
-</li>
-<li><p>42题目的根据子网掩码判断在同一个子网看一下</p>
-</li>
-<li><p>IP数据报投长度以32b为单位 </p>
-</li>
-<li><p>IP组播中 非IP组播成员也可以发送消息</p>
-</li>
-<li><p>Internet层次命名机制 名字空间 是树形的</p>
-</li>
-<li><p>浏览器组成 控制单元 客户单元 解释单元</p>
-</li>
-<li><p>IM中 音频聊天采用UDP  应用共享 比如白板 采用的是TCP</p>
-</li>
-<li><p>Sun- NFS</p>
-</li>
-<li><p>Bittorrent采用MIT开源的系统 最初没有DHT</p>
-</li>
-<li><p>CMIP  轮询中断 trap 事件报告采用 ROP方式</p>
-</li>
-<li><p>Ethernet 前导码 7b 原地址可以使用IP地址 Mac地址 物理地址 数据字段最短46 类型字段支出网络层协议类型</p>
-</li>
-<li><p>VLAN不可以用集线器进行组件 可以基于组播、IP、Mac、交换机</p>
-</li>
-<li><p>IP的特点 隐藏了低层次的网络细节 不指定网络互连的拓扑结构 同一的地址描述方法 不要求网络之间全互连</p>
-</li>
-<li><p>浏览器安全 要求站点来传证书 防止第三方偷看可以用SSL</p>
-</li>
-<li><p>P2P基于小世界 六度理论假设</p>
-</li>
-<li><p>Des 每轮操作都有置换和代还 最后一轮迭代输出64bit 56位秘钥长度</p>
-</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/19/ncre47/" data-id="cjfo0va9c000djpfyzh4ftbay" class="article-share-link">共有</a>
+      <a data-url="http://yoursite.com/2018/03/20/php-code-1/" data-id="cjg7ugt63000effm14oa0muqc" class="article-share-link">共有</a>
       
       
     </footer>
@@ -983,6 +965,10 @@
       <ul>
         
           <li>
+            <a href="/2018/04/20/weekend4/">4.7-4.20周记</a>
+          </li>
+        
+          <li>
             <a href="/2018/04/06/weekend3/">Weekend Log 4.6</a>
           </li>
         
@@ -996,10 +982,6 @@
         
           <li>
             <a href="/2018/03/20/mysql-acid/">MySQL 事务处理</a>
-          </li>
-        
-          <li>
-            <a href="/2018/03/20/autoloader/">自动加载以及Composer的实现</a>
           </li>
         
       </ul>
