@@ -14,12 +14,10 @@
 <meta property="og:site_name" content="GTX Ultimate">
 <meta property="og:description" content="Composer autoload_static.php报错（PHP54）原因初步定为php版本问题 下次运行composer update/install 的时候使用php5进行运行 防止生成优化class loader代码 可以改为composer 1.10版本以下进行使用 svn包含不到子文件夹问题子文件夹中包含.svn文件夹，删除之可以提交 kill &amp;amp; kill -9kill和k">
 <meta property="og:locale" content="ja">
-<meta property="og:image" content="http://ong7eqtw5.bkt.clouddn.com/Pasted%20Graphic%202.tiff">
-<meta property="og:updated_time" content="2018-04-20T11:00:35.000Z">
+<meta property="og:updated_time" content="2018-04-20T11:02:33.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="4.7-4.20周记">
 <meta name="twitter:description" content="Composer autoload_static.php报错（PHP54）原因初步定为php版本问题 下次运行composer update/install 的时候使用php5进行运行 防止生成优化class loader代码 可以改为composer 1.10版本以下进行使用 svn包含不到子文件夹问题子文件夹中包含.svn文件夹，删除之可以提交 kill &amp;amp; kill -9kill和k">
-<meta name="twitter:image" content="http://ong7eqtw5.bkt.clouddn.com/Pasted%20Graphic%202.tiff">
   
     <link rel="alternate" href="/atom.xml" title="GTX Ultimate" type="application/atom+xml">
   
@@ -131,36 +129,30 @@
 <p>生产服务器将打包文件，解包成本地的一个目录，再将运行路径的符号链接（symlink）指向这个目录，然后重新启动应用。这方面的部署工具有Ansible，Chef，Puppet等。</p>
 <p>4.6 回滚<br>一旦当前版本发生问题，就要回滚到上一个版本的构建结果。最简单的做法就是修改一下符号链接，指向上一个版本的目录。</p>
 <p>Jenkins 检查日程</p>
-<p><em>/3 </em> <em> </em> *</p>
-<h1 id="Yii请求流程"><a href="#Yii请求流程" class="headerlink" title="Yii请求流程"></a>Yii请求流程</h1><ol>
-<li>用户发出了访问 URL <a href="http://www.example.com/index.php?r=post/show&amp;id=1" target="_blank" rel="noopener">http://www.example.com/index.php?r=post/show&amp;id=1</a> 的请求， Web 服务器通过执行入口脚本 index.php 处理此请求。</li>
-<li>入口脚本创建了一个 应用 实例并执行。</li>
-<li>应用从一个叫做 request 的 应用组件 中获得了用户请求的详细信息。</li>
-<li>应用在一个名叫 urlManager 的应用组件的帮助下，决定请求的 控制器 和 动作 。在这个例子中，控制器是 post，它代表PostController 类； 动作是 show ，其实际含义由控制器决定。</li>
-<li>应用创建了一个所请求控制器的实例以进一步处理用户请求。控制器决定了动作 show 指向控制器类中的一个名为 actionShow 的方法。然后它创建并持行了与动作关联的过滤器（例如访问控制，基准测试）。 如果过滤器允许，动作将被执行。</li>
-<li>动作从数据库中读取一个 ID 为 1 的 Post 模型。</li>
-<li>动作通过 Post 模型渲染一个名为 show 的 视图。</li>
-<li>视图读取并显示 Post 模型的属性。</li>
-<li>视图执行一些 小物件。</li>
-<li>视图的渲染结果被插入一个 布局。</li>
-<li>动作完成视图渲染并将其呈现给用户。</li>
-</ol>
-<h1 id="如何确认自己是root"><a href="#如何确认自己是root" class="headerlink" title="如何确认自己是root"></a>如何确认自己是root</h1><p>sudo -s -&gt; no reply -&gt; root</p>
-<h1 id="saltStack"><a href="#saltStack" class="headerlink" title="saltStack"></a>saltStack</h1><p>远程运维工具</p>
-<p>salt ‘ip’ module.function ‘params &amp; commands’</p>
-<h1 id="lsyncd"><a href="#lsyncd" class="headerlink" title="lsyncd"></a>lsyncd</h1><p>TDB</p>
-<h1 id="事件驱动模型、单进程、多进程比较"><a href="#事件驱动模型、单进程、多进程比较" class="headerlink" title="事件驱动模型、单进程、多进程比较"></a>事件驱动模型、单进程、多进程比较</h1><p><img src="http://ong7eqtw5.bkt.clouddn.com/Pasted%20Graphic%202.tiff" alt="Alt text" title="进程模型比较"></p>
-<p>事件驱动编程是一种编程范式，这里程序的执行流由外部事件来决定。它的特点是包含一个事件循环，当外部事件发生时使用回调机制来触发相应的处理。另外两种常见的编程范式是（单线程）同步以及多线程编程。</p>
-<p>在单线程同步模型中，任务按照顺序执行。如果某个任务因为I/O而阻塞，其他所有的任务都必须等待，直到它完成之后它们才能依次执行。这种明确的执行顺序和串行化处理的行为是很容易推断得出的。如果任务之间并没有互相依赖的关系，但仍然需要互相等待的话这就使得程序不必要的降低了运行速度。</p>
-<p>在多线程版本中，这3个任务分别在独立的线程中执行。这些线程由操作系统来管理，在多处理器系统上可以并行处理，或者在单处理器系统上交错执行。这使得当某个线程阻塞在某个资源的同时其他线程得以继续执行。与完成类似功能的同步程序相比，这种方式更有效率，但程序员必须写代码来保护共享资源，防止其被多个线程同时访问。多线程程序更加难以推断，因为这类程序不得不通过线程同步机制如锁、可重入函数、线程局部存储或者其他机制来处理线程安全问题，如果实现不当就会导致出现微妙且令人痛不欲生的bug。</p>
-<p>在事件驱动版本的程序中，3个任务交错执行，但仍然在一个单独的线程控制中。当处理I/O或者其他昂贵的操作时，注册一个回调到事件循环中，然后当I/O操作完成时继续执行。回调描述了该如何处理某个事件。事件循环轮询所有的事件，当事件到来时将它们分配给等待处理事件的回调函数。这种方式让程序尽可能的得以执行而不需要用到额外的线程。事件驱动型程序比多线程程序更容易推断出行为，因为程序员不需要关心线程安全问题。</p>
-<h1 id="HAProxy"><a href="#HAProxy" class="headerlink" title="HAProxy"></a>HAProxy</h1><h1 id="curl-常用命令"><a href="#curl-常用命令" class="headerlink" title="curl 常用命令"></a>curl 常用命令</h1><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line">curl -o page.html http://www.linuxidc.com -o 将page存储下来</span><br><span class="line"></span><br><span class="line">curl -x 123.45.67.89:1080 -o page.html http://www.linuxidc.com -x 制定proxy和port</span><br><span class="line"></span><br><span class="line">curl -x 123.45.67.89:1080 -o page.html -D cookie0001.txt http://www.linuxidc.com  -D 存储COOKIE信息</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">curl -x 123.45.67.89:1080 -o page1.html -D cookie0002.txt -b cookie0001.txt http://www.linuxidc.com -b 将文件cookie取出并且使用</span><br><span class="line"></span><br><span class="line">-A 确定浏览器信息</span><br><span class="line"></span><br><span class="line">-e 设定Referer 就是从哪里来的链接</span><br><span class="line"></span><br><span class="line">curl一样可以下载文件</span><br><span class="line"></span><br><span class="line">curl -o php.php www.php.php/php.php</span><br><span class="line"></span><br><span class="line">-O 直接按照线上的文件名进行下载</span><br><span class="line"></span><br><span class="line">curl -O </span><br><span class="line"></span><br><span class="line"></span><br><span class="line">批量下载</span><br><span class="line"></span><br><span class="line">curl -O http://cgi2.tky.3web.ne.jp/~&#123;zzh,nick&#125;/[001-201].JPG</span><br><span class="line"></span><br><span class="line">curl -u FTP协议下载</span><br><span class="line"></span><br><span class="line">curl -u name:passed ftp://</span><br><span class="line"></span><br><span class="line">curl -d 以POST形式传输数据</span><br><span class="line"></span><br><span class="line">-H 一个个的http头</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><figcaption><span>* * * *```</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"># Yii请求流程</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">1. 用户发出了访问 URL http://www.example.com/index.php?r=post/show&amp;id=1 的请求， Web 服务器通过执行入口脚本 index.php 处理此请求。</span><br><span class="line">2. 入口脚本创建了一个 应用 实例并执行。</span><br><span class="line">3. 应用从一个叫做 request 的 应用组件 中获得了用户请求的详细信息。</span><br><span class="line">4. 应用在一个名叫 urlManager 的应用组件的帮助下，决定请求的 控制器 和 动作 。在这个例子中，控制器是 post，它代表PostController 类； 动作是 show ，其实际含义由控制器决定。</span><br><span class="line">5. 应用创建了一个所请求控制器的实例以进一步处理用户请求。控制器决定了动作 show 指向控制器类中的一个名为 actionShow 的方法。然后它创建并持行了与动作关联的过滤器（例如访问控制，基准测试）。 如果过滤器允许，动作将被执行。</span><br><span class="line">6. 动作从数据库中读取一个 ID 为 1 的 Post 模型。</span><br><span class="line">7. 动作通过 Post 模型渲染一个名为 show 的 视图。</span><br><span class="line">8. 视图读取并显示 Post 模型的属性。</span><br><span class="line">9. 视图执行一些 小物件。</span><br><span class="line">10. 视图的渲染结果被插入一个 布局。</span><br><span class="line">11. 动作完成视图渲染并将其呈现给用户。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># 如何确认自己是root</span><br><span class="line"></span><br><span class="line">sudo -s -&gt; no reply -&gt; root</span><br><span class="line"></span><br><span class="line"># saltStack</span><br><span class="line"></span><br><span class="line">远程运维工具</span><br><span class="line"></span><br><span class="line">salt ‘ip’ module.function ‘params &amp; commands’</span><br><span class="line"></span><br><span class="line"># lsyncd</span><br><span class="line"></span><br><span class="line">TDB</span><br><span class="line"></span><br><span class="line"># 事件驱动模型、单进程、多进程比较</span><br><span class="line"></span><br><span class="line">![Alt text](http://ong7eqtw5.bkt.clouddn.com/Pasted%20Graphic%202.tiff &quot;进程模型比较&quot;)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">事件驱动编程是一种编程范式，这里程序的执行流由外部事件来决定。它的特点是包含一个事件循环，当外部事件发生时使用回调机制来触发相应的处理。另外两种常见的编程范式是（单线程）同步以及多线程编程。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">在单线程同步模型中，任务按照顺序执行。如果某个任务因为I/O而阻塞，其他所有的任务都必须等待，直到它完成之后它们才能依次执行。这种明确的执行顺序和串行化处理的行为是很容易推断得出的。如果任务之间并没有互相依赖的关系，但仍然需要互相等待的话这就使得程序不必要的降低了运行速度。</span><br><span class="line"></span><br><span class="line">在多线程版本中，这3个任务分别在独立的线程中执行。这些线程由操作系统来管理，在多处理器系统上可以并行处理，或者在单处理器系统上交错执行。这使得当某个线程阻塞在某个资源的同时其他线程得以继续执行。与完成类似功能的同步程序相比，这种方式更有效率，但程序员必须写代码来保护共享资源，防止其被多个线程同时访问。多线程程序更加难以推断，因为这类程序不得不通过线程同步机制如锁、可重入函数、线程局部存储或者其他机制来处理线程安全问题，如果实现不当就会导致出现微妙且令人痛不欲生的bug。</span><br><span class="line"></span><br><span class="line">在事件驱动版本的程序中，3个任务交错执行，但仍然在一个单独的线程控制中。当处理I/O或者其他昂贵的操作时，注册一个回调到事件循环中，然后当I/O操作完成时继续执行。回调描述了该如何处理某个事件。事件循环轮询所有的事件，当事件到来时将它们分配给等待处理事件的回调函数。这种方式让程序尽可能的得以执行而不需要用到额外的线程。事件驱动型程序比多线程程序更容易推断出行为，因为程序员不需要关心线程安全问题。</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"># HAProxy</span><br><span class="line"></span><br><span class="line"># curl 常用命令</span><br></pre></td></tr></table></figure>
+<p>curl -o page.html <a href="http://www.linuxidc.com" target="_blank" rel="noopener">http://www.linuxidc.com</a> -o 将page存储下来</p>
+<p>curl -x 123.45.67.89:1080 -o page.html <a href="http://www.linuxidc.com" target="_blank" rel="noopener">http://www.linuxidc.com</a> -x 制定proxy和port</p>
+<p>curl -x 123.45.67.89:1080 -o page.html -D cookie0001.txt <a href="http://www.linuxidc.com" target="_blank" rel="noopener">http://www.linuxidc.com</a>  -D 存储COOKIE信息</p>
+<p>curl -x 123.45.67.89:1080 -o page1.html -D cookie0002.txt -b cookie0001.txt <a href="http://www.linuxidc.com" target="_blank" rel="noopener">http://www.linuxidc.com</a> -b 将文件cookie取出并且使用</p>
+<p>-A 确定浏览器信息</p>
+<p>-e 设定Referer 就是从哪里来的链接</p>
+<p>curl一样可以下载文件</p>
+<p>curl -o php.php www.php.php/php.php</p>
+<p>-O 直接按照线上的文件名进行下载</p>
+<p>curl -O </p>
+<p>批量下载</p>
+<p>curl -O <a href="http://cgi2.tky.3web.ne.jp/~{zzh,nick}/[001-201].JPG" target="_blank" rel="noopener">http://cgi2.tky.3web.ne.jp/~{zzh,nick}/[001-201].JPG</a></p>
+<p>curl -u FTP协议下载</p>
+<p>curl -u name:passed ftp://</p>
+<p>curl -d 以POST形式传输数据</p>
+<p>-H 一个个的http头</p>
+<p>```</p>
 <h1 id="KMP-敏感词"><a href="#KMP-敏感词" class="headerlink" title="KMP 敏感词"></a>KMP 敏感词</h1><p>TBD</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/20/weekend4/" data-id="cjg7ugt6c000nffm1ev7qt2jl" class="article-share-link">共有</a>
+      <a data-url="http://yoursite.com/2018/04/20/weekend4/" data-id="cjgu5ga1t000o2nfyj5e4y3ua" class="article-share-link">共有</a>
       
       
     </footer>
@@ -168,6 +160,15 @@
   
     
 <nav id="article-nav">
+  
+    <a href="/2018/05/06/weekend5/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">次の記事</strong>
+      <div class="article-nav-title">
+        
+          4.21-5.6周记
+        
+      </div>
+    </a>
   
   
     <a href="/2018/04/06/weekend3/" id="article-nav-older" class="article-nav-link-wrap">
@@ -196,7 +197,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">アーカイブ</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">4月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">3月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">2月 2018</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">5月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">4月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">3月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">2月 2018</a></li></ul>
     </div>
   </div>
 
@@ -207,6 +208,10 @@
     <h3 class="widget-title">最近の投稿</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/05/06/weekend5/">4.21-5.6周记</a>
+          </li>
         
           <li>
             <a href="/2018/04/20/weekend4/">4.7-4.20周记</a>
@@ -222,10 +227,6 @@
         
           <li>
             <a href="/2018/03/25/weekend1/">3.25周 一周拾遗</a>
-          </li>
-        
-          <li>
-            <a href="/2018/03/20/mysql-acid/">MySQL 事务处理</a>
           </li>
         
       </ul>
