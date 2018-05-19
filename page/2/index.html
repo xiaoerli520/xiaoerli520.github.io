@@ -69,6 +69,89 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-php-code-2" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/20/php-code-2/" class="article-date">
+  <time datetime="2018-03-20T03:19:22.000Z" itemprop="datePublished">2018-03-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/20/php-code-2/">PHP代码实现2 [从变量和数据的角度] 1</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a>数据类型</h1><p>1.静态类型语言，比如：C/Java等，在静态语言类型中，类型的检查是在&lt;编译&gt;(compile-time)确定的， 也就是说在运行时变量的类型是不会发生变化的。</p>
+<p>2.动态语言类型，比如：PHP，python等各种脚本语言，这类语言中的类型是在[运行时]确定的， 那么也就是说类型通常可以在运行时发生变化</p>
+<p>3.无类型语言，比如：汇编语言，汇编语言操作的是底层存储，他们对类型毫无感知。</p>
+<h1 id="PHP-8种变量类型"><a href="#PHP-8种变量类型" class="headerlink" title="PHP 8种变量类型"></a>PHP 8种变量类型</h1><p>String Int float Boolean Null Resource Object array</p>
+<p>在官方的PHP实现内部，所有变量使用同一种数据结构(zval)来保存，而这个结构同时表示PHP中的各种数据类型。 它不仅仅包含变量的值，也包含变量的类型。这就是PHP弱类型的核心。</p>
+<h2 id="PHP变量存储结构"><a href="#PHP变量存储结构" class="headerlink" title="PHP变量存储结构"></a>PHP变量存储结构</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">typedef struct _zval_struct zval;</span><br><span class="line">...</span><br><span class="line">struct _zval_struct &#123;</span><br><span class="line">    /* Variable information */</span><br><span class="line">    zvalue_value value;     /* value */ 变量值</span><br><span class="line">    zend_uint refcount__gc; // 引用计数 GC的时候用 默认1</span><br><span class="line">    zend_uchar type;    /* active type */ 变量类型</span><br><span class="line">    zend_uchar is_ref__gc; // 是否为引用 默认0</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>PS：在PHP5.3之后引入了新垃圾收集机制 则refcount -&gt; refcount_gc is_ref -&gt; is_ref_gc</p>
+<p>【注意 变量的值存在了zvalue_value这个struct中，那么也就是其的内存占用很玄学，也就是是用union 来巧妙的避开多内存占用】</p>
+<p>type:IS_NULL、IS_BOOL、IS_LONG、IS_DOUBLE、IS_STRING、IS_ARRAY、IS_OBJECT和IS_RESOURCE</p>
+<h2 id="PHP变量的值的存储"><a href="#PHP变量的值的存储" class="headerlink" title="PHP变量的值的存储"></a>PHP变量的值的存储</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">typedef union _zvalue_value &#123;</span><br><span class="line">    long lval;                  /* long value */</span><br><span class="line">    double dval;                /* double value */</span><br><span class="line">    struct &#123;						/*string value*/</span><br><span class="line">        char *val;</span><br><span class="line">        int len;</span><br><span class="line">    &#125; str;</span><br><span class="line">    HashTable *ht;              /* hash table value */</span><br><span class="line">    zend_object_value obj;</span><br><span class="line">&#125; zvalue_value;</span><br></pre></td></tr></table></figure>
+<p>这里使用联合体而不是用结构体是出于空间利用率的考虑，因为一个变量同时只能属于一种类型。 如果使用结构体的话将会不必要的浪费空间，而PHP中的所有逻辑都围绕变量来进行的，这样的话， 内存浪费将是十分大的。这种做法成本小但收益非常大。</p>
+<p>注意到字符串value中加入了int的 len， 这和MyIsam存储结构存储长度的原理是相同的，因为获取到字符串长度的时间复杂度是O(n),字符串在PHP操作中很频繁，为了节约时间开销，直接存储进来。是一种空间换时间的做法</p>
+<p>【哈希相关】</p>
+<p>通过合理设计的哈希函数，我们就能将key映射到合适的范围，因为我们的key空间可以很大(例如字符串key)， 在映射到一个较小的空间中时可能会出现两个不同的key映射被到同一个index上的情况， 这就是我们所说的出现了冲突。 目前解决hash冲突的方法主要有两种：链接法和开放寻址法。</p>
+<ul>
+<li>链接法通过使用一个链表来保存slot值的方式来解决冲突，也就是当不同的key映射到一个槽中的时候使用链表来保存这些值。 所以使用链接法是在最坏的情况下，也就是所有的key都映射到同一个槽中了，这样哈希表就退化成了一个链表， 这样的话操作链表的时间复杂度则成了O(n)，这样哈希表的性能优势就没有了， 所以选择一个合适的哈希函数是最为关键的。</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">typedef struct _Bucket /** 采用链接法解决哈希冲突的HashTable结构 最坏情况 O(n) **/</span><br><span class="line">&#123;</span><br><span class="line">    char *key;</span><br><span class="line">    void *value;</span><br><span class="line">    struct _Bucket *next;</span><br><span class="line">&#125; Bucket;</span><br><span class="line"> </span><br><span class="line">typedef struct _HashTable</span><br><span class="line">&#123;</span><br><span class="line">    int size;</span><br><span class="line">    int elem_num;</span><br><span class="line">    Bucket** buckets;</span><br><span class="line">&#125; HashTable;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>键(key)：用于操作数据的标示，例如PHP数组中的索引，或者字符串键等等。</li>
+<li>槽(slot/bucket)：哈希表中用于保存数据的一个单元，也就是数据真正存放的容器。</li>
+<li>哈希函数(hash function)：将key映射(map)到数据应该存放的slot所在位置的函数。</li>
+<li>哈希冲突(hash collision)：哈希函数将两个不同的key映射到同一个索引的情况。</li>
+</ul>
+<p>hash_Insert函数：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line">int hash_insert(HashTable *ht, char *key, void *value)</span><br><span class="line">&#123;</span><br><span class="line">    // check if we need to resize the hashtable</span><br><span class="line">    resize_hash_table_if_needed(ht);</span><br><span class="line"> </span><br><span class="line">    int index = HASH_INDEX(ht, key);</span><br><span class="line"> </span><br><span class="line">    Bucket *org_bucket = ht-&gt;buckets[index]; // 获得计算出来的index所在的bucket</span><br><span class="line">    Bucket *tmp_bucket = org_bucket;</span><br><span class="line"> </span><br><span class="line">    // check if the key-value exits already</span><br><span class="line">    while(tmp_bucket)</span><br><span class="line">    &#123;</span><br><span class="line">        if(strcmp(key, tmp_bucket-&gt;key) == 0)</span><br><span class="line">        &#123;</span><br><span class="line">            LOG_MSG(&quot;[update]\tkey: %s\n&quot;, key);</span><br><span class="line">            tmp_bucket-&gt;value = value;</span><br><span class="line"> </span><br><span class="line">            return SUCCESS; // 查看当前的key对应的value是否已经存在了，value是不允许重复的</span><br><span class="line">        &#125;</span><br><span class="line"> </span><br><span class="line">        tmp_bucket = tmp_bucket-&gt;next;</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    Bucket *bucket = (Bucket *)malloc(sizeof(Bucket)); 分配新的bucket的地址</span><br><span class="line"> </span><br><span class="line">    bucket-&gt;key   = key;</span><br><span class="line">    bucket-&gt;value = value;</span><br><span class="line">    bucket-&gt;next  = NULL;  进行相关bucket的赋值</span><br><span class="line"> </span><br><span class="line">    ht-&gt;elem_num += 1;    HashTable计数增加</span><br><span class="line"> </span><br><span class="line">    if(org_bucket != NULL)</span><br><span class="line">    &#123;</span><br><span class="line">        LOG_MSG(&quot;[collision]\tindex:%d key:%s\n&quot;, index, key); 出现冲突 </span><br><span class="line">        bucket-&gt;next = org_bucket; 将新的bucket放在index的第一位 后面进行顺延</span><br><span class="line">    &#125;</span><br><span class="line"> </span><br><span class="line">    ht-&gt;buckets[index]= bucket; </span><br><span class="line"> </span><br><span class="line">    LOG_MSG(&quot;[insert]\tindex:%d key:%s\tht(num:%d)\n&quot;,</span><br><span class="line">        index, key, ht-&gt;elem_num);</span><br><span class="line"> </span><br><span class="line">    return SUCCESS;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line">static int hash_resize(HashTable *ht)</span><br><span class="line">&#123;</span><br><span class="line">    // double the size</span><br><span class="line">    int org_size = ht-&gt;size;</span><br><span class="line">    ht-&gt;size = ht-&gt;size * 2;</span><br><span class="line">    ht-&gt;elem_num = 0; //后续重新插入，因为Double size之后 之前的冲突有可能被解开，所以重新Insert</span><br><span class="line"> </span><br><span class="line">    LOG_MSG(&quot;[resize]\torg size: %i\tnew size: %i\n&quot;, org_size, ht-&gt;size);</span><br><span class="line"> </span><br><span class="line">    Bucket **buckets = (Bucket **)calloc(ht-&gt;size, sizeof(Bucket *));</span><br><span class="line"> </span><br><span class="line">    Bucket **org_buckets = ht-&gt;buckets; 获取老的buckets</span><br><span class="line">    ht-&gt;buckets = buckets;// 新的table置为空</span><br><span class="line"> </span><br><span class="line">    int i = 0;</span><br><span class="line">    for(i=0; i &lt; org_size; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        Bucket *cur = org_buckets[i];</span><br><span class="line">        Bucket *tmp;</span><br><span class="line">        while(cur)</span><br><span class="line">        &#123;</span><br><span class="line">            // rehash: insert again</span><br><span class="line">            hash_insert(ht, cur-&gt;key, cur-&gt;value);</span><br><span class="line"> </span><br><span class="line">            // free the org bucket, but not the element</span><br><span class="line">            tmp = cur;</span><br><span class="line">            cur = cur-&gt;next;</span><br><span class="line">            free(tmp);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    free(org_buckets);</span><br><span class="line"> </span><br><span class="line">    LOG_MSG(&quot;[resize] done\n&quot;);</span><br><span class="line"> </span><br><span class="line">    return SUCCESS;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>数组是PHP中最常用，也是最强大变量类型，它可以存储其他类型的数据，而且提供各种内置操作函数。数组的存储相对于其他变量要复杂一些， 数组的值存储在zvalue_value.ht字段中，它是一个HashTable类型的数据。 PHP的数组使用哈希表来存储关联数据。哈希表是一种高效的键值对存储结构。PHP的哈希表实现中使用了两个数据结构HashTable和Bucket。 PHP所有的工作都由哈希表实现，在下节HashTable中将进行哈希表基本概念的介绍以及PHP的哈希表实现。（WOC PHP竟然用HashTable存储array，O(1)!）</p>
+<p>对象的存储：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">typedef struct _zend_object_value &#123;</span><br><span class="line">    zend_object_handle handle;  //  unsigned int类型，EG(objects_store).object_buckets的索引</span><br><span class="line">    zend_object_handlers *handlers;</span><br><span class="line">&#125; zend_object_value;</span><br></pre></td></tr></table></figure>
+<p>PHP的对象只有在运行时才会被创建，前面的章节介绍了EG宏，这是一个全局结构体用于保存在运行时的数据。 其中就包括了用来保存所有被创建的对象的对象池</p>
+<p>而object对象值内容的zend_object_handle域就是当前 对象在对象池中所在的索引，handlers字段则是将对象进行操作时的处理函数保存起来。 这个结构体及对象相关的类的结构_zend_class_entry，将在第五章作详细介绍</p>
+<h3 id="PHP-HashTable实现"><a href="#PHP-HashTable实现" class="headerlink" title="PHP HashTable实现"></a>PHP HashTable实现</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">typedef struct _hashtable &#123; </span><br><span class="line">    uint nTableSize;        // hash Bucket的大小，最小为8，以2x增长。</span><br><span class="line">    uint nTableMask;        // nTableSize-1 ， 索引取值的优化</span><br><span class="line">    uint nNumOfElements;    // hash Bucket中当前存在的元素个数，count()函数会直接返回此值 </span><br><span class="line">    ulong nNextFreeElement; // 下一个数字索引的位置</span><br><span class="line">    Bucket *pInternalPointer;   // 当前遍历的指针（foreach比for快的原因之一）</span><br><span class="line">    Bucket *pListHead;          // 存储数组头元素指针</span><br><span class="line">    Bucket *pListTail;          // 存储数组尾元素指针</span><br><span class="line">    Bucket **arBuckets;         // 存储hash数组</span><br><span class="line">    dtor_func_t pDestructor;    // 在删除元素时执行的回调函数，用于资源的释放</span><br><span class="line">    zend_bool persistent;       //指出了Bucket内存分配的方式。如果persisient为TRUE，则使用操作系统本身的内存分配函数为Bucket分配内存，否则使用PHP的内存分配函数。</span><br><span class="line">    unsigned char nApplyCount; // 标记当前hash Bucket被递归访问的次数（防止多次递归）</span><br><span class="line">    zend_bool bApplyProtection;// 标记当前hash桶允许不允许多次访问，不允许时，最多只能递归3次</span><br><span class="line">#if ZEND_DEBUG</span><br><span class="line">    int inconsistent;</span><br><span class="line">#endif</span><br><span class="line">&#125; HashTable;</span><br></pre></td></tr></table></figure>
+<p>PS：mask的作用就是将哈希值映射到槽位所能存储的索引范围内。 例如：某个key的索引值是21， 哈希表的大小为8，则mask为7，则求与时的二进制表示为： 10101 &amp; 111 = 101 也就是十进制的5。 因为2的整数次方-1的二进制比较特殊：后面N位的值都是1，这样比较容易能将值进行映射， 如果是普通数字进行了二进制与之后会影响哈希值的结果。那么哈希函数计算的值的平均分布就可能出现影响。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">typedef struct bucket &#123;</span><br><span class="line">    ulong h;            // 对char *key进行hash后的值，或者是用户指定的数字索引值</span><br><span class="line">    uint nKeyLength;    // hash关键字的长度，如果数组索引为数字，此值为0</span><br><span class="line">    void *pData;        // 指向value，一般是用户数据的副本，如果是指针数据，则指向pDataPtr</span><br><span class="line">    void *pDataPtr;     //如果是指针数据，此值会指向真正的value，同时上面pData会指向此值</span><br><span class="line">    struct bucket *pListNext;   // 整个hash表的下一元素</span><br><span class="line">    struct bucket *pListLast;   // 整个哈希表该元素的上一个元素</span><br><span class="line">    struct bucket *pNext;       // 存放在同一个hash Bucket内的下一个元素</span><br><span class="line">    struct bucket *pLast;       // 同一个哈希bucket的上一个元素</span><br><span class="line">    // 保存当前值所对于的key字符串，这个字段只能定义在最后，实现变长结构体</span><br><span class="line">    char arKey[1];              // 是变长结构体 在插入的时候进行单独申请空间就可以</span><br><span class="line">&#125; Bucket;</span><br></pre></td></tr></table></figure>
+<p>PS：如上面各字段的注释。h字段保存哈希表key哈希后的值。这里保存的哈希值而不是在哈希表中的索引值， 这是因为索引值和哈希表的容量有直接关系，如果哈希表扩容了，那么这些索引还得重新进行哈希在进行索引映射， 这也是一种优化手段。</p>
+<p>在PHP数组中如果索引字符串可以被转换成数字也会被转换成数字索引。 所以在PHP中例如’10’，’11’这类的字符索引和数字索引10， 11没有区别。</p>
+<p>HashTable的操作接口常见：</p>
+<ul>
+<li>初始化操作，例如zend_hash_init()函数，用于初始化哈希表接口，分配空间等。</li>
+<li>查找，插入，删除和更新操作接口，这是比较常规的操作。</li>
+<li>迭代和循环，这类的接口用于循环对哈希表进行操作。</li>
+<li>复制，排序，倒置和销毁等操作。</li>
+</ul>
+<p>PS：在PHP中不管是对数组的添加操作（zend_hash_add），还是对数组的更新操作（zend_hash_update）， 其最终都是调用_zend_hash_add_or_update函数完成，这在面向对象编程中相当于两个公有方法和一个公共的私有方法的结构， 以实现一定程度上的代码复用。</p>
+<h3 id="PHP-List链表实现"><a href="#PHP-List链表实现" class="headerlink" title="PHP List链表实现"></a>PHP List链表实现</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">typedef struct _zend_llist_element &#123;</span><br><span class="line">    struct _zend_llist_element *next;</span><br><span class="line">    struct _zend_llist_element *prev;</span><br><span class="line">    char data[1]; /* Needs to always be last in the struct */</span><br><span class="line">&#125; zend_llist_element;</span><br><span class="line"> </span><br><span class="line">typedef struct _zend_llist &#123;</span><br><span class="line">    zend_llist_element *head;</span><br><span class="line">    zend_llist_element *tail;</span><br><span class="line">    size_t count;</span><br><span class="line">    size_t size;</span><br><span class="line">    llist_dtor_func_t dtor;</span><br><span class="line">    unsigned char persistent;</span><br><span class="line">    zend_llist_element *traverse_ptr;</span><br><span class="line">&#125; zend_llist;</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">ZEND_API void zend_llist_add_element(zend_llist *l, void *element) // List插入操作</span><br><span class="line">&#123;</span><br><span class="line">    zend_llist_element *tmp = pemalloc(sizeof(zend_llist_element)+l-&gt;size-1, l-&gt;persistent);</span><br><span class="line"> </span><br><span class="line">    tmp-&gt;prev = l-&gt;tail;</span><br><span class="line">    tmp-&gt;next = NULL;</span><br><span class="line">    if (l-&gt;tail) &#123;</span><br><span class="line">        l-&gt;tail-&gt;next = tmp;</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        l-&gt;head = tmp;</span><br><span class="line">    &#125;</span><br><span class="line">    l-&gt;tail = tmp;</span><br><span class="line">    memcpy(tmp-&gt;data, element, l-&gt;size);</span><br><span class="line"> </span><br><span class="line">    ++l-&gt;count;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>PS：PHP中很多的函数都会有*_ex()以及不带ex两个版本的函数，这主要是为了方便使用， 和上面的代码一样，ex版本的通常是一个功能较全或者可选参数较多的版本， 而在代码中很多地方默认的参数值都一样，为了方便使用，再封装一个普通版本。</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/20/php-code-2/" data-id="cjhd6s61a000if9fyhqty9hi3" class="article-share-link">共有</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-php-code-1" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/03/20/php-code-1/" class="article-date">
@@ -158,7 +241,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/20/php-code-1/" data-id="cjgu5ga1m000g2nfyo3mhykqx" class="article-share-link">共有</a>
+      <a data-url="http://yoursite.com/2018/03/20/php-code-1/" data-id="cjhd6s613000cf9fy291u2bgu" class="article-share-link">共有</a>
       
       
     </footer>
@@ -276,7 +359,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/19/ncre47/" data-id="cjgu5ga1k000d2nfyphmwsb58" class="article-share-link">共有</a>
+      <a data-url="http://yoursite.com/2018/03/19/ncre47/" data-id="cjhd6s611000bf9fyf7h634bg" class="article-share-link">共有</a>
       
       
     </footer>
@@ -331,7 +414,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/19/interview-xiaomi/" data-id="cjgu5ga1c00062nfywhl0w5ew" class="article-share-link">共有</a>
+      <a data-url="http://yoursite.com/2018/03/19/interview-xiaomi/" data-id="cjhd6s60t0005f9fys244z806" class="article-share-link">共有</a>
       
       
     </footer>
@@ -381,7 +464,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/15/eight/" data-id="cjgu5ga1a00042nfynxha6ezf" class="article-share-link">共有</a>
+      <a data-url="http://yoursite.com/2018/03/15/eight/" data-id="cjhd6s60s0004f9fyygo9kl7p" class="article-share-link">共有</a>
       
       
     </footer>
@@ -425,7 +508,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/15/shooting/" data-id="cjgu5ga1p000j2nfydpt011r6" class="article-share-link">共有</a>
+      <a data-url="http://yoursite.com/2018/03/15/shooting/" data-id="cjhd6s619000hf9fy91rdi42i" class="article-share-link">共有</a>
       
       
     </footer>
@@ -572,7 +655,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/14/ncre46/" data-id="cjgu5ga1i000b2nfypv9u84vp" class="article-share-link">共有</a>
+      <a data-url="http://yoursite.com/2018/03/14/ncre46/" data-id="cjhd6s614000df9fyqqsmb3p8" class="article-share-link">共有</a>
       
       
     </footer>
@@ -712,7 +795,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/13/ncre45/" data-id="cjgu5ga1j000c2nfyylorg15d" class="article-share-link">共有</a>
+      <a data-url="http://yoursite.com/2018/03/13/ncre45/" data-id="cjhd6s615000ef9fy0r3q5j4x" class="article-share-link">共有</a>
       
       
     </footer>
@@ -863,7 +946,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/12/ncre44/" data-id="cjgu5ga1f000a2nfyueu5d9l9" class="article-share-link">共有</a>
+      <a data-url="http://yoursite.com/2018/03/12/ncre44/" data-id="cjhd6s60y0009f9fypichig4f" class="article-share-link">共有</a>
       
       
     </footer>
@@ -1009,147 +1092,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/11/ncre43/" data-id="cjgu5ga1d00072nfym8dmrl0u" class="article-share-link">共有</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-ncre42" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/08/ncre42/" class="article-date">
-  <time datetime="2018-03-08T12:22:26.000Z" itemprop="datePublished">2018-03-08</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/08/ncre42/">ncre4 网络工程师 day2</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="操作系统"><a href="#操作系统" class="headerlink" title="操作系统"></a>操作系统</h1><ul>
-<li><p>计算机整体设计结构 整体结构 层次结构 微内核结构(客户机/服务器结构)</p>
-</li>
-<li><p>用户程序在用户态下使用特权指令而引起的中断是 访管中断 而 溢出中断属于异常</p>
-</li>
-<li><p>指令错属于CPU错误 不属于IO中断 设备出错 数据传送完毕 键盘输入是可以的</p>
-</li>
-<li><p>Linux支持的状态：运行状态， 可中断睡眠状态， 不可中断睡眠状态， 暂停状态， 不可交互睡眠状态， 死亡状态， 僵死状态， 僵死撤销状态</p>
-</li>
-<li><p>Fork之后后面的不执行</p>
-</li>
-<li><p>新创建的进程进入就绪队列不会引起新进程的调度</p>
-</li>
-<li><p>管程是实现进程同步的有效工具 通常用来管理资源 可以提升代码可读性</p>
-</li>
-<li><p>动态地址映射方式向内存装入程序的时候 地址转换发生在每条命令执行的时刻</p>
-</li>
-<li><p>加快内存分配 应该按空闲区大小递增顺序排列</p>
-</li>
-<li><p>页式存储管理方案 逻辑地址32bit  内存分块pow(2, 10) 用户程序分成 pow(2, (32 - 10))页</p>
-</li>
-<li><p>虚拟存储空间受到计算机位宽的限制</p>
-</li>
-<li><p>打开文件的时候所做的工作：检查文件以及对应的控制块是否已经调入内存 检查操作合法性 返回给用户一个文件描述符</p>
-</li>
-<li><p>每个索引可以放100个地址 一级可以放100个 二级可以放100 * 100个 则全加起来就是10 + 100 + 10000</p>
-</li>
-<li><p>影响磁盘读写性能的  寻道时间main 旋转延时 传输时间</p>
-</li>
-<li><p>设备按信息交换单位进行分类 可以分为块设备和字符设备</p>
-</li>
-<li><p>缓冲池着重考虑进程同步</p>
-</li>
-<li><p>进程饥饿 进程的优先级较低而长时间得不到调度</p>
-</li>
-<li><p>银行家算法是对死锁的避免</p>
-</li>
-<li><p>死锁的定义 当且仅当当前状态的资源分配图是不可完全化简的</p>
-</li>
-<li><p>进程的必要组成成分是 进程控制块 数据 指令代码</p>
-</li>
-<li><p>每个线程拥有独立的栈， 不拥有独立的地址空间</p>
-</li>
-<li><p>PV问题：P申请过资源 资源为1 且 -1 PV也就是rc = rc + 1之类的 PV原语不可以改变顺序</p>
-</li>
-<li><p>操作系统存储管理方法，存在碎片的是动态分区 段氏分区</p>
-</li>
-<li><p>虚拟页式存储管理系统中，每个页表项必须包含的 页框号 有效位 修改位 访问位</p>
-</li>
-<li><p>为了保证文件系统文件安全，可以采用定时备份 设置文件访问控制列表</p>
-</li>
-<li><p>FAT 是指Windows的File Allocation Table 文件分配表 使用十六位表示蹙号 文件物理结构是链接结构</p>
-</li>
-<li><p>IO软件的层次结构 用户应用层 设备独立层 设备驱动层 中断处理层</p>
-</li>
-<li><p>计算机死锁 进程推进不当 资源分配不当</p>
-</li>
-</ul>
-<h1 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a>计算机网络</h1><ul>
-<li><p>801.11ae是万兆以太网 801.11z是1G 802.11ac  54mbps  802.11b 11mbps</p>
-</li>
-<li><p>以太网中前导码字段长度 56位 7比特</p>
-</li>
-<li><p>以太网帧长 64-1518B</p>
-</li>
-<li><p>IP互联网中主机使用同一的物理地址表示方法是错误的</p>
-</li>
-<li><p>IP数据报中 如果偏移字段值为十进制数100 那么位置偏移量为800字节</p>
-</li>
-<li><p>P2P网络的主要结构类型分为集中式 分布式结构化 分布式非结构化 混合式</p>
-</li>
-<li><p>DNS资源种类 MX 交换机 A 主机 SOA 授权开始 CNAME 域名、别名</p>
-</li>
-<li><p>FTP模式 主动模式和被动模式</p>
-</li>
-<li><p>电子邮件系统使用base64编码的主要目的是将二进制码转化为ascii码</p>
-</li>
-<li><p>Telnet中使用nvt的目的是屏蔽不同用户终端格式差异</p>
-</li>
-<li><p>mSN使用MSNP协议 AOL采用OSCAR协议 Google Talk采用XMPP XMPP采用简单客户端 体系结构和Email类似 采用分布式非P2P协议</p>
-</li>
-<li><p>BT下载 tracker存储用户信息 最早的P2P 共享系统是Napster</p>
-</li>
-<li><p>SNMP协议已经超越了TCPIP协议 再上一层 第一部协议并没有充分考虑安全性 MIB集中存储于代理软件 收集数据采用中断和轮询</p>
-</li>
-<li><p>ElGamal基于椭圆曲线的公钥密码体制 生成密文长度是原文的2倍</p>
-</li>
-<li><p>X.509是由ITU和IETF共同制定的协议 顺序号是证书的唯一标识 发行者名用DN格式的[RFC 2222]标识</p>
-</li>
-<li><p>Linux不是Unix的一个变种 由编程爱好者维护</p>
-</li>
-<li><p>无线局域网可以采用跳频扩频通信技术</p>
-</li>
-<li><p>Gigabit以太网 采用和以太网一样的帧格式 也可以使用双绞线进行连接</p>
-</li>
-<li><p>RIP采用向量-距离算法、OSPF采用链路-状态算法 OSPF比RIP收敛快 RIP比OSPF配置算法简单 RIP中的距离以跳数计算</p>
-</li>
-<li><p>提高域名解析效率的方法 从本地域名服务器开始解析 在域名服务器中使用高速缓存 在客户机使用高速缓存</p>
-</li>
-<li><p>VoIP 网络电话 中的网守 是网络中消息控制中心 可以用来确定网关地址 可以和网关结合在一起 可以进行计费管理</p>
-</li>
-<li><p>主动攻击 重放 篡改 拒绝服务 伪装 被动攻击 监控 流量分析</p>
-</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/08/ncre42/" data-id="cjgu5ga1e00092nfygpzwllou" class="article-share-link">共有</a>
+      <a data-url="http://yoursite.com/2018/03/11/ncre43/" data-id="cjhd6s60x0008f9fyayzoej6l" class="article-share-link">共有</a>
       
       
     </footer>
@@ -1195,6 +1138,10 @@
       <ul>
         
           <li>
+            <a href="/2018/05/19/which-str-concat-is-fastest/">PHP-不同Str 拼接方法性能对比</a>
+          </li>
+        
+          <li>
             <a href="/2018/05/06/weekend5/">4.21-5.6周记</a>
           </li>
         
@@ -1208,10 +1155,6 @@
         
           <li>
             <a href="/2018/03/30/weekend2/">3.30一周拾遗</a>
-          </li>
-        
-          <li>
-            <a href="/2018/03/25/weekend1/">3.25周 一周拾遗</a>
           </li>
         
       </ul>
