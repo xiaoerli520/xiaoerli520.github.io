@@ -69,6 +69,99 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-php-code-3" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/20/php-code-3/" class="article-date">
+  <time datetime="2018-03-20T05:29:59.000Z" itemprop="datePublished">2018-03-20</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/20/php-code-3/">PHP代码实现2 [从变量和数据的角度] 2</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="常量"><a href="#常量" class="headerlink" title="常量"></a>常量</h1><h3 id="常量的数据结构"><a href="#常量的数据结构" class="headerlink" title="常量的数据结构"></a>常量的数据结构</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">typedef struct _zend_constant &#123;</span><br><span class="line">    zval value; /* zval结构，PHP内部变量的存储结构，在第一小节有说明 */</span><br><span class="line">    int flags;  /* 常量的标记如 CONST_PERSISTENT | CONST_CS */</span><br><span class="line">    char *name; /* 常量名称 */</span><br><span class="line">    uint name_len;  </span><br><span class="line">    int module_number;  /* 模块号 */</span><br><span class="line">&#125; zend_constant;</span><br></pre></td></tr></table></figure>
+<p>PHP对于常量的名称在定义时其实是没有所谓的限制</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">define(&apos;^_^&apos;, &apos;smile&apos;);</span><br><span class="line"> </span><br><span class="line">if (defined(&apos;^_^&apos;)) &#123;</span><br><span class="line">    echo &apos;yes&apos;;</span><br><span class="line">&#125;else&#123;</span><br><span class="line">    echo &apos;no&apos;;</span><br><span class="line">&#125;</span><br><span class="line">//$var = ^_^;   //语法错误</span><br><span class="line">$var = constant(&quot;^_^&quot;);</span><br></pre></td></tr></table></figure>
+<p>通过defined函数测试表示，^_^这个常量已经定义好，这样的常量无法直接调用， 只能使用constant()方法来获取到，否则在语法解析时会报错，因为它不是一个合法的标示符。</p>
+<h3 id="常量的等级"><a href="#常量的等级" class="headerlink" title="常量的等级"></a>常量的等级</h3><p>除了CONST_CS标记，常量的flags字段通常还可以用CONST_PERSISTENT和CONST_CT_SUBST。</p>
+<p>CONST_PERSISTENT表示这个常量需要持久化。这里的持久化内存申请时的持久化是一个概念， 非持久常量会在请求结束时释放该常量，如果读者还不清楚PHP的生命周期，可以参考， PHP生命周期这一小节，也就是说， [如果是非持久常量，会在RSHUTDOWN阶段就将该常量释放，否则只会在MSHUTDOWN阶段将内存释放]， 在用户空间，也就是用户定义的常量都是非持久化的，通常扩展和内核定义的常量会设置为持久化， 因为如果常量被释放了，而下次请求又需要使用这个常量，该常量就必须在请求时初始化一次， 而对于常量这些不变的量来说就是个没有意义的重复计算。</p>
+<p>通过define()函数定义的常量的模块编号都是PHP_USER_CONSTANT，这表示是用户定义的常量。 除此之外我们在平时使用较多的常量：如错误报告级别E_ALL, E_WARNING等常量就有点不同了。 这些是PHP内置定义的常量，他们属于标准常量。</p>
+<p>标准常量注册操作： php_module_startup() -&gt; zend_startup() -&gt; zend_register_standard_constants()]</p>
+<h3 id="魔术常量-随着代码的位置而改变"><a href="#魔术常量-随着代码的位置而改变" class="headerlink" title="魔术常量 随着代码的位置而改变"></a>魔术常量 随着代码的位置而改变</h3><p>[PHP已经在词法解析时将这些常量换成了对应的值]</p>
+<p>几个 PHP 的“魔术常量”<br>名称    说明<br>__LINE__    文件中的当前行号</p>
+<p>__FILE__    文件的完整路径和文件名。如果用在被包含文件中，则返回被包含的文件名。自 PHP 4.0.2 起，FILE 总是包含一个绝对路径（如果是符号连接，则是解析后的绝对路径），而在此之前的版本有时会包含一个相对路径。</p>
+<p>__DIR__    文件所在的目录。如果用在被包括文件中，则返回被包括的文件所在的目录。它等价于 dirname(FILE)。除非是根目录，否则 目录中名不包括末尾的斜杠。（PHP 5.3.0中新增）</p>
+<p>__FUNCTION__    函数名称（PHP 4.3.0 新加）。自 PHP 5 起本常量返回该函数被定义时的名字（区分大小写）。在 PHP 4 中该值总是小写&gt; 字母的</p>
+<p>__CLASS__    类的名称（PHP 4.3.0 新加）。自 PHP 5 起本常量返回该类被定义时的名字（区分大小写）。在 PHP 4 中该值总是小写字母的</p>
+<p>__METHOD__    类的方法名（PHP 5.0.0 新加）。返回该方法被定义时的名字（区分大小写）。</p>
+<p>__NAMESPACE__    当前命名空间的名称（大小写敏感）。这个常量是在编译时定义的（PHP 5.3.0 新增）</p>
+<p>前面有个比较特殊的地方，当func_name不存在时，<strong>FUNCTION</strong>被替换成空字符串， 你可能会想，怎么会有变量名不存在的方法呢，这里并不是匿名方法，匿名方法的function_name 并不是空的，而是:”{closure}”, 有兴趣的读者可以去代码找找在那里给定义了。 </p>
+<h3 id="预定义变量"><a href="#预定义变量" class="headerlink" title="预定义变量"></a>预定义变量</h3><p>在PHP脚本执行的时候，用户全局变量(在用户空间显式定义的变量)会保存在一个HashTable数据类型的符号表(symbol_table)中， 而我们用得非常多的在全局范围内有效的变量却与这些用户全局变量不同。 例如:$_GET，$_POST，$_SERVER，$_FILES等变量，我们并没有在程序中定义这些变量，并且这些变量也同样保存在符号表中， 从这些表象我们不难得出结论：[PHP是在脚本运行之前就将这些特殊的变量加入到了符号表。] 在请求初始化阶段 RINIT</p>
+<h3 id="变量赋值"><a href="#变量赋值" class="headerlink" title="变量赋值"></a>变量赋值</h3><h4 id="赋值左值存在引用-且左值不等于右值-MMP-这是COW-写时复制啊"><a href="#赋值左值存在引用-且左值不等于右值-MMP-这是COW-写时复制啊" class="headerlink" title="赋值左值存在引用 且左值不等于右值 MMP 这是COW 写时复制啊"></a>赋值左值存在引用 且左值不等于右值 MMP 这是COW 写时复制啊</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">$a = 10;</span><br><span class="line">$b = &amp;$a;</span><br><span class="line"> </span><br><span class="line">xdebug_debug_zval(&apos;a&apos;);</span><br><span class="line"> </span><br><span class="line">$a = 20;</span><br><span class="line">xdebug_debug_zval(&apos;a&apos;);</span><br></pre></td></tr></table></figure>
+<p>此时Zend engine的实现行动</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">if (PZVAL_IS_REF(variable_ptr)) &#123; // 如果is_ref_gc != 0</span><br><span class="line">    if (variable_ptr!=value) &#123; // 且右值 ！= 左值</span><br><span class="line">        zend_uint refcount = Z_REFCOUNT_P(variable_ptr); 存储refcount</span><br><span class="line"> </span><br><span class="line">        garbage = *variable_ptr;  将老值保存</span><br><span class="line">        *variable_ptr = *value;   赋予新的右值</span><br><span class="line">        Z_SET_REFCOUNT_P(variable_ptr, refcount);  设置新的refcount</span><br><span class="line">        Z_SET_ISREF_P(variable_ptr);    设置新的is ref</span><br><span class="line">        if (!is_tmp_var) &#123; </span><br><span class="line">            zendi_zval_copy_ctor(*variable_ptr);</span><br><span class="line">        &#125;</span><br><span class="line">        zendi_zval_dtor(garbage);</span><br><span class="line">        return variable_ptr;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>COW介绍: 这是一种推迟内存复制带来的内存管理优化，而当变量的值发生变化时，才会进行重新开辟内存空间，这个机制我们称为写时复制机制</p>
+<p>EG：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$i = 4;   //内核创建一个zval指针，并且为其以堆的方式开辟空间，让指针指向这个空间，将zval中的成员引用计数置为1，类型标记为整形，并且申请一个zvalue_value指针，同样以堆的方式以其开辟空间,同时将该联合体中的lval赋值为4,并且在symbal_table的hash表中记录变量i和zval指针的映射关系</span><br><span class="line">$j = $i;   //没有在申请内存空间，在zval的成员中引用计数标记为2</span><br><span class="line">$j = 5;   //内核重新创建zval指针，重复下上面的步骤，我就不重复说明了，重点是将旧的zval引用计数标记为1</span><br></pre></td></tr></table></figure>
+<h4 id="赋值的左值不存在引用，左值的引用计数为1，左值等于右值"><a href="#赋值的左值不存在引用，左值的引用计数为1，左值等于右值" class="headerlink" title="赋值的左值不存在引用，左值的引用计数为1，左值等于右值"></a>赋值的左值不存在引用，左值的引用计数为1，左值等于右值</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$a = 10;</span><br><span class="line">$a = $a; // 引用计数经历了+1 -1的过程</span><br></pre></td></tr></table></figure>
+<p>Zend engine的行为：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">if (Z_DELREF_P(variable_ptr)==0) &#123;  //  引用计数减一操作</span><br><span class="line">        if (!is_tmp_var) &#123;</span><br><span class="line">            if (variable_ptr==value) &#123;</span><br><span class="line">                Z_ADDREF_P(variable_ptr);   //  引用计数加一操作</span><br><span class="line">            &#125;</span><br></pre></td></tr></table></figure>
+<h4 id="赋值的左值不存在引用，左值的引用计数为1，右值存在引用"><a href="#赋值的左值不存在引用，左值的引用计数为1，右值存在引用" class="headerlink" title="赋值的左值不存在引用，左值的引用计数为1，右值存在引用"></a>赋值的左值不存在引用，左值的引用计数为1，右值存在引用</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">$a = 10;</span><br><span class="line">$b = &amp;$a;</span><br><span class="line">$c = $a;</span><br></pre></td></tr></table></figure>
+<p>这里的$c = $a;的操作就是我们所示的第三种情况。 对于这种情况，ZEND内核直接创建一个新的zval容器，左值的值为右值，并且左值的引用计数为1。 也就是说，这种情形$c不会与$a指向同一个zval。 </p>
+<h4 id="赋值的左值不存在引用，左值的引用计数为1，右值不存在引用"><a href="#赋值的左值不存在引用，左值的引用计数为1，右值不存在引用" class="headerlink" title="赋值的左值不存在引用，左值的引用计数为1，右值不存在引用"></a>赋值的左值不存在引用，左值的引用计数为1，右值不存在引用</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">$a = 10;</span><br><span class="line">$c = $a;</span><br></pre></td></tr></table></figure>
+<p>这时，右值的引用计数加上，一般情况下，会对左值进行垃圾收集操作，将其移入垃圾缓冲池。垃圾缓冲池的功能是在PHP5.3后才有的。 </p>
+<h4 id="情况五：赋值的左值不存在引用，左值的引用计数为大于0，右值存在引用，并且引用计数大于0"><a href="#情况五：赋值的左值不存在引用，左值的引用计数为大于0，右值存在引用，并且引用计数大于0" class="headerlink" title="情况五：赋值的左值不存在引用，左值的引用计数为大于0，右值存在引用，并且引用计数大于0"></a>情况五：赋值的左值不存在引用，左值的引用计数为大于0，右值存在引用，并且引用计数大于0</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$a = 10;</span><br><span class="line">$b = $a;</span><br><span class="line">$va = 20;</span><br><span class="line">$vb = &amp;$va;</span><br><span class="line"> </span><br><span class="line">$a = $va;</span><br></pre></td></tr></table></figure>
+<p>最后一个操作就是我们的情况五。 使用xdebug看引用计数发现，最终$a变量的引用计数为1，$va变量的引用计数为2，并且$va存在引用。</p>
+<h3 id="变量销毁"><a href="#变量销毁" class="headerlink" title="变量销毁"></a>变量销毁</h3><p>unset()是一个语法结构， 根据变量不同出发不同的操作</p>
+<p>程序会先获取目标符号表，这个符号表是一个HashTable，然后将我们需要unset掉的变量从这个HashTable中删除。 如果对HashTable的元素删除操作成功，程序还会对EX(CVs)内存储的值进行清空操作。 以缓存机制来解释，在删除原始数据后，程序也会删除相对应的缓存内容，以免用户获取到脏数据。</p>
+<h3 id="变量作用域"><a href="#变量作用域" class="headerlink" title="变量作用域"></a>变量作用域</h3><p>对于全局变量，Zend引擎有一个_zend_executor_globals结构，该结构中的symbol_table就是全局符号表， 其中保存了在顶层作用域中的变量。</p>
+<p>同样，函数或者对象的方法在被调用时会创建active_symbol_table来保存局部变量。</p>
+<p>函数中的局部变量就存储在_zend_execute_data的symbol_table中，在执行当前函数的op_array时， 全局zend_executor_globals中的active_symbol_table会指向当前_zend_execute_data中的symbol_table。</p>
+<h3 id="数据类型转换"><a href="#数据类型转换" class="headerlink" title="数据类型转换"></a>数据类型转换</h3><ol>
+<li><p>直接的变量赋值操作</p>
+</li>
+<li><p>运算式结果对变量的赋值操作</p>
+</li>
+<li><p>强制类型转换</p>
+</li>
+</ol>
+<ul>
+<li>允许进行强制类型转换的类型</li>
+</ul>
+<p>(int), (integer) 转换为整型</p>
+<p>(bool), (boolean) 转换为布尔类型</p>
+<p>(float), (double) 转换为浮点类型</p>
+<p>(string) 转换为字符串</p>
+<p>(array) 转换为数组</p>
+<p>(object) 转换为对象</p>
+<p>(unset) 转换为NULL </p>
+<p>（unset）\$a(仅仅是类型转换为了null) != unset($a)</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/20/php-code-3/" data-id="cjhkht67s000g2wm1aonzxk9a" class="article-share-link">共有</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-php-code-2" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/03/20/php-code-2/" class="article-date">
@@ -142,7 +235,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/20/php-code-2/" data-id="cjhd7ranw000eubfyr1rexf6t" class="article-share-link">共有</a>
+      <a data-url="http://yoursite.com/2018/03/20/php-code-2/" data-id="cjhkht67q000f2wm189mgay4v" class="article-share-link">共有</a>
       
       
     </footer>
@@ -241,7 +334,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/20/php-code-1/" data-id="cjhd7ranv000dubfyzxhn0s02" class="article-share-link">共有</a>
+      <a data-url="http://yoursite.com/2018/03/20/php-code-1/" data-id="cjhkht67p000e2wm1zkwlx98l" class="article-share-link">共有</a>
       
       
     </footer>
@@ -359,7 +452,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/19/ncre47/" data-id="cjhd7rant000cubfye5p1ujju" class="article-share-link">共有</a>
+      <a data-url="http://yoursite.com/2018/03/19/ncre47/" data-id="cjhkht67f000b2wm1l6zj2cza" class="article-share-link">共有</a>
       
       
     </footer>
@@ -414,7 +507,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/19/interview-xiaomi/" data-id="cjhd7rank0006ubfyyzfei18p" class="article-share-link">共有</a>
+      <a data-url="http://yoursite.com/2018/03/19/interview-xiaomi/" data-id="cjhkht66x00052wm11bjwyeat" class="article-share-link">共有</a>
       
       
     </footer>
@@ -464,7 +557,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/15/eight/" data-id="cjhd7rang0003ubfyvbtvvb2o" class="article-share-link">共有</a>
+      <a data-url="http://yoursite.com/2018/03/15/eight/" data-id="cjhkht66u00042wm1b9lce7f0" class="article-share-link">共有</a>
       
       
     </footer>
@@ -508,7 +601,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/15/shooting/" data-id="cjhd7rao0000hubfyth2r9gv1" class="article-share-link">共有</a>
+      <a data-url="http://yoursite.com/2018/03/15/shooting/" data-id="cjhkht683000k2wm1omx7uibj" class="article-share-link">共有</a>
       
       
     </footer>
@@ -655,7 +748,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/14/ncre46/" data-id="cjhd7rans000bubfygj2xz4h1" class="article-share-link">共有</a>
+      <a data-url="http://yoursite.com/2018/03/14/ncre46/" data-id="cjhkht67o000d2wm18ryn64ko" class="article-share-link">共有</a>
       
       
     </footer>
@@ -795,7 +888,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/13/ncre45/" data-id="cjhd7ranp000aubfyjltu492a" class="article-share-link">共有</a>
+      <a data-url="http://yoursite.com/2018/03/13/ncre45/" data-id="cjhkht67k000c2wm13xtu8xmn" class="article-share-link">共有</a>
       
       
     </footer>
@@ -946,153 +1039,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/12/ncre44/" data-id="cjhd7rao7000oubfy9nrdxvv1" class="article-share-link">共有</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-ncre43" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/11/ncre43/" class="article-date">
-  <time datetime="2018-03-11T02:35:22.000Z" itemprop="datePublished">2018-03-11</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/11/ncre43/">计算机四级-网络工程 Day3</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="操作系统"><a href="#操作系统" class="headerlink" title="操作系统"></a>操作系统</h1><ul>
-<li><p>现代操作系统：并发性、共享性、随机性</p>
-</li>
-<li><p>组成操作系统的主要部分是：进程线程管理 内存管理 设备管理 文件管理</p>
-</li>
-<li><p>当由用户态转化为内核态 需要使用的指令是访管指令 内核态即管态</p>
-</li>
-<li><p>进程从运行换为阻塞 是需要的数据没有准备好</p>
-</li>
-<li><p>进程共享不能使用PV进行共享</p>
-</li>
-<li><p>已经满的邮件槽不能在申请互斥锁</p>
-</li>
-<li><p>将零碎的空闲区域集中为一个大的空闲区的技术是内存紧缩 页式分配内存利用率高且管理简单</p>
-</li>
-<li><p>第三套 16题 计算公式 块表 1 - 90%</p>
-</li>
-<li><p>决定虚拟内存空间最大容量的要素是计算机位宽</p>
-</li>
-<li><p>文件存储空间的分配单位通常是：数据块</p>
-</li>
-<li><p>电梯算法 扫描算法SCAN</p>
-</li>
-<li><p>Unix中 对文件系统的空闲区管理通常采用成组链接法</p>
-</li>
-<li><p>FAT32采用的是链接结构</p>
-</li>
-<li><p>IO层次结构 用户应用层 设备独立层 设备驱动层 中断处理层</p>
-</li>
-<li><p>解除死锁  剥夺 撤销 重启</p>
-</li>
-<li><p>PCB包含进程标识符 进程当前状态 进程优先级</p>
-</li>
-<li><p>调度算法 交互式操作系统 多级反馈队列（先进先出，时间片流转，可抢占最高级） 时间片流转 高优先级优先</p>
-</li>
-<li><p>Test&amp;Set指令 W=1 返回重新测试 W = 0,设置W = 1 进入临界区</p>
-</li>
-<li><p>页式 段式 段页式可以和虚拟存储技术结合使用</p>
-</li>
-<li><p>虚拟存储系统中，进程的部分程序装入后便可以运行</p>
-</li>
-<li><p>连续结构，索引结构，多级索引结构更适合文件的随机存取</p>
-</li>
-<li><p>提高检索速度，应该将文件进行链接</p>
-</li>
-<li><p>IO程序设备返回准备就绪 可以向输出缓冲区写数据</p>
-</li>
-<li><p>预防死锁 简历SPOOLing系统 一次性分配所有资源 有序分配资源 剥夺 撤销 重启</p>
-</li>
-</ul>
-<h1 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a>计算机网络</h1><ul>
-<li><p>TCPIP模型 提供可靠端到端的层次 传输层</p>
-</li>
-<li><p>无线网状网WMN</p>
-</li>
-<li><p>星型拓扑结构的瓶颈是中心节点，网状拓扑结构复杂，但是可靠性高</p>
-</li>
-<li><p>Unix系统描述 具有分时 多任务 多用户 通用的系统</p>
-</li>
-<li><p>802.3AE 10G 802.3Z 1G 802.3U 802.3 10M</p>
-</li>
-<li><p>以太网 目前地址字段使用的地址长度 48bit</p>
-</li>
-<li><p>IEEE 802模型 在链路层解决介质访问问题 仅仅对于OSI参考模型的访问控制自层和物理层</p>
-</li>
-<li><p>第三套单选42题目 看一下计算方式</p>
-</li>
-<li><p>发现数据报存在错误，应该抛弃该数据报</p>
-</li>
-<li><p>SMTP发送 POP3接受</p>
-</li>
-<li><p>Internet 的DNS服务器使用的逻辑结构是树形结构</p>
-</li>
-<li><p>FTP采用被动式建立数据连接的命令是PASV ABOR是放弃之前的连接</p>
-</li>
-<li><p>CS模型，服务器标示一个特定的服务器通常使用端口号进行标示</p>
-</li>
-<li><p>NFS文件系统由Sun推出 CIFS是Win2000后系统使用</p>
-</li>
-<li><p>NetBIOS名称最多有15个字符 254个通路 4种SMB 使用TCP 139端口</p>
-</li>
-<li><p>P2P理论基础是六度分割</p>
-</li>
-<li><p>Maze是PKU开发的，支持断点续传 支持即时通信和BBS</p>
-</li>
-<li><p>SNMP超越TCPIP 采用轮询和中断 管理者和代理是一对多关系 </p>
-</li>
-<li><p>CMIP由ISO指定，IETF指定SETF 针对OSI模型 采用报告机制</p>
-</li>
-<li><p>AES由NIST指定 对称加密算法 </p>
-</li>
-<li><p>共享式以太网 核心设备是集线器或者交换机</p>
-</li>
-<li><p>无线局域网 可采用直接序列扩频技术 </p>
-</li>
-<li><p>IP物联网特点 隐藏低层物理网络细节 信息可以跨网传输 使用同一的地址描述法 平等的对待每一个网络</p>
-</li>
-<li><p>组播组管理协议IGMP CGMP</p>
-</li>
-<li><p>NVT Telnet 功能是屏蔽不同的系统对键盘解释的差异</p>
-</li>
-<li><p>P2P网络 采用分布式结构化拓扑的 Pastry Tapestry Chord CAN 第三套 17题</p>
-</li>
-<li><p>BT 百宝箱不支持积点机制 PP点点通 百宝箱不支持种子</p>
-</li>
-<li><p>RSA 公钥密码 由罗纳德·李维斯特（Ron Rivest）、阿迪·萨莫尔（Adi Shamir）和伦纳德·阿德曼（Leonard Adleman）</p>
-</li>
-<li><p>认证中心 将公共秘钥和特定实体进行绑定 ITU指定了CA标准 CA不负责管理用户的私钥 </p>
-</li>
-</ul>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/11/ncre43/" data-id="cjhd7ranm0008ubfyuuaieqi3" class="article-share-link">共有</a>
+      <a data-url="http://yoursite.com/2018/03/12/ncre44/" data-id="cjhkht67b000a2wm16n6xi79h" class="article-share-link">共有</a>
       
       
     </footer>
@@ -1138,6 +1085,10 @@
       <ul>
         
           <li>
+            <a href="/2018/05/24/gitlab-webhook-jenkins/">Gitlab Jenkins WebHook 持续集成配置踩坑记</a>
+          </li>
+        
+          <li>
             <a href="/2018/05/19/which-str-concat-is-fastest/">PHP-不同Str 拼接方法性能对比</a>
           </li>
         
@@ -1151,10 +1102,6 @@
         
           <li>
             <a href="/2018/04/06/weekend3/">Weekend Log 4.6</a>
-          </li>
-        
-          <li>
-            <a href="/2018/03/30/weekend2/">3.30一周拾遗</a>
           </li>
         
       </ul>
