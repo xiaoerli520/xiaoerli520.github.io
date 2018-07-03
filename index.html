@@ -69,6 +69,110 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-weekend6" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/07/03/weekend6/" class="article-date">
+  <time datetime="2018-07-03T12:58:34.000Z" itemprop="datePublished">2018-07-03</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/07/03/weekend6/">GTX log 6</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>5.24-7.2</p>
+<h1 id="相关算法"><a href="#相关算法" class="headerlink" title="相关算法"></a>相关算法</h1><h2 id="判断两颗二叉树相等"><a href="#判断两颗二叉树相等" class="headerlink" title="判断两颗二叉树相等"></a>判断两颗二叉树相等</h2><p>有两种方法：一种是递归比较。另一种是二叉树的遍历。</p>
+<p>先说二叉树的遍历。由于先序遍历 再加上 中序遍历能唯一确定一棵二叉树。故，对这两棵树分别进行先序和中序遍历，比较这两棵树的先序遍历序列和中序遍历序列，如果都一样则说明这两棵二叉树是一样的。这里用了两次遍历。时间复杂度为O(2N)</p>
+<p>首先比较根结点是不是一样的；如果根结点一样，再继续比较根的左右孩子是不是一样的，这是一个递归过程。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">BinaryNode</span> &#123;</span></span><br><span class="line">	<span class="keyword">char</span> data;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">BinaryTree</span> &#123;</span></span><br><span class="line">	<span class="keyword">int</span> data;</span><br><span class="line">	BinaryNode *lc;</span><br><span class="line">	BinaryNode *rc;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">bool</span> <span class="title">isEqual</span><span class="params">(BinaryTree A, BinaryTree B)</span> </span>&#123;</span><br><span class="line">	<span class="keyword">if</span> (A == <span class="literal">NULL</span> &amp;&amp; B == <span class="literal">NULL</span>)</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line">	<span class="keyword">if</span> (!A || !B)</span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">	<span class="keyword">if</span> (A-&gt;data == T2 -&gt; data)</span><br><span class="line">		<span class="keyword">return</span> isEqual(A-&gt;lc, B-&gt;lc) &amp;&amp; isEqual(A -&gt; rc, B -&gt; rc)</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="判断二叉树是另一颗二叉树子结构-pointer-or-value"><a href="#判断二叉树是另一颗二叉树子结构-pointer-or-value" class="headerlink" title="判断二叉树是另一颗二叉树子结构 pointer or value"></a>判断二叉树是另一颗二叉树子结构 pointer or value</h3><p>个人感觉判断子结构要比判断子树困难一点，如果是子树，那么它一定是子结构；但是反过来不成立。</p>
+<p>判断子结构的核心思路其实与 (1) 中判断两棵树是否相同 是一致的。只不过对于 (1) 而言， 只要有一个结点不相同了，那这二棵二叉树就不是一样的了。而对于子结构而言，有可能某个结点的子树中包含了 子结构。</p>
+<p>首先遍历二叉树A的根结点8，由于二叉树B的根为4，两者不同。此时我们可以判断出这两棵树是不相同的。</p>
+<p>但是，我们还不能判断出二叉树B 不是 二叉树A 的子结构。还需要进一步判断。这个判断，就是一个递归过程了。递归如下：</p>
+<p>判断二叉树A的根结点的左子树是否包含了二叉树B，若未包含，再判断二叉树A的根结点的右子树是否包含了二叉树B</p>
+<p>从前面的 (2) 可知，我们可以用判断子结构的实现，来判断子树。</p>
+<p>若二叉树B是二叉树A的子结构，且二叉树A的根结点 与 二叉树B的根结点不相同。那么，二叉树B就是二叉树A的子树了。</p>
+<p>故这种方法的时间复杂度也为O(NK)</p>
+<p>此外，还有另外一种方法：可将该问题转化为串的匹配问题。如果二叉树是B是二叉树A的子树，</p>
+<p>则二叉树B的中序遍历序列 (前序、后序应该也是可以的吧)是 二叉树A的 中序遍历 序列的一个子串。</p>
+<p>从而，可以用KMP算法实现字符串匹配。如果匹配成功，则说明二叉树B是二叉树A的子树，反之则不是。</p>
+<h2 id="DP算法"><a href="#DP算法" class="headerlink" title="DP算法"></a>DP算法</h2><p><a href="https://blog.csdn.net/u010900754/article/details/55015018" target="_blank" rel="noopener">https://blog.csdn.net/u010900754/article/details/55015018</a></p>
+<p><a href="https://blog.csdn.net/cr496352127/article/details/77934132?locationNum=10&amp;fps=1" target="_blank" rel="noopener">https://blog.csdn.net/cr496352127/article/details/77934132?locationNum=10&amp;fps=1</a></p>
+<h2 id="字符串匹配-算法"><a href="#字符串匹配-算法" class="headerlink" title="字符串匹配 算法"></a>字符串匹配 算法</h2><h3 id="朴素匹配算法"><a href="#朴素匹配算法" class="headerlink" title="朴素匹配算法"></a>朴素匹配算法</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">navie_string_matcher</span><span class="params">(<span class="keyword">char</span> *T, <span class="keyword">char</span> *P)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	lenOri = <span class="built_in">strlen</span>(T)</span><br><span class="line">	lenMod = <span class="built_in">strlen</span>(P)</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">for</span> i = <span class="number">0</span>;i&lt;lenOri;i++ &#123;</span><br><span class="line">		<span class="keyword">for</span> j = <span class="number">0</span>;j&lt;lenMod;j++ &#123;</span><br><span class="line">			<span class="keyword">if</span> P[j] != T[i+j] 匹配位数 是一样同步的</span><br><span class="line">				<span class="keyword">break</span> <span class="comment">// 如果不匹配 则 跳出 offset ++ </span></span><br><span class="line">			<span class="keyword">if</span> j = lenMod - <span class="number">1</span> <span class="comment">// 匹配完毕</span></span><br><span class="line">				<span class="keyword">return</span> s;</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Rabin-Karp-算法"><a href="#Rabin-Karp-算法" class="headerlink" title="Rabin-Karp 算法"></a>Rabin-Karp 算法</h3><p>以 十进制 数 来表示字符串 算法匹配中更加方便。</p>
+<p>给定一个模式串P[1-m]，同理在文本串T[s+1..s+m]表示文本串中某段与模式串长度相等的一串字符，那么分别用数字p,t表示这两个字符串，通过比较数字p和t的大小，就可确定字符串是否匹配而无需用模式串中字符依次匹配文本串。</p>
+<p>也就 是 直接比较 数字 防止额外的 依次遍历</p>
+<p>也可以用于字符串分类？</p>
+<p>数学中有霍纳法则,我们运用霍纳法则在O(m)内计算p： </p>
+<p>p=P[m]+10(P[m-1]+10(P[m-2]+…+10(P[2]+10P1)…))) </p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"stdio.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"string.h"</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">"math.h"</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">char</span>* <span class="title">substr</span><span class="params">(<span class="keyword">char</span>* p, <span class="keyword">int</span> start, <span class="keyword">int</span> end)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	<span class="keyword">char</span> *q = <span class="built_in">malloc</span>(<span class="keyword">sizeof</span>(<span class="keyword">char</span>)*(end-start+<span class="number">1</span>))</span><br><span class="line">	<span class="keyword">int</span> i = <span class="number">0</span>;</span><br><span class="line">	<span class="keyword">for</span>(;i&lt;end-start+<span class="number">1</span>;i++) &#123;</span><br><span class="line">		*(q+i) = *(p+start+i)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> q;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Rabin_karp_matcher</span><span class="params">(<span class="keyword">char</span> T[], <span class="keyword">char</span> P[], <span class="keyword">int</span> d, <span class="keyword">int</span> q)</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">	n = <span class="built_in">strlen</span>(T)</span><br><span class="line">	m = <span class="built_in">strlen</span>(P)</span><br><span class="line">	h = ((<span class="keyword">int</span>)<span class="built_in">pow</span>(d, m<span class="number">-1</span>))</span><br><span class="line">	p=<span class="number">0</span></span><br><span class="line">	t=<span class="number">0</span></span><br><span class="line">	<span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;m;i++) &#123;</span><br><span class="line">		p=(d*p+P[i]-<span class="string">'a'</span>)%q;<span class="comment">//求p</span></span><br><span class="line">        t =(d*t +T[i]-<span class="string">'a'</span>)%q;</span><br><span class="line">        t0=(d*t0 +T[i]-<span class="string">'a'</span>);<span class="comment">//求初始t0=num(T[1,m])</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">int</span> s;</span><br><span class="line">    <span class="keyword">for</span>(s=<span class="number">0</span>;s&lt;=n-m;s++)</span><br><span class="line">    &#123;</span><br><span class="line">            <span class="keyword">if</span>(p==t&amp;&amp;(<span class="built_in">strcmp</span>(P,substr(T,s,s+m<span class="number">-1</span>))==<span class="number">0</span>))</span><br><span class="line">         <span class="comment">//  if(p==t)</span></span><br><span class="line">           &#123;</span><br><span class="line"></span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">"%d\n"</span>,s);</span><br><span class="line">           &#125;</span><br><span class="line"></span><br><span class="line">           <span class="built_in">printf</span>(<span class="string">"%d  %d  %c \n"</span>,t,p,T[s]);</span><br><span class="line">           <span class="keyword">int</span> tem=t0;</span><br><span class="line">           t0=(d*(tem-(T[s]-<span class="string">'a'</span>)*h)+T[s+m]-<span class="string">'a'</span>);<span class="comment">//求ts+1;</span></span><br><span class="line">           t=t0%q;</span><br><span class="line">  <span class="comment">//              int tem=t;</span></span><br><span class="line">   <span class="comment">//             t=(d*(tem-(T[s]-'a')*h)+T[s+m]-'a')%q;</span></span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line">        <span class="keyword">char</span> T[<span class="number">100</span>], P[<span class="number">100</span>];</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%s"</span>,T);</span><br><span class="line">        <span class="built_in">scanf</span>(<span class="string">"%s"</span>,P);</span><br><span class="line">        RABIN_KARP_MATCHER(T,P,<span class="number">10</span>,<span class="number">13</span>);</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="有限自动机"><a href="#有限自动机" class="headerlink" title="有限自动机"></a>有限自动机</h3><p><a href="https://blog.csdn.net/u011467044/article/details/55008649" target="_blank" rel="noopener">https://blog.csdn.net/u011467044/article/details/55008649</a></p>
+<h3 id="KMP"><a href="#KMP" class="headerlink" title="KMP"></a>KMP</h3><p>在模式P匹配文本T时，当匹配到最后一位不匹配时，朴素字符串匹配的做法是P往前移动一位继续匹配</p>
+<p>可是根据我们的观察发现更有效的做法是P可以直接往前移动两位</p>
+<p>如上个人理解PI数组主要记录当前匹配无效时下次的有效偏移位数，避免无效的偏移。<br>KMP算法充分利用已匹配的信息，避免重复的匹配过程。</p>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span><span class="meta-string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> MAX_LEN 20</span></span><br><span class="line"><span class="keyword">int</span> PI[MAX_LEN];</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">void</span> <span class="title">Compute_prefix_fun</span><span class="params">(<span class="keyword">char</span> P[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> m,k,q;</span><br><span class="line">    m=<span class="built_in">strlen</span>(P);</span><br><span class="line">    PI[<span class="number">0</span>]=<span class="number">0</span>;</span><br><span class="line">    k=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(q=<span class="number">1</span>;q&lt;m;++q)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">while</span>((k&gt;<span class="number">0</span>)&amp;&amp;P[k]!=P[q])</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="comment">//q=PI[q];</span></span><br><span class="line">            k=PI[k];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(P[k]==P[q])</span><br><span class="line">            k=k+<span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">        PI[q]=k;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">void</span>  <span class="title">KMP_matcher</span><span class="params">(<span class="keyword">char</span> T[],<span class="keyword">char</span> P[])</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="keyword">int</span> n,m,q,i;</span><br><span class="line">    n=<span class="built_in">strlen</span>(T);</span><br><span class="line">    m=<span class="built_in">strlen</span>(P);</span><br><span class="line">    Compute_prefix_fun(P);</span><br><span class="line">    q=<span class="number">0</span>;</span><br><span class="line">    <span class="keyword">for</span>(i=<span class="number">0</span>;i&lt;n;i++)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">while</span>((q&gt;<span class="number">0</span>)&amp;&amp;P[q]!=T[i])</span><br><span class="line">        &#123;</span><br><span class="line">            q=PI[q<span class="number">-1</span>];</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span>(P[q]==T[i])</span><br><span class="line">            q=q+<span class="number">1</span>;</span><br><span class="line">        <span class="keyword">if</span>(q==m)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">"%d\n"</span>,i-m+<span class="number">1</span>);</span><br><span class="line">            q=PI[q<span class="number">-1</span>];</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">char</span> T[<span class="number">20</span>],P[<span class="number">20</span>];</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%s"</span>,T);</span><br><span class="line">    <span class="built_in">scanf</span>(<span class="string">"%s"</span>,P);</span><br><span class="line">    KMP_matcher(T,P);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="PHP"><a href="#PHP" class="headerlink" title="PHP"></a>PHP</h1><h2 id="常量-PHP-SAPI-判断当前运行模式"><a href="#常量-PHP-SAPI-判断当前运行模式" class="headerlink" title="常量 PHP_SAPI 判断当前运行模式"></a>常量 PHP_SAPI 判断当前运行模式</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">if</span> (PHP_SAPI == <span class="string">"cli"</span> <span class="comment">// "cgi") &#123;</span></span><br><span class="line">	<span class="comment">//</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="Throwable-是PHP7以上才有的-涵盖更多-Exception-选项"><a href="#Throwable-是PHP7以上才有的-涵盖更多-Exception-选项" class="headerlink" title="Throwable 是PHP7以上才有的 涵盖更多 Exception 选项"></a>Throwable 是PHP7以上才有的 涵盖更多 Exception 选项</h2><h2 id="PHP-从-MySQL-查出来的-可能-会多-r-n-的字符-不符合-可以去掉"><a href="#PHP-从-MySQL-查出来的-可能-会多-r-n-的字符-不符合-可以去掉" class="headerlink" title="PHP 从 MySQL 查出来的 可能 会多 \r\n 的字符 不符合 可以去掉"></a>PHP 从 MySQL 查出来的 可能 会多 \r\n 的字符 不符合 可以去掉</h2><p>str_replace</p>
+<h2 id="call-user-func-array"><a href="#call-user-func-array" class="headerlink" title="call_user_func_array"></a>call_user_func_array</h2><p>对 函数 不定参数 函数 可以进行解构操作 方便使用</p>
+<h1 id="Linux"><a href="#Linux" class="headerlink" title="Linux"></a>Linux</h1><h2 id="pstree-查看-当前进程树"><a href="#pstree-查看-当前进程树" class="headerlink" title="pstree 查看 当前进程树"></a>pstree 查看 当前进程树</h2><p>可以通过 pstree 看到当前进程树</p>
+<h2 id="如何-构建磁盘满的状态？"><a href="#如何-构建磁盘满的状态？" class="headerlink" title="如何 构建磁盘满的状态？"></a>如何 构建磁盘满的状态？</h2><p>首先将 dev/ramX 挂在一个目录 这个目录的可写入大小大概为100M左右</p>
+<p>dd if=/dev/zero of=sun.txt bs=5000000M count=10</p>
+<p>就充满了这个分区</p>
+<p>例如 PHP file_put_content 默认 存储 会导致 报错</p>
+<h2 id="fswatch-MAC-inotifyWait-linux"><a href="#fswatch-MAC-inotifyWait-linux" class="headerlink" title="fswatch (MAC) inotifyWait (linux)"></a>fswatch (MAC) inotifyWait (linux)</h2><p>文件监控</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">inotifywait -e modify -e create -e move --format &apos;%T %w%f %Xe %e &apos; -m --exclude .tmp$ --exclude &apos;^*.[0-9a-zA-Z]&#123;6&#125;$&apos;  -r --timefmt &apos;%a %b %d %T %Y&apos;  /data1/ms/template /data1/ms/template.test /data1/ms/resource</span><br></pre></td></tr></table></figure>
+<h2 id="远程运维工具-SaltStack"><a href="#远程运维工具-SaltStack" class="headerlink" title="远程运维工具 SaltStack"></a>远程运维工具 SaltStack</h2><h1 id="Golang"><a href="#Golang" class="headerlink" title="Golang"></a>Golang</h1><h2 id="Go-cmd-exec-执行目录问题"><a href="#Go-cmd-exec-执行目录问题" class="headerlink" title="Go cmd.exec 执行目录问题"></a>Go cmd.exec 执行目录问题</h2><p>rsync的时候 为了创建 新文件夹在target上，需要R参数，但是必须cd 到指定目录</p>
+<p>go的执行shell命令是不可以直接cd的 </p>
+<p>通过</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cmd := exec.Command(&quot;ls&quot;)</span><br><span class="line">cmd.Dir=&quot;/&quot;</span><br></pre></td></tr></table></figure>
+<p>即可</p>
+<h2 id="Go-for-启动闭包函数携程带来的坑"><a href="#Go-for-启动闭包函数携程带来的坑" class="headerlink" title="Go for 启动闭包函数携程带来的坑"></a>Go for 启动闭包函数携程带来的坑</h2><p>原代码</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">for i,checker := range k.checkers &#123;</span><br><span class="line">	go func () &#123;</span><br><span class="line">		checker(k)</span><br><span class="line">	&#125;()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>结果发现 range 并且启动了之后 启动的都是同一个checker</p>
+<p>修改代码后发现</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">for i,checker := range k.checkers &#123;</span><br><span class="line">	go func (checker Checker) &#123;</span><br><span class="line">		checker(k)</span><br><span class="line">	&#125;(checker)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>运行了正常的checkers</p>
+<p>得知 go 在开启携程时 遇到 for 并不会立即开启携程 会在for range 之后开启 因此 需要 在go func 内部进行传参 保证每次启动的闭包函数正确</p>
+<h2 id="Go-多协程读写-Map-会报错"><a href="#Go-多协程读写-Map-会报错" class="headerlink" title="Go 多协程读写 Map 会报错"></a>Go 多协程读写 Map 会报错</h2><p>map不是线程(goroutine)安全的。</p>
+<p>增加 Sync.Mutex 互斥所 或者 RWMutex 读写锁 可以解决问题</p>
+<p>对于 hashMap的更新问题</p>
+<p>如果 多线程在访问hashMap</p>
+<p>可以 read dirty save 三个 </p>
+<p>写入的 dirty </p>
+<p>读取的时候  如果 dirty 有 则读dirty 并且写入read </p>
+<p>如果扩容的时候 读read</p>
+<p>然后 底层 扩容 然后 进行read dirty 综合判断后复制</p>
+<h2 id="time-Duration"><a href="#time-Duration" class="headerlink" title="time.Duration"></a>time.Duration</h2><p>话说这个 感觉 Go 真的 是画蛇添足了</p>
+<p>time.sleep(time.Duration(k.sleep_time) * time.second)</p>
+<p>真的是 冗长的代码</p>
+<h2 id="Go-的fswatch库"><a href="#Go-的fswatch库" class="headerlink" title="Go 的fswatch库"></a>Go 的fswatch库</h2><p>官方不支持 -r 的递归监控 放弃吧 inotify + fswatch</p>
+<h2 id="defer"><a href="#defer" class="headerlink" title="defer"></a>defer</h2><p>defer 会 在函数return 之前 执行 用于 一些句柄 等资源的回收 但是 会造成性能的削减</p>
+<h2 id="Go-运行时内存堆栈分析"><a href="#Go-运行时内存堆栈分析" class="headerlink" title="Go 运行时内存堆栈分析"></a>Go 运行时内存堆栈分析</h2><p>参考备忘录 Markdown 传不上来</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/07/03/weekend6/" data-id="cjj5rq8xk000mddm1rrmseiox" class="article-share-link">共有</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-gitlab-webhook-jenkins" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/05/24/gitlab-webhook-jenkins/" class="article-date">
@@ -127,7 +231,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/05/24/gitlab-webhook-jenkins/" data-id="cjhkht6al000p2wm12pj3atn0" class="article-share-link">共有</a>
+      <a data-url="http://yoursite.com/2018/05/24/gitlab-webhook-jenkins/" data-id="cjj5rq8yp000qddm1xvqefrtm" class="article-share-link">共有</a>
       
       
     </footer>
@@ -215,7 +319,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/05/19/which-str-concat-is-fastest/" data-id="cjhkht6b3000q2wm1vao7qatt" class="article-share-link">共有</a>
+      <a data-url="http://yoursite.com/2018/05/19/which-str-concat-is-fastest/" data-id="cjj5rq8yz000rddm1gvzepae3" class="article-share-link">共有</a>
       
       
     </footer>
@@ -297,7 +401,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/05/06/weekend5/" data-id="cjhkht689000o2wm1fa1dr0el" class="article-share-link">共有</a>
+      <a data-url="http://yoursite.com/2018/05/06/weekend5/" data-id="cjj5rq8xn000pddm177xe6qt4" class="article-share-link">共有</a>
       
       
     </footer>
@@ -391,7 +495,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/20/weekend4/" data-id="cjhkht686000m2wm1q8s3039q" class="article-share-link">共有</a>
+      <a data-url="http://yoursite.com/2018/04/20/weekend4/" data-id="cjj5rq8xl000nddm1a2g4i1t1" class="article-share-link">共有</a>
       
       
     </footer>
@@ -430,7 +534,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/04/06/weekend3/" data-id="cjhkht688000n2wm1zg8rzptj" class="article-share-link">共有</a>
+      <a data-url="http://yoursite.com/2018/04/06/weekend3/" data-id="cjj5rq8xm000oddm1uyfgabg7" class="article-share-link">共有</a>
       
       
     </footer>
@@ -562,7 +666,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/30/weekend2/" data-id="cjhkht67w000i2wm1ba3ml1dr" class="article-share-link">共有</a>
+      <a data-url="http://yoursite.com/2018/03/30/weekend2/" data-id="cjj5rq8xj000lddm12mxbem07" class="article-share-link">共有</a>
       
       
     </footer>
@@ -690,7 +794,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/25/weekend1/" data-id="cjhkht684000l2wm1rnlkxob6" class="article-share-link">共有</a>
+      <a data-url="http://yoursite.com/2018/03/25/weekend1/" data-id="cjj5rq8xi000kddm105drcmt4" class="article-share-link">共有</a>
       
       
     </footer>
@@ -745,7 +849,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/20/mysql-acid/" data-id="cjhkht66z00062wm1igvvtb21" class="article-share-link">共有</a>
+      <a data-url="http://yoursite.com/2018/03/20/mysql-acid/" data-id="cjj5rq8x00006ddm1wz9yoxhi" class="article-share-link">共有</a>
       
       
     </footer>
@@ -828,55 +932,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/20/autoloader/" data-id="cjhkht66l00012wm1yncgm38e" class="article-share-link">共有</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-php-code-4" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/03/20/php-code-4/" class="article-date">
-  <time datetime="2018-03-20T09:27:37.000Z" itemprop="datePublished">2018-03-20</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/03/20/php-code-4/">PHP代码实现3 [函数角度] 1</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h3 id="内部函数"><a href="#内部函数" class="headerlink" title="内部函数"></a>内部函数</h3><p>标准函数的实现存放在ext/standard扩展目录中。</p>
-<h3 id="php函数种类"><a href="#php函数种类" class="headerlink" title="php函数种类"></a>php函数种类</h3><p>Zend engine中的function的存在形式</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">struct _zend_execute_data &#123;</span><br><span class="line">    //...省略部分代码</span><br><span class="line">    zend_function_state function_state;</span><br><span class="line">    zend_function *fbc; /* Function Being Called */</span><br><span class="line">    //...省略部分代码</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
-<p>zend_function 的存在形式 Union！</p>
-<p>联合体的所有成员变量共享内存中的一块内存，在某个时刻只能有一个成员使用这块内存， 并且当使用某一个成员时，其仅能按照它的类型和内存大小修改对应的内存空间。</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">typedef union _zend_function &#123;</span><br><span class="line">    zend_uchar type;    /* 如用户自定义则为 #define ZEND_USER_FUNCTION 2</span><br><span class="line">                            MUST be the first element of this struct! */</span><br><span class="line"> </span><br><span class="line">    struct &#123;</span><br><span class="line">        zend_uchar type;  /* never used */</span><br><span class="line">        char *function_name;    //函数名称</span><br><span class="line">        zend_class_entry *scope; //函数所在的类作用域</span><br><span class="line">        zend_uint fn_flags;     // 作为方法时的访问类型等，如ZEND_ACC_STATIC等  </span><br><span class="line">        union _zend_function *prototype; //函数原型</span><br><span class="line">        zend_uint num_args;     //参数数目</span><br><span class="line">        zend_uint required_num_args; //需要的参数数目</span><br><span class="line">        zend_arg_info *arg_info;  //参数信息指针</span><br><span class="line">        zend_bool pass_rest_by_reference;</span><br><span class="line">        unsigned char return_reference;  //返回值 </span><br><span class="line">    &#125; common;</span><br><span class="line"> </span><br><span class="line">    zend_op_array op_array;   //函数中的操作</span><br><span class="line">    zend_internal_function internal_function;  </span><br><span class="line">&#125; zend_function;</span><br></pre></td></tr></table></figure>
-<ul>
-<li>在PHP的实现中，即使没有显式的返回， Zend引擎也会“帮你“返回NULL。</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">$func = &apos;print_r&apos;;</span><br><span class="line">$func(&apos;i am print_r function.&apos;);</span><br><span class="line"></span><br><span class="line">print_r(&apos;i am print_r function.&apos;);</span><br></pre></td></tr></table></figure>
-<p>变量函数是DO_FCALL_BY_NAME，而内部函数是DO_FCALL。这在语法解析时就已经决定了</p>
-<p>如果不是方法，并且不是动态调用，并且函数名为字符串常量，则其生成的中间代码为ZEND_DO_FCALL。其它情况则为ZEND_DO_FCALL_BY_NAME。</p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/20/php-code-4/" data-id="cjhkht67u000h2wm1bzo0hjtb" class="article-share-link">共有</a>
+      <a data-url="http://yoursite.com/2018/03/20/autoloader/" data-id="cjj5rq8wu0001ddm1f21jzq8u" class="article-share-link">共有</a>
       
       
     </footer>
@@ -909,7 +965,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">アーカイブ</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">5月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">4月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">3月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">2月 2018</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">7月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">5月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">4月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">3月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">2月 2018</a></li></ul>
     </div>
   </div>
 
@@ -920,6 +976,10 @@
     <h3 class="widget-title">最近の投稿</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/2018/07/03/weekend6/">GTX log 6</a>
+          </li>
         
           <li>
             <a href="/2018/05/24/gitlab-webhook-jenkins/">Gitlab Jenkins WebHook 持续集成配置踩坑记</a>
@@ -935,10 +995,6 @@
         
           <li>
             <a href="/2018/04/20/weekend4/">4.7-4.20周记</a>
-          </li>
-        
-          <li>
-            <a href="/2018/04/06/weekend3/">Weekend Log 4.6</a>
           </li>
         
       </ul>
