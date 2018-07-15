@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>周记7 | GTX Ultimate</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="记一次Go slice在并发中不安全的坑当时的软件结构是，系统启动后会启动n个 goroutine， 然后所有的goroutine等待Task的到来，并发的处理多个task。 在task到来的时候，进行相关参数的拼接（故障就出在这），然后调用shell 执行命令 123456789101112// 获取参数与参数拼接代码params = rsync.paramsparams = buildParm">
+<meta property="og:type" content="article">
+<meta property="og:title" content="周记7">
+<meta property="og:url" content="http://yoursite.com/2018/07/15/weekend7/index.html">
+<meta property="og:site_name" content="GTX Ultimate">
+<meta property="og:description" content="记一次Go slice在并发中不安全的坑当时的软件结构是，系统启动后会启动n个 goroutine， 然后所有的goroutine等待Task的到来，并发的处理多个task。 在task到来的时候，进行相关参数的拼接（故障就出在这），然后调用shell 执行命令 123456789101112// 获取参数与参数拼接代码params = rsync.paramsparams = buildParm">
+<meta property="og:locale" content="ja">
+<meta property="og:updated_time" content="2018-07-15T09:47:07.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="周记7">
+<meta name="twitter:description" content="记一次Go slice在并发中不安全的坑当时的软件结构是，系统启动后会启动n个 goroutine， 然后所有的goroutine等待Task的到来，并发的处理多个task。 在task到来的时候，进行相关参数的拼接（故障就出在这），然后调用shell 执行命令 123456789101112// 获取参数与参数拼接代码params = rsync.paramsparams = buildParm">
+  
+    <link rel="alternate" href="/atom.xml" title="GTX Ultimate" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">GTX Ultimate</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">你的出现亵渎了这里</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSSフィード"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="検索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-weekend7" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/07/15/weekend7/" class="article-date">
+  <time datetime="2018-07-15T09:27:20.000Z" itemprop="datePublished">2018-07-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      周记7
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="记一次Go-slice在并发中不安全的坑"><a href="#记一次Go-slice在并发中不安全的坑" class="headerlink" title="记一次Go slice在并发中不安全的坑"></a>记一次Go slice在并发中不安全的坑</h1><p>当时的软件结构是，系统启动后会启动n个 goroutine， 然后所有的goroutine等待Task的到来，并发的处理多个task。</p>
+<p>在task到来的时候，进行相关参数的拼接（故障就出在这），然后调用shell 执行命令</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取参数与参数拼接代码</span></span><br><span class="line">params = rsync.params</span><br><span class="line"></span><br><span class="line">params = buildParms(params, src, dst)</span><br><span class="line"></span><br><span class="line">exec(params)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">func buildParams(params, src, dst) []string &#123;</span><br><span class="line">	params = append(...)</span><br><span class="line">	<span class="keyword">return</span> params</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>代码执行之后，当并发量比较大的时候，会发现 build之后的params  的最后几个字符串会异常</p>
+<p>知道是并发slice线程安全的问题，但是解决办法，百思不得其解</p>
+<p>后来问题聚焦于append ，google 证实append的确不是一个线程安全的函数，并发执行直接的话，会导致data race</p>
+<p>在go playground 中 ：发现了一点起色，就是 </p>
+<p>buildParams 函数 每次新建一个新的 slice 然后 返回新的 slice</p>
+<p>结果发现 现象的确少了很多，但是还是有</p>
+<p>后来发现，只要 在调用上层 也新建slice 就可以完全规避这个问题。</p>
+<p>也就是不要在并发的时候  公用一个 slice 一定要每次操作都进行新建。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">// 改进之后的 拼装参数方法</span></span><br><span class="line">func buildParams(params []string, src string, dst string) []string &#123;</span><br><span class="line">	s := make([]string, <span class="number">0</span>)</span><br><span class="line">	s = append(s, params...)</span><br><span class="line">	s = append(s, src)</span><br><span class="line">	s = append(s, dst)</span><br><span class="line">	<span class="keyword">return</span> s</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="Go"><a href="#Go" class="headerlink" title="Go"></a>Go</h1><h2 id="goland-vendor-不识别"><a href="#goland-vendor-不识别" class="headerlink" title="goland vendor 不识别"></a>goland vendor 不识别</h2><p>goland不会识别 vendor 文件夹下的相关dep</p>
+<p>所以 可以使用 文件夹下带 src目录，然后添加到 project PATH 就可以正常的代码提示</p>
+<h2 id="Go-跨平台编译"><a href="#Go-跨平台编译" class="headerlink" title="Go 跨平台编译"></a>Go 跨平台编译</h2><p>用于减少开发成本 build 了之后 直接 rsync上去</p>
+<p>CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o </p>
+<h2 id="Go-不能-在exec-shell的时候直接-cd"><a href="#Go-不能-在exec-shell的时候直接-cd" class="headerlink" title="Go 不能 在exec shell的时候直接 cd"></a>Go 不能 在exec shell的时候直接 cd</h2><p>cmd.Dir = “/“</p>
+<h2 id="map-非线程安全-增删改查需要-加锁"><a href="#map-非线程安全-增删改查需要-加锁" class="headerlink" title="map 非线程安全 增删改查需要 加锁"></a>map 非线程安全 增删改查需要 加锁</h2><h2 id="信号量-控制并发数量"><a href="#信号量-控制并发数量" class="headerlink" title="信号量 控制并发数量"></a>信号量 控制并发数量</h2><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line">package utils</span><br><span class="line"></span><br><span class="line">import <span class="string">"sync"</span></span><br><span class="line"></span><br><span class="line">type Semaphore struct &#123;</span><br><span class="line">	maxNum  int</span><br><span class="line">	Threads chan int</span><br><span class="line">	Wg      sync.WaitGroup</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func NewSemaphore (maxNum int) *Semaphore &#123;</span><br><span class="line">	<span class="keyword">var</span> sem = <span class="keyword">new</span>(Semaphore)</span><br><span class="line">	sem.maxNum  = maxNum</span><br><span class="line">	sem.Threads = make(chan int, maxNum)</span><br><span class="line">	<span class="keyword">return</span> sem</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func (sem *Semaphore) P() &#123;</span><br><span class="line">	sem.Threads &lt;- <span class="number">1</span></span><br><span class="line">	sem.Wg.Add(<span class="number">1</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func (sem *Semaphore) V() &#123;</span><br><span class="line">	sem.Wg.Done()</span><br><span class="line">	&lt;-sem.Threads</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func (sem *Semaphore) Wait() &#123;</span><br><span class="line">	sem.Wg.Wait()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func (sem *Semaphore) Discard() &#123;</span><br><span class="line">	sem.Threads = make(chan int, sem.maxNum)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="PHP"><a href="#PHP" class="headerlink" title="PHP"></a>PHP</h1><h2 id="脚本中存在死循环的调用"><a href="#脚本中存在死循环的调用" class="headerlink" title="脚本中存在死循环的调用"></a>脚本中存在死循环的调用</h2><p>有一个类 里面有各种方法 外加一个 死循环 的 check方法</p>
+<p>在其他方法调用这个类的其他方法的时候 Class::otherMethod();</p>
+<p>fpm 出现了504</p>
+<p>百思不得其解</p>
+<p>phpunit测试发现，在调用static方法的时候，竟然连 check()方法一起执行了你敢信？</p>
+<p>所以 执行和类 需要分开</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/07/15/weekend7/" data-id="cjjmnp0cg000onzjr8auszaff" class="article-share-link">共有</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/07/03/weekend6/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前の記事</strong>
+      <div class="article-nav-title">GTX log 6</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">アーカイブ</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">7月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">5月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">4月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">3月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">2月 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最近の投稿</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/07/15/weekend7/">周记7</a>
+          </li>
+        
+          <li>
+            <a href="/2018/07/03/weekend6/">GTX log 6</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/24/gitlab-webhook-jenkins/">Gitlab Jenkins WebHook 持续集成配置踩坑记</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/19/which-str-concat-is-fastest/">PHP-不同Str 拼接方法性能对比</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/06/weekend5/">4.21-5.6周记</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 GuoQingZhe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
