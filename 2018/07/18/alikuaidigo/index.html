@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>落地成盒-发快递 | GTX Ultimate</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="如图，某物流派送员p，需要给a、b、c、d4个快递点派送包裹，请问派送员需要选择什么的路线，才能完成最短路程的派送。假设如图派送员的起点坐标(0,0)，派送路线只能沿着图中的方格边行驶，每个小格都是正方形，且边长为1，如p到d的距离就是4。随机输入n个派送点坐标，求输出最短派送路线值（从起点开始完成n个点派送并回到起始点的距离）。 123456789101112131415161718192021">
+<meta property="og:type" content="article">
+<meta property="og:title" content="落地成盒-发快递">
+<meta property="og:url" content="http://yoursite.com/2018/07/18/alikuaidigo/index.html">
+<meta property="og:site_name" content="GTX Ultimate">
+<meta property="og:description" content="如图，某物流派送员p，需要给a、b、c、d4个快递点派送包裹，请问派送员需要选择什么的路线，才能完成最短路程的派送。假设如图派送员的起点坐标(0,0)，派送路线只能沿着图中的方格边行驶，每个小格都是正方形，且边长为1，如p到d的距离就是4。随机输入n个派送点坐标，求输出最短派送路线值（从起点开始完成n个点派送并回到起始点的距离）。 123456789101112131415161718192021">
+<meta property="og:locale" content="ja">
+<meta property="og:updated_time" content="2018-07-18T13:33:27.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="落地成盒-发快递">
+<meta name="twitter:description" content="如图，某物流派送员p，需要给a、b、c、d4个快递点派送包裹，请问派送员需要选择什么的路线，才能完成最短路程的派送。假设如图派送员的起点坐标(0,0)，派送路线只能沿着图中的方格边行驶，每个小格都是正方形，且边长为1，如p到d的距离就是4。随机输入n个派送点坐标，求输出最短派送路线值（从起点开始完成n个点派送并回到起始点的距离）。 123456789101112131415161718192021">
+  
+    <link rel="alternate" href="/atom.xml" title="GTX Ultimate" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">GTX Ultimate</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">你的出现亵渎了这里</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSSフィード"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="検索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="http://yoursite.com"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-alikuaidigo" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/07/18/alikuaidigo/" class="article-date">
+  <time datetime="2018-07-18T13:32:48.000Z" itemprop="datePublished">2018-07-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      落地成盒-发快递
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>如图，某物流派送员p，需要给a、b、c、d4个快递点派送包裹，请问派送员需要选择什么的路线，才能完成最短路程的派送。假设如图派送员的起点坐标(0,0)，派送路线只能沿着图中的方格边行驶，每个小格都是正方形，且边长为1，如p到d的距离就是4。随机输入n个派送点坐标，求输出最短派送路线值（从起点开始完成n个点派送并回到起始点的距离）。</p>
+<figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">package main</span><br><span class="line"></span><br><span class="line">import (</span><br><span class="line">	<span class="string">"math"</span></span><br><span class="line">	<span class="string">"fmt"</span></span><br><span class="line">)</span><br><span class="line"></span><br><span class="line">type Point struct &#123;</span><br><span class="line"></span><br><span class="line">	x, y int</span><br><span class="line"></span><br><span class="line">	isVisited bool</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> startPoint = Point&#123;<span class="number">0</span>,<span class="number">0</span>,<span class="keyword">false</span>&#125; <span class="comment">// 设置 零点</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> MinPath = int(^uint(<span class="number">0</span>) &gt;&gt; <span class="number">1</span>) <span class="comment">// max value of int</span></span><br><span class="line"></span><br><span class="line">func (p1 *Point)Length(p2 *Point) (int) &#123;</span><br><span class="line">	<span class="comment">// go 的abs  比较蛋疼</span></span><br><span class="line">	<span class="keyword">return</span> int(math.Abs(float64(p1.x) - float64(p2.x)) + math.Abs(float64(p1.x) - float64(p2.x)))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func Find(start *Point, points []*Point, sum int, count int) int &#123;</span><br><span class="line">	<span class="keyword">if</span> count == len(points) &#123;</span><br><span class="line">		MinPath = int(math.Min(float64(MinPath), float64(sum + start.Length(&amp;startPoint))))</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span> _, v := range points &#123;</span><br><span class="line">		<span class="keyword">if</span> v.isVisited == <span class="keyword">false</span> &#123;</span><br><span class="line">			sum += v.Length(start)</span><br><span class="line">			<span class="keyword">if</span> sum &lt; MinPath &#123;</span><br><span class="line">				<span class="comment">// 选择最短路径执行</span></span><br><span class="line">				v.isVisited = <span class="keyword">true</span></span><br><span class="line">				Find(v, points, sum, count+<span class="number">1</span>)</span><br><span class="line">			&#125;</span><br><span class="line">			sum -= v.Length(start)</span><br><span class="line">			v.isVisited = <span class="keyword">false</span></span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> MinPath</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">func main () &#123;</span><br><span class="line">	<span class="keyword">var</span> numOfPoint = <span class="number">0</span></span><br><span class="line">	fmt.Scanf(<span class="string">"%d"</span>, &amp;numOfPoint)</span><br><span class="line"></span><br><span class="line">	<span class="keyword">var</span> Points []*Point</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span> i:=<span class="number">0</span>;i&lt;numOfPoint;i++ &#123;</span><br><span class="line">		<span class="keyword">var</span> x, y int</span><br><span class="line">		fmt.Scanf(<span class="string">"%d %d"</span>, &amp;x, &amp;y)</span><br><span class="line">		Points = append(Points, &amp;Point&#123;x, y, <span class="keyword">false</span>&#125;)</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">var</span> min = Find(&amp;startPoint, Points, <span class="number">0</span>, <span class="number">0</span>)</span><br><span class="line"></span><br><span class="line">	fmt.Println(min)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/07/18/alikuaidigo/" data-id="cjjr63mnr0000uzfy7y7a0vry" class="article-share-link">共有</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/2018/07/16/daily-8/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前の記事</strong>
+      <div class="article-nav-title">daily_8</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">アーカイブ</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/07/">7月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/05/">5月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/04/">4月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/03/">3月 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/02/">2月 2018</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最近の投稿</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2018/07/18/alikuaidigo/">落地成盒-发快递</a>
+          </li>
+        
+          <li>
+            <a href="/2018/07/16/daily-8/">daily_8</a>
+          </li>
+        
+          <li>
+            <a href="/2018/07/15/weekend7/">周记7</a>
+          </li>
+        
+          <li>
+            <a href="/2018/07/03/weekend6/">GTX log 6</a>
+          </li>
+        
+          <li>
+            <a href="/2018/05/24/gitlab-webhook-jenkins/">Gitlab Jenkins WebHook 持续集成配置踩坑记</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2018 GuoQingZhe<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+  <script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

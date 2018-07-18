@@ -69,6 +69,197 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-shooting" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/15/shooting/" class="article-date">
+  <time datetime="2018-03-15T10:54:02.000Z" itemprop="datePublished">2018-03-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/15/shooting/">打靶训练</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">一个射击运动员打靶，靶一共有10环，连开10枪打中90环的情况有多少种？需要考虑10枪的先后关系，比如9环10环同10环9环是不同的。</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>可以直接暴力十个for 在最后一个for里面判断 空间和时间复杂度都太大了</p>
+</li>
+<li><p>使用递归的方式 减少空间复杂度</p>
+</li>
+</ul>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">int sum;</span><br><span class="line">int store[10];</span><br><span class="line">void Output()          //打印</span><br><span class="line">&#123;</span><br><span class="line">    for(int i=9;i&gt;=0;i--)</span><br><span class="line">    &#123;</span><br><span class="line">        cout&lt;&lt;store[i]&lt;&lt;&quot; &quot;;</span><br><span class="line">    &#125;</span><br><span class="line">    cout&lt;&lt;endl;</span><br><span class="line">    ++sum;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void Comput(int score, int num)</span><br><span class="line">&#123;</span><br><span class="line">    if(score&lt;0 || score&gt;(num+1)*10)       // 前者是因为已经打满了90环 在Comput的第一个参数有个减法 后者是不可能打满90环</span><br><span class="line">        return ;</span><br><span class="line">    if(num==0)                  //打到最后一次 直接将剩下的环数进行匹配 这样避免了最后一次的for循环</span><br><span class="line">    &#123;</span><br><span class="line">        store[num]=score;</span><br><span class="line">        Output();</span><br><span class="line">        return;</span><br><span class="line">    &#125;</span><br><span class="line">    for(int i=0;i&lt;=10;i++)                 //没有出现上述情况，递归</span><br><span class="line">    &#123;</span><br><span class="line">        store[num]=i;                       // 这一发打了多少环 0-10环循环</span><br><span class="line">        Comput(score-i,num-1);              // 下一发应该打的目的</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int main()</span><br><span class="line">&#123;</span><br><span class="line">    Comput(90,9);</span><br><span class="line">    cout&lt;&lt;sum&lt;&lt;endl;</span><br><span class="line">    return 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">这样就理解了！</span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/15/shooting/" data-id="cjjr63mok000nuzfyhs7vxjfd" class="article-share-link">共有</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-ncre46" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/03/14/ncre46/" class="article-date">
+  <time datetime="2018-03-14T02:19:06.000Z" itemprop="datePublished">2018-03-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2018/03/14/ncre46/">计算机四级-网络工程 Day6</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="操作系统"><a href="#操作系统" class="headerlink" title="操作系统"></a>操作系统</h1><ul>
+<li><p>配置操作系统的目的是提高计算机系统资源的利用率</p>
+</li>
+<li><p>使进程从阻塞态转换为挂起的原语是 suspend</p>
+</li>
+<li><p>pthread_mutex_init() 表示创建一个互斥量 pthread_mutex_unlock表示释放一个互斥量</p>
+</li>
+<li><p>直接通信中  系统提供的发送原语是 send(receiver, message)</p>
+</li>
+<li><p>源代码-》 编译 -》目标文件.obj -》 链接 -》 可执行文件exe</p>
+</li>
+<li><p>进程交换是指将暂时不用的进程代码、数据等交换到磁盘</p>
+</li>
+<li><p>cpu 3% 磁盘 97% 此时磁盘较忙 cpu大部分资源都给了硬盘</p>
+</li>
+<li><p>为了提高内存利用率 可以根据需要采用多种不同大小的页面</p>
+</li>
+<li><p>时间局部性 大量循环 空间局部性 程序代码的顺序性</p>
+</li>
+<li><p>多级树形目录 复杂化了文件管理 对于用户来说 解决了文件重名的问题</p>
+</li>
+<li><p>最适合磁带的文件物理结构是 顺序结构</p>
+</li>
+<li><p>第六套23题了解一下 </p>
+</li>
+</ul>
+<p>柱面号=逻辑块号 / （每个柱面扇区数 * 磁盘结构盘面数） </p>
+<p>磁头号=逻辑块号 mod （每个柱面扇区数 * 磁盘结构盘面数） / 扇区数</p>
+<p>扇区号=逻辑块号 mod （每个柱面扇区数 * 磁盘结构盘面数）mod 扇区数</p>
+<ul>
+<li><p>第六套25题了解一下</p>
+</li>
+<li><p>键盘控制方式采用中断方式</p>
+</li>
+<li><p>设备独立层的作用 屏蔽IO设备驱动多样性 </p>
+</li>
+<li><p>进程控制块必须常驻内存</p>
+</li>
+<li><p>信号量初始化之后 只能实施PV原语操作</p>
+</li>
+<li><p>引入虚拟页式存储管理系统 会出现  页面都懂 belady异常 缺页中断  页面写错误</p>
+</li>
+<li><p>文件控制块：文件大小 文件创建时间 文件拥有者 文件访问权限</p>
+</li>
+<li><p>Spooling系统主要组成成分 输入井和输出井 输入缓冲区和输出缓冲区  输入进程和输出进程</p>
+</li>
+<li><p>死锁产生条件 进程推进不当 资源分配不当 产生环路是死锁的必要条件</p>
+</li>
+</ul>
+<h1 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a>计算机网络</h1><ul>
+<li><p>计算机网络是联网的自制计算机集合</p>
+</li>
+<li><p>EtherNet以太网数据帧长度最大1500B  64-1518B</p>
+</li>
+<li><p>跳频扩频可以使用2.4Ghz的ISM频段</p>
+</li>
+<li><p>CSMA/CA是一种介质访问控制方法 重发之前需要等待一段时间</p>
+</li>
+<li><p>IP 不靠谱 面向无连接 尽最大努力</p>
+</li>
+<li><p>多设备用一个IP NAT设备应该采用的工作模式 NAPT</p>
+</li>
+<li><p>POP3发送协议中 STAT查询报文总数和长度 PETR请求服务器发送指定编号的邮件 QUIT删除指定邮件</p>
+</li>
+<li><p>P2P网络：</p>
+</li>
+</ul>
+<p>集中式、分布式结构化、分布式非结构化、混合式</p>
+<p>集中式服务器存储目录和索引信息</p>
+<p>分布式非结构化网络通常使用完全随机图 </p>
+<p>分布式结构化网络通常采用分布式散列表</p>
+<ul>
+<li>SIP</li>
+</ul>
+<p>消息通常分为2类 </p>
+<p>起始行分为请求行和状态行</p>
+<p>消息头和消息体通过CRLF分割</p>
+<p>请求消息分为6中类型</p>
+<p>只有发送方发送Invite</p>
+<ul>
+<li>XMPP</li>
+</ul>
+<p>实体地址称为JID</p>
+<ul>
+<li>NetBIOS协议 </li>
+</ul>
+<p>名称15字符 </p>
+<p>话路数量 254</p>
+<p>4种SMB</p>
+<ul>
+<li>SNMP</li>
+</ul>
+<p>类似一个CMIS 轮询 中断 trap</p>
+<p>CMIP 终端用户负担轻</p>
+<ul>
+<li>802.11帧结构 </li>
+</ul>
+<p>帧控制字段长度2字节</p>
+<p>数据部分长度可变</p>
+<p>采用CRC效验</p>
+<ul>
+<li><p>IPV6注意事项：先导0可以省略 后导0不可以省略</p>
+</li>
+<li><p>服务器相应并发请求可以使用并发服务器或者重复服务器方案</p>
+</li>
+<li><p>Web服务采用CS BS工作模式</p>
+</li>
+<li><p>C1级别描述 数据保护以用户组为单位 用户和数据分离 比C2安全性低</p>
+</li>
+</ul>
+<p>橘皮书安全等级：桔皮书将计算机安全由低到高分为四类七级：D1、C1、C2、B1、B2、B3、A1。其中D1级是不具备最低安全限度的等级，C1和C2级是具备最低安全限度的等级，B1和B2级是具有中等安全保护能力的等级，B3和A1属于最高安全等级</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://yoursite.com/2018/03/14/ncre46/" data-id="cjjr63moc000duzfyrhaw62og" class="article-share-link">共有</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-ncre45" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/2018/03/13/ncre45/" class="article-date">
@@ -199,7 +390,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/13/ncre45/" data-id="cjjmnp0by0009nzjrby69evbg" class="article-share-link">共有</a>
+      <a data-url="http://yoursite.com/2018/03/13/ncre45/" data-id="cjjr63mob000cuzfy0hx5rqs1" class="article-share-link">共有</a>
       
       
     </footer>
@@ -350,7 +541,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/12/ncre44/" data-id="cjjmnp0c0000anzjrmtsoau5d" class="article-share-link">共有</a>
+      <a data-url="http://yoursite.com/2018/03/12/ncre44/" data-id="cjjr63mod000fuzfy61zkqh9x" class="article-share-link">共有</a>
       
       
     </footer>
@@ -496,7 +687,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/11/ncre43/" data-id="cjjmnp0bx0008nzjrksxt3dmt" class="article-share-link">共有</a>
+      <a data-url="http://yoursite.com/2018/03/11/ncre43/" data-id="cjjr63mo7000auzfywlcrlahq" class="article-share-link">共有</a>
       
       
     </footer>
@@ -636,7 +827,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/08/ncre42/" data-id="cjjmnp0c1000bnzjrhni1qyrj" class="article-share-link">共有</a>
+      <a data-url="http://yoursite.com/2018/03/08/ncre42/" data-id="cjjr63mo9000buzfyu96u3bei" class="article-share-link">共有</a>
       
       
     </footer>
@@ -811,7 +1002,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/08/ncre41/" data-id="cjjmnp0bu0005nzjrm5tjglg4" class="article-share-link">共有</a>
+      <a data-url="http://yoursite.com/2018/03/08/ncre41/" data-id="cjjr63mo60009uzfyh9ccqu67" class="article-share-link">共有</a>
       
       
     </footer>
@@ -858,7 +1049,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/03/06/about-docker/" data-id="cjjmnp0bi0000nzjrchg2hjru" class="article-share-link">共有</a>
+      <a data-url="http://yoursite.com/2018/03/06/about-docker/" data-id="cjjr63mny0002uzfy9xhfkqgb" class="article-share-link">共有</a>
       
       
     </footer>
@@ -927,7 +1118,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/04/distributed-system/" data-id="cjjmnp0bo0001nzjrj2qyyyfi" class="article-share-link">共有</a>
+      <a data-url="http://yoursite.com/2018/02/04/distributed-system/" data-id="cjjr63mo00004uzfym3t9g5a8" class="article-share-link">共有</a>
       
       
     </footer>
@@ -976,52 +1167,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/03/test-speed/" data-id="cjjmnp0cc000knzjrzuyvvxop" class="article-share-link">共有</a>
-      
-      
-    </footer>
-  </div>
-  
-</article>
-
-
-  
-    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
-  <div class="article-meta">
-    <a href="/2018/02/02/hello-world/" class="article-date">
-  <time datetime="2018-02-02T09:59:25.000Z" itemprop="datePublished">2018-02-02</time>
-</a>
-    
-  </div>
-  <div class="article-inner">
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2018/02/02/hello-world/">Hello World</a>
-    </h1>
-  
-
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
-
-      
-    </div>
-    <footer class="article-footer">
-      <a data-url="http://yoursite.com/2018/02/02/hello-world/" data-id="cjjmnp0bt0004nzjr0pwt7m3d" class="article-share-link">共有</a>
+      <a data-url="http://yoursite.com/2018/02/03/test-speed/" data-id="cjjr63mog000juzfyvu2l0wbl" class="article-share-link">共有</a>
       
       
     </footer>
@@ -1035,7 +1181,7 @@
 
   <nav id="page-nav">
     
-    <a class="extend prev" rel="prev" href="/page/2/">&laquo; 戻る</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span>
+    <a class="extend prev" rel="prev" href="/page/2/">&laquo; 戻る</a><a class="page-number" href="/">1</a><a class="page-number" href="/page/2/">2</a><span class="page-number current">3</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/4/">次へ &raquo;</a>
   </nav>
 
 </section>
@@ -1067,6 +1213,14 @@
       <ul>
         
           <li>
+            <a href="/2018/07/18/alikuaidigo/">落地成盒-发快递</a>
+          </li>
+        
+          <li>
+            <a href="/2018/07/16/daily-8/">daily_8</a>
+          </li>
+        
+          <li>
             <a href="/2018/07/15/weekend7/">周记7</a>
           </li>
         
@@ -1076,14 +1230,6 @@
         
           <li>
             <a href="/2018/05/24/gitlab-webhook-jenkins/">Gitlab Jenkins WebHook 持续集成配置踩坑记</a>
-          </li>
-        
-          <li>
-            <a href="/2018/05/19/which-str-concat-is-fastest/">PHP-不同Str 拼接方法性能对比</a>
-          </li>
-        
-          <li>
-            <a href="/2018/05/06/weekend5/">4.21-5.6周记</a>
           </li>
         
       </ul>
